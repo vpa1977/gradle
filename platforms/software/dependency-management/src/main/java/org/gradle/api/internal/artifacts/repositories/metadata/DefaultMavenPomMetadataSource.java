@@ -17,6 +17,7 @@ package org.gradle.api.internal.artifacts.repositories.metadata;
 
 import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.component.ModuleComponentSelector;
+import org.gradle.api.internal.artifacts.DefaultModuleIdentifier;
 import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.ModuleDescriptorHashModuleSource;
 import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.parser.DescriptorParseContext;
 import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.parser.MetaDataParser;
@@ -27,6 +28,7 @@ import org.gradle.api.internal.artifacts.repositories.resolver.MavenResolver;
 import org.gradle.api.internal.artifacts.repositories.resolver.MavenUniqueSnapshotComponentIdentifier;
 import org.gradle.api.internal.artifacts.repositories.resolver.ResourcePattern;
 import org.gradle.api.internal.artifacts.repositories.resolver.VersionLister;
+import org.gradle.internal.component.external.model.DefaultModuleComponentIdentifier;
 import org.gradle.internal.component.external.model.maven.MutableMavenModuleResolveMetadata;
 import org.gradle.internal.component.model.ComponentOverrideMetadata;
 import org.gradle.internal.hash.ChecksumService;
@@ -66,6 +68,11 @@ public class DefaultMavenPomMetadataSource extends AbstractRepositoryMetadataSou
                 metaData.setId(snapshotComponentIdentifier);
                 metaData.setSnapshotTimestamp(snapshotComponentIdentifier.getTimestamp());
             } else {
+                if (metaData.isRelocated()) {
+                    moduleComponentIdentifier = DefaultModuleComponentIdentifier
+                        .newId(DefaultModuleIdentifier.newId("relocated." + moduleComponentIdentifier.getGroup(), moduleComponentIdentifier.getModule()),
+                            moduleComponentIdentifier.getVersion());
+                }
                 checkMetadataConsistency(moduleComponentIdentifier, metaData);
             }
             MutableMavenModuleResolveMetadata result = MavenResolver.processMetaData(metaData);

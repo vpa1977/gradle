@@ -134,22 +134,16 @@ public final class GradlePomModuleDescriptorParser extends AbstractModuleDescrip
 
         ModuleVersionIdentifier relocation = pomReader.getRelocation();
         if (relocation != null) {
+            LOGGER.info(mdBuilder.getComponentIdentifier()
+                + " is relocated to " + relocation
+                + ". Please update your dependencies.");
+            LOGGER.debug("Relocated module will be considered as a dependency");
             if (groupId != null && artifactId != null && artifactId.equals(relocation.getName()) && groupId.equals(relocation.getGroup())) {
-                LOGGER.error("POM relocation to an other version number is not fully supported in Gradle : {} relocated to {}.",
-                    mdBuilder.getComponentIdentifier(), relocation);
-                LOGGER.warn("Please update your dependency to directly use the correct version '{}'.", relocation);
-                LOGGER.warn("Resolution will only pick dependencies of the relocated element.  Artifacts and other metadata will be ignored.");
-                PomReader relocatedModule = parsePomForId(parserSettings, DefaultModuleComponentIdentifier.newId(relocation), new HashMap<>());
-                addDependencies(mdBuilder, relocatedModule);
-            } else {
-                LOGGER.info(mdBuilder.getComponentIdentifier()
-                    + " is relocated to " + relocation
-                    + ". Please update your dependencies.");
-                LOGGER.debug("Relocated module will be considered as a dependency");
-                ModuleComponentSelector selector = DefaultModuleComponentSelector.newSelector(
-                    DefaultModuleIdentifier.newId(relocation.getGroup(), relocation.getName()), new DefaultMutableVersionConstraint(relocation.getVersion()));
-                mdBuilder.addDependencyForRelocation(selector);
+                mdBuilder.setModuleRevId("relocated." + groupId, artifactId, version);
             }
+            ModuleComponentSelector selector = DefaultModuleComponentSelector.newSelector(
+                DefaultModuleIdentifier.newId(relocation.getGroup(), relocation.getName()), new DefaultMutableVersionConstraint(relocation.getVersion()));
+            mdBuilder.addDependencyForRelocation(selector);
         } else {
             overrideDependencyMgtsWithImported(parserSettings, pomReader);
             addDependencies(mdBuilder, pomReader);
@@ -215,9 +209,6 @@ public final class GradlePomModuleDescriptorParser extends AbstractModuleDescrip
         return DEPENDENCY_IMPORT_SCOPE.equals(dependencyMgt.getScope());
     }
 
-    private PomReader parsePomForId(DescriptorParseContext parseContext, ModuleComponentIdentifier identifier, Map<String, String> childProperties) throws IOException, SAXException {
-        return parsePomResource(parseContext, parseContext.getMetaDataArtifact(identifier, ArtifactType.MAVEN_POM), childProperties);
-    }
 
     private PomReader parsePomForSelector(DescriptorParseContext parseContext, ModuleComponentSelector selector, Map<String, String> childProperties) throws IOException, SAXException {
         VersionSelector acceptor = mavenVersionSelectorScheme.parseSelector(selector.getVersion());
