@@ -30,6 +30,7 @@ import org.gradle.api.internal.plugins.PluginManagerInternal;
 import org.gradle.api.internal.plugins.PluginRegistry;
 import org.gradle.api.plugins.InvalidPluginException;
 import org.gradle.api.plugins.UnknownPluginException;
+import org.gradle.internal.LenientMode;
 import org.gradle.internal.event.ListenerManager;
 import org.gradle.internal.exceptions.LocationAwareException;
 import org.gradle.plugin.management.internal.PluginRequestInternal;
@@ -195,7 +196,53 @@ public class DefaultPluginRequestApplicator implements PluginRequestApplicator {
                 request.getScriptDisplayName(), request.getLineNumber());
         }
 
-        return result.getFound(request);
+        try {
+            return result.getFound(request);
+        } catch (Exception e) {
+            if (LenientMode.isEnabled() && isUnknownPluginFailure(e)) {
+                LOGGER.warn("Plugin {} is unknown, skipping it", request.getDisplayName());
+                return new LenientSkippedPluginResolution(request);
+            }
+            throw e;
+        }
+    }
+
+    private static boolean isUnknownPluginFailure(Throwable e) {
+        Throwable current = e;
+        while (current != null) {
+            if (current instanceof UnknownPluginException) {
+                return true;
+            }
+            current = current.getCause();
+        }
+        return false;
+    }
+
+    /**
+     * A no-op resolution for plugins skipped in lenient mode because they are unknown.
+     */
+    private static class LenientSkippedPluginResolution implements PluginResolution {
+        private final PluginRequestInternal request;
+
+        LenientSkippedPluginResolution(PluginRequestInternal request) {
+            this.request = request;
+        }
+
+        @Override
+        public PluginId getPluginId() {
+            return request.getId();
+        }
+
+        @Override
+        public void applyTo(PluginManagerInternal pluginManager) {
+            // no-op: the plugin was skipped in lenient mode
+        }
+
+        @Override
+        @Nullable
+        public String getPluginVersion() {
+            return null;
+        }
     }
 
     private static class CollectingPluginRequestResolutionVisitor implements PluginResolutionVisitor {
