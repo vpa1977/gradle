@@ -21,6 +21,9 @@ import groovy.lang.MissingMethodException;
 import groovy.lang.MissingPropertyException;
 import org.gradle.api.internal.DynamicObjectAware;
 import org.gradle.api.internal.project.DefaultProject;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
+import org.gradle.internal.LenientMode;
 import org.gradle.internal.configuration.problems.IsolatedProjectsProblemsReporter;
 import org.gradle.internal.deprecation.DeprecationLogger;
 import org.gradle.internal.logging.StandardOutputCapture;
@@ -147,6 +150,8 @@ public abstract class BasicScript extends org.gradle.groovy.scripts.Script imple
      */
     private static final class ScriptDynamicObject extends AbstractDynamicObject {
 
+        private static final Logger LOGGER = Logging.getLogger(ScriptDynamicObject.class);
+
         private final Binding binding;
         private final DynamicObject scriptObject;
         private DynamicObject dynamicTarget;
@@ -184,6 +189,19 @@ public abstract class BasicScript extends org.gradle.groovy.scripts.Script imple
                 return result;
             }
             return dynamicTarget.tryInvokeMethod(name, arguments);
+        }
+
+        @Override
+        public Object invokeMethod(String name, Object... arguments) throws MissingMethodException {
+            DynamicInvokeResult result = tryInvokeMethod(name, arguments);
+            if (result.isFound()) {
+                return result.getValue();
+            }
+            if (LenientMode.isEnabled()) {
+                LOGGER.warn("Extension {} is unknown", name);
+                return null;
+            }
+            return super.invokeMethod(name, arguments);
         }
 
         @Override
