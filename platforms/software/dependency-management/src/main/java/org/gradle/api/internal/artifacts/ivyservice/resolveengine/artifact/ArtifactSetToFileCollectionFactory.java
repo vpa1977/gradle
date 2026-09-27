@@ -28,6 +28,7 @@ import org.gradle.api.internal.file.FileCollectionStructureVisitor;
 import org.gradle.api.internal.tasks.TaskDependencyResolveContext;
 import org.gradle.api.problems.internal.ProblemsInternal;
 import org.gradle.internal.DisplayName;
+import org.gradle.internal.LenientMode;
 import org.gradle.internal.component.external.model.ImmutableCapabilities;
 import org.gradle.internal.component.model.DefaultIvyArtifactName;
 import org.gradle.internal.component.model.IvyArtifactName;
@@ -38,6 +39,8 @@ import org.gradle.internal.operations.BuildOperationQueue;
 import org.gradle.internal.operations.RunnableBuildOperation;
 import org.gradle.internal.service.scopes.Scope;
 import org.gradle.internal.service.scopes.ServiceScope;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -157,6 +160,8 @@ public class ArtifactSetToFileCollectionFactory {
         };
     }
     private static class NameBackedResolutionHost implements ResolutionHost, DisplayName {
+        private static final Logger LOGGER = LoggerFactory.getLogger(NameBackedResolutionHost.class);
+
         private final ProblemsInternal problemsService;
         private final String displayName;
 
@@ -188,6 +193,11 @@ public class ArtifactSetToFileCollectionFactory {
         @Override
         public Optional<TypedResolveException> consolidateFailures(String resolutionType, Collection<Throwable> failures) {
             if (failures.isEmpty()) {
+                return Optional.empty();
+            } else if (LenientMode.isEnabled()) {
+                for (Throwable failure : failures) {
+                    LOGGER.warn("Ignoring {} resolution failure for {}: {}", resolutionType, displayName, failure.getMessage());
+                }
                 return Optional.empty();
             } else {
                 reportProblems(failures);

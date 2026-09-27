@@ -91,6 +91,7 @@ import org.gradle.internal.DisplayName;
 import org.gradle.internal.Factories;
 import org.gradle.internal.Factory;
 import org.gradle.internal.ImmutableActionSet;
+import org.gradle.internal.LenientMode;
 import org.gradle.internal.code.UserCodeApplicationContext;
 import org.gradle.internal.deprecation.DeprecationLogger;
 import org.gradle.internal.deprecation.Documentation;
@@ -109,6 +110,9 @@ import org.gradle.util.internal.CollectionUtils;
 import org.gradle.util.internal.ConfigureUtil;
 import org.gradle.util.internal.WrapUtil;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.inject.Inject;
 import java.io.File;
 import java.util.ArrayDeque;
@@ -1769,6 +1773,8 @@ public abstract class DefaultConfiguration extends AbstractFileCollection implem
 
     private static class DefaultResolutionHost implements ResolutionHost {
 
+        private static final Logger LOGGER = LoggerFactory.getLogger(DefaultResolutionHost.class);
+
         private final Path buildTreePath;
         private final DisplayName displayName;
         private final ProblemsInternal problems;
@@ -1798,6 +1804,12 @@ public abstract class DefaultConfiguration extends AbstractFileCollection implem
 
         @Override
         public Optional<TypedResolveException> consolidateFailures(String resolutionType, Collection<Throwable> failures) {
+            if (LenientMode.isEnabled() && !failures.isEmpty()) {
+                for (Throwable failure : failures) {
+                    LOGGER.warn("Ignoring {} resolution failure for {}: {}", resolutionType, displayName.getDisplayName(), failure.getMessage());
+                }
+                return Optional.empty();
+            }
             return Optional.ofNullable(exceptionMapper.mapFailures(failures, resolutionType, displayName));
         }
 
