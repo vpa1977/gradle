@@ -20,6 +20,7 @@ import com.google.common.annotations.VisibleForTesting
 import org.gradle.api.HasImplicitReceiver
 import org.gradle.api.JavaVersion
 import org.gradle.api.SupportsKotlinAssignmentOverloading
+import org.gradle.internal.LenientMode
 import org.gradle.internal.SystemProperties
 import org.gradle.internal.io.NullOutputStream
 import org.gradle.internal.logging.ConsoleRenderer
@@ -73,6 +74,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.OutputStream
 import java.io.PrintStream
+import java.nio.file.Files
 import kotlin.reflect.KClass
 import kotlin.script.experimental.api.ResultWithDiagnostics
 import kotlin.script.experimental.api.ScriptCompilationConfiguration
@@ -131,6 +133,18 @@ fun compileKotlinScriptToDirectory(
     pathTranslation: (String) -> String
 ): String {
 
+    if (LenientMode.isEnabled()) {
+        return compileKotlinScriptToDirectoryLenient(
+            outputDirectory,
+            compilerOptions,
+            scriptFile,
+            scriptDef,
+            classPath,
+            logger,
+            pathTranslation
+        )
+    }
+
     compileKotlinScriptModuleTo(
         outputDirectory,
         compilerOptions,
@@ -143,6 +157,119 @@ fun compileKotlinScriptToDirectory(
 
     return NameUtils.getScriptNameForFile(scriptFile.name).asString()
 }
+
+
+private
+const val MAX_LENIENT_COMPILATION_ROUNDS = 20
+
+
+/**
+ * Lenient variant of [compileKotlinScriptToDirectory]: when compilation fails, the
+ * statements enclosing the compilation errors are erased from the in-memory source
+ * (see [LenientStatementEraser]) and compilation is retried, until the script
+ * compiles, no more progress can be made, or [MAX_LENIENT_COMPILATION_ROUNDS] is
+ * reached — in which case the last [ScriptCompilationException] is rethrown.
+ */
+private
+fun compileKotlinScriptToDirectoryLenient(
+    outputDirectory: File,
+    compilerOptions: KotlinCompilerOptions,
+    scriptFile: File,
+    scriptDef: ScriptDefinition,
+    classPath: List<File>,
+    logger: Logger,
+    pathTranslation: (String) -> String
+): String {
+
+    val scriptClassName = NameUtils.getScriptNameForFile(scriptFile.name).asString()
+    val translatedScriptPath = pathTranslation(scriptFile.path)
+
+    var currentScriptFile = scriptFile
+    var currentPathTranslation = pathTranslation
+    var currentText = scriptFile.readText()
+    val previouslyErased = mutableListOf<IntRange>()
+
+    withRootDisposable {
+        // Created lazily so successfully compiling scripts never pay for the parsing environment
+        val eraser by lazy(LazyThreadSafetyMode.NONE) { LenientStatementEraser.usingEmbeddedKotlinParser(this) }
+        var round = 0
+        while (true) {
+            try {
+                compileKotlinScriptModuleTo(
+                    outputDirectory,
+                    compilerOptions,
+                    "buildscript",
+                    listOf(currentScriptFile.path),
+                    scriptDef,
+                    classPath,
+                    messageCollectorFor(logger, compilerOptions.allWarningsAsErrors, currentPathTranslation)
+                )
+                return scriptClassName
+            } catch (exception: ScriptCompilationException) {
+                val locatedErrors = exception.errors.filter { it.location != null }
+                if (round >= MAX_LENIENT_COMPILATION_ROUNDS || locatedErrors.isEmpty()) {
+                    throw exception
+                }
+                val erasure = eraser.erase(
+                    currentText,
+                    locatedErrors.map { LenientStatementEraser.ErrorLocation(it.location!!.line, it.location!!.column) },
+                    previouslyErased
+                )
+                if (erasure == null || erasure.erasedText == currentText) {
+                    throw exception
+                }
+                erasure.erasedStatements.forEach { statement ->
+                    logLenientSkipWarning(logger, statement, locatedErrors)
+                }
+                previouslyErased.addAll(erasure.erasedStatements.map { it.range })
+                currentText = erasure.erasedText
+
+                // The temp file must keep the original file name so the compiled
+                // script class name derived from it stays stable.
+                val tempDirectory = Files.createTempDirectory("gradle-kotlin-dsl-lenient").toFile()
+                val tempScriptFile = File(tempDirectory, scriptFile.name)
+                tempScriptFile.writeText(currentText)
+                val tempScriptPath = tempScriptFile.path
+                currentPathTranslation = { path ->
+                    if (path == tempScriptPath) translatedScriptPath else pathTranslation(path)
+                }
+                currentScriptFile = tempScriptFile
+                round++
+            }
+        }
+        @Suppress("UNREACHABLE_CODE")
+        throw IllegalStateException("Lenient script compilation loop exited without a result")
+    }
+}
+
+
+private
+fun logLenientSkipWarning(
+    logger: Logger,
+    statement: LenientStatementEraser.ErasedStatement,
+    errors: List<ScriptCompilationError>
+) {
+    val blockName = statement.blockName
+    if (blockName != null && errors.any { isUnresolvedReferenceTo(it.message, blockName) }) {
+        logger.warn("Extension {} is unknown", blockName)
+    } else {
+        logger.warn(
+            "Skipping statement that does not compile at line {}: {}",
+            statement.firstLine,
+            errors.first().message
+        )
+    }
+}
+
+
+private
+fun isUnresolvedReferenceTo(message: String, name: String): Boolean =
+    unresolvedReferencePatternFor(name).containsMatchIn(message)
+
+
+private
+fun unresolvedReferencePatternFor(name: String) =
+    Regex("Unresolved reference[: ]'?${Regex.escape(name)}\\b")
 
 
 private
@@ -411,7 +538,7 @@ fun CompilerConfiguration.addScriptingCompilerComponents() {
 
 
 @OptIn(K1Deprecation::class)
-private
+internal
 fun Disposable.kotlinCoreEnvironmentFor(configuration: CompilerConfiguration): KotlinCoreEnvironment {
     return SystemProperties.getInstance().withSystemProperty(
         KOTLIN_COMPILER_ENVIRONMENT_KEEPALIVE_PROPERTY.property,
