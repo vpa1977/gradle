@@ -45,11 +45,6 @@ dependencies {
     implementation(libs.slf4jApi)
 
     compileOnly(libs.jspecify)
-
-    testImplementation(projects.beanSerializationServices)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.beanSerializationServices))
-    testImplementation(testLibs.mockitoKotlin)
 }
 
 gradleModule {
