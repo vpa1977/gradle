@@ -25,15 +25,6 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.httpcore)
     implementation(libs.slf4jApi)
-
-    testImplementation(testFixtures(projects.core))
-
-    integTestImplementation(projects.enterpriseOperations)
-    integTestImplementation(testFixtures(projects.buildCache))
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm) {
-        because("Uses application plugin.")
-    }
 }
 
 gradleModule {
@@ -45,5 +36,3 @@ gradleModule {
         daemon = true
     }
 }
-
-
