@@ -20,18 +20,6 @@ dependencies {
 
     implementation(libs.guava)
     implementation(libs.jsr305)
-
-    testImplementation(projects.internalDistributionTesting)
-    testImplementation(testFixtures(projects.serialization))
-    testImplementation(testFixtures(projects.core))
-
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(libs.slf4jApi)
-
-    integTestDistributionRuntimeOnly(projects.distributionsBasics)
-    integTestImplementation(projects.serviceRegistryBuilder)
-    integTestImplementation(projects.toolingApi)
-    integTestImplementation(testFixtures(projects.testingBase))
 }
 
 gradleModule {
