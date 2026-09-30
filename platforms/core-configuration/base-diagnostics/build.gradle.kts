@@ -34,27 +34,6 @@ dependencies {
     implementation(projects.projectFeatures)
 
     implementation(libs.commonsLang)
-
-    testFixturesApi(testFixtures(projects.platformNative))
-    testFixturesApi(testFixtures(projects.logging))
-
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.core)
-    testFixturesImplementation(projects.internalIntegTesting)
-
-    testFixturesImplementation(libs.guava)
-
-    testImplementation(projects.processServices)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.logging))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ReportGeneratorTest tests load services like ClassLoaderRegistry.")
-    }
-
-    integTestImplementation(testFixtures(projects.declarativeDslProvider))
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
