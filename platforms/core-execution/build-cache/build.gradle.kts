@@ -1,7 +1,6 @@
 plugins {
     id("gradlebuild.distribution.api-java")
     id("gradlebuild.publish-public-libraries")
-    id("gradlebuild.jmh")
 }
 
 description = "Implementation of build cache controller and factories"
@@ -23,24 +22,6 @@ dependencies {
     implementation(libs.commonsIo)
     api(libs.guava)
     implementation(libs.slf4jApi)
-
-    jmhImplementation(projects.baseServices)
-    jmhImplementation(projects.native)
-    jmhImplementation(platform(projects.distributionsDependencies))
-    jmhImplementation(testLibs.aircompressor)
-    jmhImplementation(libs.commonsCompress)
-    jmhImplementation(libs.commonsIo)
-    jmhImplementation(testLibs.jtar)
-    jmhImplementation(testLibs.snappy)
-
-    testImplementation(testFixtures(projects.baseServices))
-    testImplementation(testFixtures(projects.buildOperations))
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.snapshots))
-
-    testFixturesImplementation(testFixtures(projects.hashing))
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
@@ -50,10 +31,4 @@ gradleModule {
         daemon = true
         worker = true
     }
-}
-
-
-
-errorprone {
-    nullawayEnabled = true
 }
