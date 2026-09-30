@@ -27,10 +27,6 @@ dependencies {
 
     implementation(libs.guava)
     implementation(projects.baseServices)
-
-    integTestImplementation(projects.internalTesting)
-    integTestImplementation(testFixtures(projects.logging))
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
