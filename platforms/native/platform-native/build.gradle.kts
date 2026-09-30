@@ -41,38 +41,6 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.guava)
     implementation(libs.snakeyaml)
-
-    testFixturesApi(projects.resources)
-    testFixturesApi(testFixtures(projects.ide))
-    testFixturesImplementation(testFixtures(projects.core))
-    testFixturesImplementation(testFixtures(projects.testingBase))
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(projects.native)
-    testFixturesImplementation(projects.platformBase)
-    testFixturesImplementation(projects.fileCollections)
-    testFixturesImplementation(projects.processServices)
-    testFixturesImplementation(projects.snapshots)
-    testFixturesImplementation(libs.guava)
-    testFixturesImplementation(libs.nativePlatform)
-    testFixturesImplementation(libs.groovyXml)
-    testFixturesImplementation(libs.commonsLang)
-    testFixturesImplementation(libs.commonsIo)
-
-    testImplementation(testFixtures(projects.baseServices))
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.enterpriseLogging))
-    testImplementation(testFixtures(projects.messaging))
-    testImplementation(testFixtures(projects.modelCore))
-    testImplementation(testFixtures(projects.platformBase))
-    testImplementation(testFixtures(projects.snapshots))
-    testImplementation(testFixtures(projects.time))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsNative) {
-        because("Required 'ideNative' to test visual studio project file generation for generated sources")
-    }
 }
 
 gradleModule {
