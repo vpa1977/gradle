@@ -17,7 +17,6 @@
 plugins {
     id("gradlebuild.distribution.implementation-java")
     id("gradlebuild.publish-public-libraries")
-    id("gradlebuild.jmh")
 }
 
 description = "Tools to serialize data"
@@ -62,8 +61,4 @@ jvmCompile {
             usesFutureStdlib = true
         }
     }
-}
-
-errorprone {
-    nullawayEnabled = true
 }
