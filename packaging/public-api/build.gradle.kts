@@ -65,8 +65,6 @@ dependencies {
     legacyExternalApi(libs.jetbrainsAnnotations)
 }
 
-val testRepoLocation = layout.buildDirectory.dir("repos/test")
-
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -83,12 +81,6 @@ publishing {
             pom {
                 name = gradleModule.identity.baseName.map { "${project.group}:$it" }
             }
-        }
-    }
-    repositories {
-        maven {
-            name = "test"
-            url = testRepoLocation.get().asFile.toURI()
         }
     }
 }
@@ -113,24 +105,4 @@ signing {
             signing.sign(this)
         }
     }
-}
-
-val testRepoElements = configurations.consumable("testRepoElements") {
-    outgoing.artifact(testRepoLocation) {
-        builtBy("publishMavenPublicationToTestRepository")
-    }
-    // TODO: De-duplicate this. See publish-public-libraries
-    attributes {
-        attribute(Category.CATEGORY_ATTRIBUTE, project.objects.named("gradle-local-repository"))
-    }
-}
-
-// TODO De-duplicate this
-/**
- * Tasks that are called by the (currently separate) promotion build running on CI.
- */
-tasks.register("promotionBuild") {
-    description = "Build and publish the public API jar"
-    group = "publishing"
-    dependsOn("publish")
 }
