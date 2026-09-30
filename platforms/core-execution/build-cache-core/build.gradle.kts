@@ -33,17 +33,6 @@ dependencies {
     implementation(libs.commonsIo)
     implementation(libs.guava)
     implementation(libs.slf4jApi)
-
-    testImplementation(projects.internalTesting)
-    testImplementation(testFixtures(projects.baseServices))
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.time))
-
-    integTestImplementation(projects.internalIntegTesting)
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm) {
-        because("Integration tests require HttpBuildCache registration from build-cache-http, which is in distributions-jvm.")
-    }
 }
 
 gradleModule {
@@ -52,8 +41,4 @@ gradleModule {
         client = true
         daemon = true
     }
-}
-
-errorprone {
-    nullawayEnabled = false
 }
