@@ -14,10 +14,6 @@ dependencies {
     api(libs.jspecify)
 
     implementation(libs.guava)
-
-    testImplementation(projects.internalTesting)
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
