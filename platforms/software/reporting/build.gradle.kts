@@ -22,19 +22,6 @@ dependencies {
 
     implementation(libs.guava)
     implementation(libs.jatl)
-
-    testImplementation(projects.processServices)
-    testImplementation(projects.baseServicesGroovy)
-    testImplementation(libs.jsoup)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.jacoco))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsJvm) {
-        because("BuildDashboard has specific support for JVM plugins (CodeNarc, JaCoCo)")
-    }
 }
 
 gradleModule {
