@@ -137,8 +137,6 @@ val core = platform("core") {
         subproject("kotlin-dsl-tooling-builders")
         subproject("kotlin-dsl-tooling-model-impls")
         subproject("kotlin-dsl-tooling-models")
-        subproject("kotlin-dsl-plugins")
-        subproject("kotlin-dsl-integ-tests")
         subproject("stdlib-kotlin-extensions")
         subproject("stdlib-serialization-codecs")
         subproject("model-core")
@@ -146,7 +144,6 @@ val core = platform("core") {
         subproject("model-groovy")
         subproject("project-features")
         subproject("project-features-api")
-        subproject("project-features-demos")
     }
 
     // Core Execution Module
@@ -154,14 +151,12 @@ val core = platform("core") {
         subproject("build-cache")
         subproject("build-cache-base")
         subproject("build-cache-core")
-        subproject("build-cache-example-client")
         subproject("build-cache-http")
         subproject("build-cache-local")
         subproject("build-cache-packaging")
         subproject("build-cache-spi")
         subproject("daemon-server-worker")
         subproject("execution")
-        subproject("execution-e2e-tests")
         subproject("file-watching")
         subproject("hashing")
         subproject("hashing-services")
@@ -177,14 +172,6 @@ val core = platform("core") {
         subproject("worker-shared")
         subproject("workers")
     }
-}
-
-// Documentation Module
-module("documentation") {
-    subproject("docs")
-    subproject("docs-asciidoctor-extensions-base")
-    subproject("docs-asciidoctor-extensions")
-    subproject("samples")
 }
 
 // IDE Module
@@ -311,7 +298,6 @@ module("enterprise") {
     subproject("enterprise")
     subproject("enterprise-logging")
     subproject("enterprise-operations")
-    subproject("enterprise-plugin-performance")
     subproject("enterprise-workers")
 }
 
@@ -320,25 +306,11 @@ packaging {
     subproject("core-platform")              // platform for Gradle distribution core
     subproject("distributions-full")
     subproject("public-api")                 // Public API publishing
-    subproject("internal-build-reports")     // Internal utility and verification projects
 }
 
 testing {
-    subproject("architecture-test")
     subproject("distributions-basics")
     subproject("distributions-core")
-    subproject("distributions-integ-tests")
-    subproject("integ-test")
-    subproject("internal-distribution-testing")
-    subproject("internal-integ-testing")
-    subproject("internal-performance-testing")
-    subproject("internal-testing")
-    subproject("performance")
-    subproject("precondition-tester")
-    subproject("public-api-tests")
-    subproject("soak")
-    subproject("smoke-ide-test") // eventually should be owned by IDEX team
-    subproject("smoke-test")
 }
 
 rootProject.name = "gradle"
