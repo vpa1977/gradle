@@ -82,28 +82,6 @@ dependencies {
     // The wrapper expects the launcher Jar to have classpath entries that contain the main class and its runtime classpath
     // See `BootstrapMainStarter`
     manifestClasspath(projects.gradleCliMain)
-
-    testImplementation(projects.internalIntegTesting)
-    testImplementation(testFixtures(projects.serialization))
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.time))
-    testImplementation(testFixtures(projects.logging))
-    testImplementation(testFixtures(projects.toolingApi))
-    testImplementation(testFixtures(projects.daemonProtocol))
-
-    integTestImplementation(projects.persistentCache)
-    integTestImplementation(projects.workerProcessServices)
-    integTestImplementation(libs.slf4jApi)
-    integTestImplementation(libs.guava)
-    integTestImplementation(libs.commonsLang)
-    integTestImplementation(libs.commonsIo)
-    integTestImplementation(testFixtures(projects.buildConfiguration))
-    integTestImplementation(testFixtures(projects.buildProcessServices))
-    integTestImplementation(testFixtures(projects.toolchainsJvmShared))
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull) {
-        because("built-in options are required to be present at runtime for 'TaskOptionsSpec'")
-    }
 }
 
 gradleModule {
@@ -117,6 +95,4 @@ gradleModule {
 strictCompile {
     ignoreRawTypes() // raw types used in public API
 }
-
-testFilesCleanup.reportOnly = true
 
