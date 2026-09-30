@@ -41,31 +41,6 @@ dependencies {
     implementation(libs.jsr305)
     implementation(libs.slf4jApi)
     implementation(libs.guava)
-
-    testImplementation(projects.native)
-    testImplementation(projects.fileCollections)
-    testImplementation(projects.resources)
-    testImplementation(projects.snapshots)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.logging))
-    testImplementation(testFixtures(projects.testingBase))
-
-    integTestRuntimeOnly(projects.kotlinDsl)
-    integTestRuntimeOnly(projects.kotlinDslProviderPlugins)
-    integTestRuntimeOnly(projects.apiMetadata)
-    integTestRuntimeOnly(projects.testKit)
-
-    integTestImplementation(projects.jvmServices)
-    integTestImplementation(projects.enterpriseOperations)
-    integTestImplementation(projects.launcher)
-
-    testFixturesImplementation(libs.inject)
-    testFixturesImplementation(libs.groovyJson)
-    testFixturesImplementation(projects.baseServices)
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm) {
-        because("Uses application plugin.")
-    }
 }
 
 gradleModule {
