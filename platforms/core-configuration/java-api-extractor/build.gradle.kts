@@ -21,7 +21,3 @@ gradleModule {
 // Should not be part of the public API
 // TODO Find a proper way to configure this
 configurations.remove(configurations.apiStubElements.get())
-
-errorprone {
-    nullawayEnabled = true
-}
