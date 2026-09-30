@@ -48,20 +48,6 @@ dependencies {
     implementation(libs.groovy)
     implementation(libs.groovyTemplates)
     implementation(libs.guava)
-
-    testImplementation(testFixtures(projects.core))
-
-    integTestImplementation(testFixtures(projects.enterpriseOperations))
-    integTestImplementation(testFixtures(projects.languageJava))
-    integTestImplementation(testFixtures(projects.modelCore))
-    integTestImplementation(testFixtures(projects.pluginsJava))
-    integTestImplementation(testFixtures(projects.pluginsJavaBase))
-    integTestImplementation(testFixtures(projects.resourcesHttp))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
@@ -70,5 +56,3 @@ gradleModule {
         daemon = true
     }
 }
-
-testFilesCleanup.reportOnly = true
