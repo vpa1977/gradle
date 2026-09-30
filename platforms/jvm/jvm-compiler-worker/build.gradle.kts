@@ -19,12 +19,6 @@ dependencies {
     implementation(projects.logging)
     implementation(libs.guava)
     implementation(libs.commonsLang)
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.languageJava)
-    javadocReferences(projects.languageJvm)
 }
 
 gradleModule {
