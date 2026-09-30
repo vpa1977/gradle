@@ -11,12 +11,8 @@ dependencies {
 
     implementation(projects.buildUpdateUtils)
 
-    implementation(buildLibs.gradleGuidesPlugin)
     implementation(buildLibs.javaParserCore)
     implementation(buildLibs.guava)
-    implementation(buildLibs.jhighlight) {
-        exclude(module = "servlet-api")
-    }
     implementation(buildLibs.flexmark)
     implementation(buildLibs.gson)
     implementation(buildLibs.commonsLang3)

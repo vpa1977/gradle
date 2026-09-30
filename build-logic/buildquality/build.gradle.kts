@@ -7,19 +7,6 @@ description = "Provides plugins to configure quality checks (incubating report, 
 dependencies {
     implementation("gradlebuild:basics")
 
-    implementation(projects.cleanup)
-    implementation(projects.documentation) {
-        // Dokka is only used by GradleKotlinDslReferencePlugin, applied solely to the
-        // (removed) :docs project; keep it off the convention-plugin classpath
-        exclude(group = "org.jetbrains.dokka")
-    }
-    implementation(projects.integrationTesting)
-    implementation(projects.jvm)
-    implementation(projects.performanceTesting)
-    implementation(projects.profiling)
-    implementation(projects.binaryCompatibility)
-    implementation(projects.dependencyModules)
-
     implementation(buildLibs.codenarc) {
         exclude(group = "org.apache.groovy")
         exclude(group = "org.codehaus.groovy")
@@ -27,12 +14,8 @@ dependencies {
     implementation(buildLibs.javaParserSymbolSolver) {
         exclude(group = "com.google.guava")
     }
-    implementation(buildLibs.kgp)
     compileOnly(buildLibs.kotlinCompilerEmbeddable) {
         because("Required by IncubatingApiReportTask and Gradle10RemovalReportTask")
-    }
-    implementation(buildLibs.develocityPlugin) {
-        because("Arch-test plugin configures the PTS extension")
     }
 
     testImplementation(buildLibs.commonsLang3)
