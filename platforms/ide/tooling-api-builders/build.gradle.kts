@@ -34,13 +34,6 @@ dependencies {
 
     runtimeOnly(projects.compositeBuilds)
     runtimeOnly(libs.groovy) // for 'Closure'
-
-    testCompileOnly(projects.toolchainsJvm) {
-        because("JavaLauncher is required for mocking Test.")
-    }
-    testImplementation(projects.fileCollections)
-    testImplementation(projects.platformJvm)
-    testImplementation(testFixtures(projects.core))
 }
 
 gradleModule {
