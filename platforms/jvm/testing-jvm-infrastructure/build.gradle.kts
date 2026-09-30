@@ -50,33 +50,6 @@ dependencies {
     compileOnly(providedLibs.junitPlatformEngine) {
         because("The actual version is provided by the user on the testRuntimeClasspath")
     }
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.messaging))
-    testImplementation(testFixtures(projects.time))
-
-    testImplementation(testLibs.assertj) {
-        because("We test assertion errors coming from AssertJ")
-    }
-    testImplementation(testLibs.opentest4j) {
-        because("We test assertion errors coming from OpenTest4J")
-    }
-    testImplementation(providedLibs.junit) {
-        because("To provide an implementation during testing")
-    }
-    testImplementation(providedLibs.junitPlatform) {
-        because("Platform types are used in tests")
-    }
-    testImplementation(providedLibs.testng) {
-        because("To provide an implementation during testing")
-    }
-    testRuntimeOnly(testLibs.guice) {
-        because("Used by TestNG")
-    }
-
-    testFixturesImplementation(projects.testingBase)
-    testFixturesImplementation(testLibs.junit)
-    testFixturesImplementation(providedLibs.testng)
 }
 
 gradleModule {
