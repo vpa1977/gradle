@@ -34,10 +34,6 @@ dependencies {
     implementation(projects.testingBase)
     implementation(projects.testingJvm)
     implementation(projects.testSuitesBase)
-
-    integTestImplementation(testFixtures(projects.testingBase))
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
