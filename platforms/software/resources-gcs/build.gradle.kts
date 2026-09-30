@@ -24,20 +24,6 @@ dependencies {
     implementation(libs.googleOauthClient)
     implementation(libs.guava)
     implementation(libs.slf4jApi)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.dependencyManagement))
-    testImplementation(testFixtures(projects.ivy))
-    testImplementation(testFixtures(projects.maven))
-
-    testImplementation(libs.groovy)
-
-    integTestImplementation(projects.coreApi)
-    integTestImplementation(projects.modelCore)
-
-    integTestImplementation(libs.commonsIo)
-
-    integTestDistributionRuntimeOnly(projects.distributionsBasics)
 }
 
 gradleModule {
