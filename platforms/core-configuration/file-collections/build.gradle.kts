@@ -26,26 +26,6 @@ dependencies {
     implementation(libs.commonsIo)
 
     compileOnly(libs.jetbrainsAnnotations)
-
-    testImplementation(projects.processServices)
-    testImplementation(projects.resources)
-    testImplementation(projects.snapshots)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.coreApi))
-    testImplementation(testFixtures(projects.modelCore))
-    testImplementation(testFixtures(projects.modelReflect))
-    testImplementation(libs.groovyDateUtil)
-
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.coreApi)
-    testFixturesImplementation(projects.native)
-
-    testFixturesImplementation(libs.guava)
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Tests instantiate DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
