@@ -39,8 +39,6 @@ dependencies {
     implementation(projects.functional)
     implementation(projects.loggingApi)
     implementation(projects.modelCore)
-
-    testImplementation(testFixtures(projects.time))
 }
 
 gradleModule {
