@@ -18,8 +18,6 @@ dependencies {
     implementation(projects.stdlibJavaExtensions) {
         because("Provides @NullMarked")
     }
-
-    testImplementation(testFixtures(projects.core))
 }
 
 gradleModule {
