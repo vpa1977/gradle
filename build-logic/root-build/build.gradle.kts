@@ -8,7 +8,6 @@ dependencies {
     implementation("gradlebuild:basics")
 
     implementation(projects.idea)
-    implementation(projects.profiling)
 
     implementation(projects.cleanup) {
         because("The CachesCleaner service is shared and needs to be on the root classpath")
