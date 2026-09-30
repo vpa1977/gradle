@@ -56,24 +56,6 @@ dependencies {
     compileOnly(providedLibs.junit) {
         because("The actual version is provided by the user on the testRuntimeClasspath")
     }
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.modelReflect))
-    testImplementation(testFixtures(projects.time))
-
-    integTestImplementation(testFixtures(projects.languageGroovy))
-    integTestImplementation(testFixtures(projects.scala))
-    integTestImplementation(testFixtures(projects.testingBase))
-    integTestImplementation(testFixtures(projects.toolingApi))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Tests instantiate DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsFull) {
-        because("TestTaskCusomExecutorIntegrationTest requires the full distribution to apply the DV plugin")
-    }
-
-    testFixturesImplementation(projects.internalIntegTesting)
 }
 
 gradleModule {
