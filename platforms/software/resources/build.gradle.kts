@@ -18,15 +18,6 @@ dependencies {
 
     implementation(libs.guava)
     implementation(libs.commonsIo)
-
-    testImplementation(projects.processServices)
-    testImplementation(projects.coreApi)
-    testImplementation(projects.fileCollections)
-    testImplementation(projects.snapshots)
-
-    testImplementation(testFixtures(projects.core))
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
