@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.implementation-java")
-    id("java-test-fixtures")
 }
 
 description = "Domain object collection infrastructure: DefaultDomainObjectCollection hierarchy, element sources, and collection event system."
@@ -25,18 +24,6 @@ dependencies {
     implementation(projects.logging)
 
     implementation(libs.fastutil)
-
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(projects.internalTesting)
-    testFixturesImplementation(projects.modelCore)
-    testFixturesImplementation(testFixtures(projects.buildOperations))
-    testFixturesImplementation(testFixtures(projects.core))
-
-    testImplementation(projects.internalTesting)
-    testImplementation(testFixtures(projects.buildOperations))
-    testImplementation(testFixtures(projects.core))
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
@@ -50,8 +37,4 @@ gradleModule {
 
 strictCompile {
     ignoreRawTypes() // raw types used in public API (Closure)
-}
-
-errorprone {
-    nullawayEnabled = false
 }
