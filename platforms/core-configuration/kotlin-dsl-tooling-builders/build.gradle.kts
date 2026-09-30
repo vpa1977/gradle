@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.implementation-kotlin")
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Kotlin DSL Tooling Builders for IDEs"
@@ -29,30 +28,6 @@ dependencies {
     implementation(projects.buildProcessServices)
 
     compileOnly(libs.jspecify)
-
-    testImplementation(testFixtures(projects.kotlinDsl))
-
-    integTestImplementation(projects.internalTesting)
-    integTestImplementation(testFixtures(projects.toolingApi))
-
-    integTestDistributionRuntimeOnly(projects.distributionsBasics)
-
-    testFixturesImplementation(projects.kotlinDsl)
-    testFixturesImplementation(projects.toolingApi)
-    testFixturesImplementation(testFixtures(projects.toolingApi))
-    testFixturesImplementation(projects.internalIntegTesting)
-
-    crossVersionTestImplementation(projects.internalIntegTesting)
-    crossVersionTestImplementation(projects.kotlinDsl)
-    crossVersionTestImplementation(projects.kotlinDslToolingModels)
-    crossVersionTestImplementation(projects.persistentCache)
-    crossVersionTestImplementation(libs.ant)
-    crossVersionTestImplementation(libs.guava)
-    crossVersionTestImplementation(libs.slf4jApi)
-
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsJvm) {
-        because("Uses application plugin.")
-    }
 }
 
 gradleModule {
@@ -64,8 +39,6 @@ gradleModule {
         daemon = true
     }
 }
-
-testFilesCleanup.reportOnly = true
 
 // Kotlin DSL tooling builders should not be part of the public API
 // TODO Find a way to not register this and the task instead
