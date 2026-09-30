@@ -43,23 +43,6 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.kotlinReflect)
     implementation(libs.jspecify)
-
-    testImplementation(testLibs.mockitoKotlin)
-    testImplementation(testFixtures(projects.declarativeDslCore))
-    testImplementation(testFixtures(projects.declarativeDslEvaluator))
-    testImplementation(projects.internalIntegTesting)
-    testImplementation(testFixtures(projects.declarativeDslProvider))
-
-    integTestImplementation(projects.internalTesting)
-    integTestImplementation(projects.logging)
-    integTestImplementation(testFixtures(projects.declarativeDslProvider))
-    integTestImplementation(testFixtures(projects.toolingApi))
-
-    testFixturesImplementation(projects.internalTesting)
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(testFixtures(projects.declarativeDslCore))
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
