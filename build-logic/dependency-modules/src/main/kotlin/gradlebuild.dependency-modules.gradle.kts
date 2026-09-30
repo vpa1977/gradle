@@ -28,7 +28,6 @@ dependencies {
     }
     components {
         // Gradle distribution - minify: remove unused transitive dependencies
-        applyRule<DependencyRemovalByNameRule>("com.amazonaws:aws-java-sdk-core", setOf("jackson-dataformat-cbor"))
         applyRule<DependencyRemovalByGroupRule>("org.eclipse.jgit:org.eclipse.jgit", setOf("com.googlecode.javaewah"))
 
         // We don't need the extra annotations provided by j2objc

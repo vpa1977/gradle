@@ -1,7 +1,6 @@
 # some versions are in shared-versions.properties
 [versions]
 ant = "1.10.17!!"
-awsS3 = "1.12.780!!"
 bouncycastle = "1.85!!"
 commonsCodec = "1.18.0!!"
 commonsCompress = "1.28.0!!"
@@ -57,10 +56,6 @@ antLauncher = { group = "org.apache.ant", name = "ant-launcher", version.ref = "
 asm = { group = "org.ow2.asm", name = "asm", version.ref = "asm" }
 asmCommons = { group = "org.ow2.asm", name = "asm-commons", version.ref = "asm" }
 asmTree = { group = "org.ow2.asm", name = "asm-tree", version.ref = "asm" }
-awsS3Core = { group = "com.amazonaws", name = "aws-java-sdk-core", version.ref = "awsS3" }
-awsS3Kms = { group = "com.amazonaws", name = "aws-java-sdk-kms", version.ref = "awsS3" }
-awsS3S3 = { group = "com.amazonaws", name = "aws-java-sdk-s3", version.ref = "awsS3" }
-awsS3Sts = { group = "com.amazonaws", name = "aws-java-sdk-sts", version.ref = "awsS3" }
 bouncycastlePgp = { group = "org.bouncycastle", name = "bcpg-jdk18on", version.ref = "bouncycastle" }
 bouncycastleProvider = { group = "org.bouncycastle", name = "bcprov-jdk18on", version.ref = "bouncycastle" }
 commonsCodec = { group = "commons-codec", name = "commons-codec", version.ref = "commonsCodec" }
