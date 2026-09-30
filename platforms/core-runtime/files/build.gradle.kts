@@ -14,12 +14,6 @@ dependencies {
     implementation(libs.slf4jApi)
 
     compileOnly(libs.jspecify)
-
-    testImplementation(projects.native)
-    testImplementation(projects.baseServices) {
-        because("TextUtil is needed")
-    }
-    testImplementation(testFixtures(projects.native))
 }
 
 gradleModule {
@@ -29,8 +23,4 @@ gradleModule {
         daemon = true
         worker = true
     }
-}
-
-errorprone {
-    nullawayEnabled = true
 }
