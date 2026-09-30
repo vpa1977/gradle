@@ -16,8 +16,6 @@ dependencies {
 
     implementation(libs.bouncycastleProvider)
     implementation(libs.guava)
-
-    testRuntimeOnly(projects.logging)
 }
 
 gradleModule {
