@@ -38,12 +38,6 @@ dependencies {
 
     runtimeOnly(projects.dependencyManagement)
     runtimeOnly(libs.groovy)
-
-    testImplementation(testFixtures(projects.core))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
 }
 
 gradleModule {
