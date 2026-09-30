@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.api-java")
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Contains plugins for building Groovy projects."
@@ -37,21 +36,6 @@ dependencies {
     implementation(libs.guava)
 
     runtimeOnly(libs.groovy)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.languageGroovy))
-
-    testRuntimeOnly(projects.distributionsJvm)
-
-    integTestImplementation(testFixtures(projects.pluginsJavaBase))
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull) {
-        because("The full distribution is required to run the GroovyToJavaConversionIntegrationTest")
-    }
-
-    crossVersionTestImplementation(projects.internalIntegTesting)
-
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
