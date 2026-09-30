@@ -47,15 +47,6 @@ dependencies {
     implementation(libs.commonsLang)
     implementation(libs.guava)
     implementation(libs.slf4jApi)
-
-    testImplementation(projects.native)
-    testImplementation(projects.fileCollections)
-    testImplementation(projects.snapshots)
-    testImplementation(projects.resources)
-    testImplementation(libs.slf4jApi)
-    testImplementation(testFixtures(projects.core))
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
