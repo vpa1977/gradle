@@ -42,20 +42,6 @@ dependencies {
     implementation(projects.pluginsJvmTestSuite)
 
     runtimeOnly(projects.testingBase)
-
-
-    testImplementation(projects.pluginsJavaBase)
-    testImplementation(testFixtures(projects.core))
-    // TODO remove this
-    testImplementation(projects.pluginsJavaBase)
-
-    testRuntimeOnly(projects.distributionsJvm) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-
-    integTestImplementation(testFixtures(projects.resourcesHttp))
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
