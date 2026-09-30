@@ -20,10 +20,6 @@ dependencies {
 
     implementation(libs.slf4jApi)
     implementation(libs.commonsIo)
-
-    testImplementation(projects.baseServices)
-    testImplementation(projects.internalTesting)
-    testImplementation(testFixtures(projects.snapshots))
 }
 
 gradleModule {
@@ -42,9 +38,4 @@ listOf(configurations["apiElements"], configurations["runtimeElements"]).forEach
             publishResolvedCoordinates = true
         }
     }
-}
-
-
-errorprone {
-    nullawayEnabled = true
 }
