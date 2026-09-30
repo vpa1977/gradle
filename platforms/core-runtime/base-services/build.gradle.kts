@@ -4,7 +4,6 @@ import gradlebuild.identity.tasks.BuildReceipt
 
 plugins {
     id("gradlebuild.distribution.api-java")
-    id("gradlebuild.jmh")
 }
 
 description = "A set of generic services and utilities."
@@ -33,23 +32,6 @@ dependencies {
     implementation(libs.jctools)
     implementation(libs.jsr305)
     implementation(libs.slf4jApi)
-
-    integTestImplementation(projects.logging)
-
-    testFixturesApi(projects.hashing)
-    testFixturesImplementation(libs.guava)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testLibs.xerces)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
-
-    jmh(platform(projects.distributionsDependencies))
-    jmh(libs.bouncycastleProvider)
-    jmh(libs.guava)
-
-    // Javadoc-only: needed to resolve cross-module {@link} references (BuildService, ExtensionAware, InstantiatorFactory)
-    javadocReferences(projects.coreApi)
-    javadocReferences(projects.modelCore)
 }
 
 gradleModule {
@@ -60,10 +42,6 @@ gradleModule {
         worker = true
     }
 }
-
-jmh.includes = listOf("HashingAlgorithmsBenchmark")
-
-
 
 // TODO: Base services should not be responsible for generating the build receipt.
 //       Perhaps :api-metadata is a better fit
@@ -80,8 +58,4 @@ val createBuildReceipt = tasks.register<BuildReceipt>("createBuildReceipt") {
 
 tasks.named<Jar>("jar").configure {
     from(createBuildReceipt.map { it.receiptFolder })
-}
-
-errorprone {
-    nullawayEnabled = true
 }
