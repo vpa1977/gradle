@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.api-java")
-    id("gradlebuild.jmh")
 }
 
 description = "This project contains various native operating system integration utilities"
@@ -23,13 +22,6 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.commonsIo)
     implementation(libs.jansi)
-
-    testImplementation(testFixtures(projects.files))
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.logging))
-
-    jmhImplementation(projects.files)
-    jmhImplementation(projects.baseServices)
 }
 
 gradleModule {
@@ -39,15 +31,4 @@ gradleModule {
         daemon = true
         worker = true
     }
-}
-
-jmh {
-    fork = 1
-    threads = 2
-    warmupIterations = 10
-    synchronizeIterations = false
-}
-
-errorprone {
-    nullawayEnabled = true
 }
