@@ -4,15 +4,6 @@ plugins {
 
 description = "Services and types used to setup a build process from a Gradle distribution."
 
-jvmCompile {
-    compilations {
-        named("testFixtures") {
-            // The TAPI cross version tests depend on these test fixtures
-            targetJvmVersion = 8
-        }
-    }
-}
-
 dependencies {
     api(projects.classloaders)
     api(projects.stdlibJavaExtensions)
@@ -20,14 +11,6 @@ dependencies {
     api(libs.jspecify)
 
     implementation(projects.baseServices)
-
-    testImplementation(libs.asm)
-    testImplementation(libs.asmTree)
-
-    testRuntimeOnly(projects.resources)
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.launcher)
 }
 
 gradleModule {
@@ -37,8 +20,4 @@ gradleModule {
         daemon = true
         worker = true
     }
-}
-
-errorprone {
-    nullawayEnabled = true
 }
