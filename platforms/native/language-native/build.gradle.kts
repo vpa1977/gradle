@@ -40,40 +40,6 @@ dependencies {
     implementation(libs.commonsLang)
     implementation(libs.groovy)
     implementation(libs.slf4jApi)
-
-    testFixturesApi(projects.baseServices) {
-        because("Test fixtures export the Named class")
-    }
-    testFixturesApi(projects.platformBase) {
-        because("Test fixtures export the Platform class")
-    }
-
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(testFixtures(projects.platformNative))
-
-    testImplementation(projects.native)
-    testImplementation(projects.resources)
-    testImplementation(projects.baseServicesGroovy)
-    testImplementation(libs.commonsIo)
-    testImplementation(testFixtures(projects.serialization))
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.versionControl))
-    testImplementation(testFixtures(projects.platformNative))
-    testImplementation(testFixtures(projects.platformBase))
-    testImplementation(testFixtures(projects.messaging))
-    testImplementation(testFixtures(projects.snapshots))
-
-    integTestImplementation(projects.native)
-    integTestImplementation(projects.enterpriseOperations)
-    integTestImplementation(projects.resources)
-    integTestImplementation(libs.nativePlatform)
-    integTestImplementation(libs.ant)
-    integTestImplementation(libs.jgit)
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsNative)
 }
 
 gradleModule {
