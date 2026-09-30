@@ -28,8 +28,6 @@ dependencies {
     implementation(projects.stdlibJavaExtensions)
 
     implementation(libs.guava)
-
-    testImplementation(testFixtures(projects.serialization))
 }
 
 gradleModule {
