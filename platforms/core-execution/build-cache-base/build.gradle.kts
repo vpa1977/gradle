@@ -10,8 +10,6 @@ dependencies {
 
     api(projects.files)
     api(projects.hashing)
-
-    testImplementation(testFixtures(projects.hashing))
 }
 
 gradleModule {
@@ -21,8 +19,4 @@ gradleModule {
         daemon = true
         worker = true
     }
-}
-
-errorprone {
-    nullawayEnabled = true
 }
