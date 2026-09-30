@@ -31,17 +31,6 @@ dependencies {
     implementation(projects.startParameter)
 
     implementation(libs.slf4jApi)
-
-    testImplementation(testFixtures(projects.resourcesHttp))
-    testImplementation(testFixtures(projects.core))
-
-    integTestImplementation(projects.baseServicesGroovy)
-    integTestImplementation(libs.jetbrainsAnnotations)
-    integTestImplementation(testLibs.groovyTest)
-
-    integTestDistributionRuntimeOnly(projects.distributionsBasics) {
-        because("Requires test-kit: 'java-gradle-plugin' is used in integration tests which always adds the test-kit dependency.")
-    }
 }
 
 gradleModule {
@@ -50,8 +39,6 @@ gradleModule {
         daemon = true
     }
 }
-
-testFilesCleanup.reportOnly = true
 
 description = """Provides functionality for resolving and managing plugins during their application to projects."""
 
