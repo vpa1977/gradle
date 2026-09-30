@@ -23,18 +23,6 @@ dependencies {
     implementation(libs.commonsLang)
     implementation(libs.guava)
     implementation(libs.slf4jApi)
-
-    testImplementation(projects.serviceRegistryImpl)
-    testImplementation(libs.commonsIo)
-    testImplementation(testFixtures(projects.time))
-    testImplementation(testFixtures(projects.serialization))
-    testImplementation(testFixtures(projects.time))
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
-    integTestImplementation(testFixtures(projects.testingBase))
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.toolingApiBuilders)
 }
 
 gradleModule {
