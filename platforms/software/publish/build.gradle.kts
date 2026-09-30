@@ -30,17 +30,6 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.guava)
     implementation(libs.jsr305)
-
-    testImplementation(testFixtures(projects.core))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Tests instantiate DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
-
-    // Javadoc-only: needed to resolve {@link MavenPublication ...}/{@link IvyPublication ...} references (downstream modules)
-    javadocReferences(projects.maven)
-    javadocReferences(projects.ivy)
 }
 
 gradleModule {
