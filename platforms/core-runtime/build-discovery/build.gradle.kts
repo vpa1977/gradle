@@ -28,8 +28,6 @@ dependencies {
 
     implementation(projects.buildProcessServices)
     implementation(projects.baseServices)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
@@ -39,8 +37,4 @@ gradleModule {
         daemon = true
         worker = true
     }
-}
-
-errorprone {
-    nullawayEnabled = true
 }
