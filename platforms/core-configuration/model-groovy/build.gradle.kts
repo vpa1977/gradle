@@ -17,14 +17,6 @@ dependencies {
 
     implementation(libs.guava)
     implementation(libs.jsr305)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.modelCore))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("NonTransformedModelDslBackingTest instantiates DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
