@@ -49,27 +49,6 @@ dependencies {
     implementation(libs.guava)
 
     runtimeOnly(libs.groovy)
-
-    testImplementation(projects.baseServicesGroovy)
-    testImplementation(projects.files)
-    testImplementation(projects.resources)
-    testImplementation(libs.slf4jApi)
-    testImplementation(libs.commonsIo)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.pluginsJava))
-    testImplementation(testFixtures(projects.languageJvm))
-    testImplementation(testFixtures(projects.languageJava))
-
-    integTestImplementation(projects.jvmServices)
-    integTestImplementation(testFixtures(projects.testingBase))
-
-    testFixturesImplementation(testFixtures(projects.core))
-    testFixturesImplementation(testFixtures(projects.languageJvm))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
