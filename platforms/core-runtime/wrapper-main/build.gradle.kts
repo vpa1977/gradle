@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import com.gradleup.gr8.FilterTransform
 import gradlebuild.basics.launcherDebuggingIsEnabled
 import org.gradle.api.artifacts.type.ArtifactTypeDefinition
 import java.nio.file.Files
@@ -23,7 +22,6 @@ import java.util.jar.Attributes
 
 plugins {
     id("gradlebuild.distribution.api-java")
-    alias(buildLibs.plugins.gr8)
 }
 
 description = "Entry point of the Gradle wrapper command"
@@ -58,47 +56,6 @@ val executableJar = tasks.register<Jar>("executableJar") {
     from(sourceSets.main.get().output)
 }
 
-// Using Gr8 plugin with ProGuard to minify the wrapper JAR.
-// This minified JAR is added to the project root when the wrapper task is used.
-// It is embedded in the main JAR as a resource called `/gradle-wrapper.jar.`
-gr8.registerFilterTransform(listOf("META-INF/.*"))
-
-val filteredRuntimeClasspath = configurations.runtimeClasspath.get().incoming.artifactView {
-    attributes.attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, FilterTransform.artifactType)
-}.files
-
-val shadowedWrapperJar = gr8.create("gr") {
-    addProgramJarsFrom(executableJar.flatMap { it.archiveFile })
-    addProgramJarsFrom(filteredRuntimeClasspath)
-    proguardFile("src/main/proguard/wrapper.pro")
-    systemClassesToolchain {
-        languageVersion = jvmCompile.compilations.named("main")
-            .flatMap { it.targetJvmVersion }
-            .map { JavaLanguageVersion.of(it) }
-    }
-}
-
-// https://github.com/gradle/gradle/issues/26658
-// Before introducing gr8, wrapper jar is generated as build/libs/gradle-wrapper.jar and used in promotion build
-// After introducing gr8, wrapper jar is generated as build/libs/gradle-wrapper-executable.jar and processed
-//   by gr8, then the processed `gradle-wrapper.jar` need to be copied back to build/libs for promotion build
-val copyGr8OutputJarAsGradleWrapperJar = tasks.register("copyGr8OutputJarAsGradleWrapperJar") {
-    // Declare file inputs and outputs
-    // We use a custom task to not have Copy "own" its output directory when copying a single file
-    val source = shadowedWrapperJar
-    val target = layout.buildDirectory.dir("libs").map { it.file("gradle-wrapper.jar") }
-
-    inputs.file(source)
-    outputs.file(target)
-    // Do the copy with a simple JDK copy action
-    doLast {
-        Files.copy(
-            source.get().asFile.toPath(),
-            target.get().asFile.toPath(),
-            StandardCopyOption.REPLACE_EXISTING
-        )
-    }
-}
 
 val debuggableJar = tasks.register<Jar>("debuggableJar") {
     archiveFileName = "gradle-wrapper.jar"
@@ -109,12 +66,5 @@ val debuggableJar = tasks.register<Jar>("debuggableJar") {
 }
 
 tasks.jar {
-    if (launcherDebuggingIsEnabled) { // shadowing and minification prevents debugging
-        from(debuggableJar)
-    } else {
-        from(shadowedWrapperJar) {
-            rename { "gradle-wrapper.jar" }
-        }
-        dependsOn(copyGr8OutputJarAsGradleWrapperJar)
-    }
+    from(debuggableJar)
 }
