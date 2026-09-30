@@ -10,8 +10,6 @@ dependencies {
     api(projects.stdlibJavaExtensions)
 
     api(libs.jspecify)
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
@@ -21,10 +19,4 @@ gradleModule {
         daemon = true
         worker = true
     }
-}
-
-
-
-errorprone {
-    nullawayEnabled = true
 }
