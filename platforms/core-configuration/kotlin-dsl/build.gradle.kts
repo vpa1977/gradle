@@ -5,7 +5,6 @@ plugins {
     id("gradlebuild.distribution.api-kotlin")
     id("gradlebuild.kotlin-dsl-dependencies-embedded")
     id("gradlebuild.kotlin-dsl-sam-with-receiver")
-    id("gradlebuild.kotlin-dsl-plugin-bundle-integ-tests")
     alias(buildLibs.plugins.shadow)
 }
 
@@ -113,58 +112,6 @@ dependencies {
     runtimeOnly(libs.kotlinBuildToolsImpl) {
         isTransitive = false
     }
-
-    testImplementation(projects.buildCacheHttp)
-    testImplementation(projects.buildCacheLocal)
-    testImplementation(projects.buildInit)
-    testImplementation(projects.jacoco)
-    testImplementation(projects.platformJvm)
-    testImplementation(projects.versionControl)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(libs.ant)
-    testImplementation(testLibs.mockitoCore)
-    testImplementation(testLibs.mockitoKotlin)
-    testImplementation(testLibs.jacksonKotlin)
-    testImplementation(testLibs.archunit)
-    testImplementation(libs.kotlinxCoroutinesJvm)
-    testImplementation(testLibs.awaitility)
-
-    integTestImplementation(projects.buildOption) {
-        because("KotlinSettingsScriptIntegrationTest makes uses of FeatureFlag")
-    }
-    integTestImplementation(projects.languageGroovy) {
-        because("ClassBytesRepositoryTest makes use of Groovydoc task.")
-    }
-    integTestImplementation(projects.internalTesting)
-    integTestImplementation(testLibs.mockitoKotlin)
-
-    testRuntimeOnly(projects.distributionsNative) {
-        because("SimplifiedKotlinScriptEvaluator reads default imports from the distribution (default-imports.txt).")
-    }
-
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.coreApi)
-    testFixturesImplementation(projects.core)
-    testFixturesImplementation(projects.fileTemp)
-    testFixturesImplementation(projects.resources)
-    testFixturesImplementation(projects.kotlinDslToolingBuilders)
-    testFixturesImplementation(projects.testKit)
-    testFixturesImplementation(projects.internalTesting)
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(projects.unitTestFixtures)
-    testFixturesImplementation(projects.serviceRegistryImpl)
-
-    testFixturesImplementation(testFixtures(projects.hashing))
-    testFixturesImplementation(testFixtures(projects.buildOperations))
-
-    testFixturesImplementation(libs.kotlinCompilerEmbeddable)
-
-    testFixturesImplementation(testLibs.junit)
-    testFixturesImplementation(testLibs.mockitoKotlin)
-    testFixturesImplementation(testLibs.jacksonKotlin)
-    testFixturesImplementation(libs.asm)
-
-    integTestDistributionRuntimeOnly(projects.distributionsBasics)
 }
 
 gradleModule {
@@ -177,9 +124,6 @@ gradleModule {
 
 // Relocate kotlin-metadata-jvm
 configurations.compileOnly {
-    extendsFrom(configurations.shadow.get())
-}
-configurations.testImplementation {
     extendsFrom(configurations.shadow.get())
 }
 tasks.shadowJar {
@@ -220,18 +164,9 @@ configurations.runtimeElements {
         builtBy(tasks.shadowJar)
     }
 }
-// Restore Kotlin's friendPath so tests and fixtures can access internals
-tasks.compileTestKotlin {
-    friendPaths.from(tasks.shadowJar)
-}
-tasks.compileTestFixturesKotlin {
-    friendPaths.from(tasks.shadowJar)
-}
 // Remove spurious configuration from shadow plugin to resolve ambiguity building the distribution
 // It seems to win over runtimeElements where it should not
 configurations.remove(configurations.shadowRuntimeElements.get())
-
-testFilesCleanup.reportOnly = true
 
 strictCompile {
     ignoreDeprecations()
