@@ -14,11 +14,8 @@
  * limitations under the License.
  */
 
-import gradlebuild.integrationtests.crossVersionTestModels
-
 plugins {
     id("gradlebuild.distribution.api-java")
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Plugins that add support for generating IDE project files used for importing Gradle projects into IDEs"
@@ -63,28 +60,6 @@ dependencies {
 
     runtimeOnly(projects.languageJvm)
     runtimeOnly(projects.testingBase)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.dependencyManagement))
-    testImplementation(testFixtures(projects.ide))
-    testImplementation(testFixtures(projects.toolingApi))
-
-    testRuntimeOnly(projects.distributionsJvm) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-
-    testImplementation(testLibs.xmlunit)
-
-
-    integTestImplementation(projects.internalIntegTesting)
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-
-    crossVersionTestImplementation(crossVersionTestModels(projects.toolingApi))
-
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
@@ -96,16 +71,3 @@ gradleModule {
         daemon = true
     }
 }
-
-/*
- * This is needed to avoid CI failures like this:
- *
- * Failed to stop service 'testFilesCleanupBuildService'.
-   > Found non-empty test files dir:
-    /home/tcagent1/agent/work/f63322e10dd6b396/platforms/ide/ide-plugins/build/tmp/teŝt files/EclipseInte.Test:
-     canHandleCi.cies/xinjd/build/reports/configuration-cache/f5dmqyt5fw1qx1u5ylf7c1p2p/f1jute3awhw927kq95bbyi89k/configuration-cache-report.html
-     canHandleCi.cies/xinjd/.project
-     canHandleCi.cies/xinjd/settings.gradle
-     canHandleCi.cies/xinjd/.classpath
- */
-testFilesCleanup.reportOnly = true
