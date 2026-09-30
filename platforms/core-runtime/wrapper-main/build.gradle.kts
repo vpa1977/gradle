@@ -24,7 +24,6 @@ import java.util.jar.Attributes
 plugins {
     id("gradlebuild.distribution.api-java")
     alias(buildLibs.plugins.gr8)
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Entry point of the Gradle wrapper command"
@@ -32,29 +31,6 @@ description = "Entry point of the Gradle wrapper command"
 dependencies {
     implementation(projects.cli)
     implementation(projects.wrapperShared)
-
-    testImplementation(projects.baseServices)
-    testImplementation(testFixtures(projects.core))
-
-    integTestImplementation(projects.buildOption)
-    integTestImplementation(projects.launcher)
-    integTestImplementation(projects.logging)
-    integTestImplementation(projects.coreApi)
-    integTestImplementation(libs.commonsIo)
-    integTestImplementation(testLibs.littleproxy)
-    integTestImplementation(testFixtures(projects.buildProcessServices))
-
-    integTestNormalizedDistribution(projects.distributionsFull)
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
-
-    crossVersionTestImplementation(projects.internalIntegTesting)
-    crossVersionTestImplementation(projects.launcher)
-    crossVersionTestImplementation(projects.logging)
-    crossVersionTestImplementation(projects.persistentCache)
-    crossVersionTestImplementation(testFixtures(projects.buildProcessServices))
-
-    crossVersionTestNormalizedDistribution(projects.distributionsFull)
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
@@ -141,10 +117,4 @@ tasks.jar {
         }
         dependsOn(copyGr8OutputJarAsGradleWrapperJar)
     }
-}
-
-
-
-errorprone {
-    nullawayEnabled = true
 }
