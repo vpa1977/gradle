@@ -42,12 +42,6 @@ dependencies {
 
     implementation(libs.guava)
     implementation(libs.jsr305)
-
-    testImplementation(testFixtures(projects.serialization))
-    testImplementation(testFixtures(projects.core))
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.launcher)
 }
 
 gradleModule {
