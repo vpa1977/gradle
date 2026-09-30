@@ -38,12 +38,6 @@ dependencies {
     compileOnly(libs.jspecify)
 
     runtimeOnly(libs.groovy)
-
-    integTestImplementation(testFixtures(projects.core))
-    integTestImplementation(testFixtures(projects.jvmServices))
-    integTestImplementation(testFixtures(projects.resourcesHttp))
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
