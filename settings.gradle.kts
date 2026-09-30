@@ -216,7 +216,6 @@ val software = platform("software") {
     subproject("resources")
     subproject("resources-http")
     subproject("resources-gcs")
-    subproject("resources-s3")
     subproject("resources-sftp")
     subproject("reporting")
     subproject("security")

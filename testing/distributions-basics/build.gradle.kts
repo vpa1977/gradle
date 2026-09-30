@@ -14,7 +14,6 @@ dependencies {
 
     pluginsRuntimeOnly(projects.resourcesHttp)
     pluginsRuntimeOnly(projects.resourcesSftp)
-    pluginsRuntimeOnly(projects.resourcesS3)
     pluginsRuntimeOnly(projects.resourcesGcs)
     pluginsRuntimeOnly(projects.resourcesHttp)
     pluginsRuntimeOnly(projects.buildCacheHttp)
