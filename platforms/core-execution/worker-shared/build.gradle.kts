@@ -41,8 +41,6 @@ dependencies {
     implementation(libs.commonsLang)
     implementation(libs.groovy)
     implementation(libs.jsr305)
-
-    testImplementation(testFixtures(projects.core))
 }
 
 gradleModule {
