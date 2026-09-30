@@ -32,10 +32,6 @@ dependencies {
 
     api(libs.inject)
     api(libs.jspecify)
-
-    testFixturesImplementation(testFixtures(projects.declarativeDslProvider))
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
