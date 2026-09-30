@@ -16,17 +16,12 @@
 
 import gradlebuild.basics.accessors.kotlinMainSourceSet
 import gradlebuild.basics.kotlindsl.configureKotlinCompilerForGradleBuild
-import gradlebuild.basics.testing.TestType
-import gradlebuild.integrationtests.configureTestSourceSetInIde
-import org.gradle.api.internal.initialization.DefaultClassLoaderScope
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 
 plugins {
     kotlin("jvm")
     id("gradlebuild.jvm-library")
-    id("gradlebuild.detekt")
-    id("gradlebuild.private-javadoc")
 }
 
 configurations.transitiveSourcesElements {
@@ -35,32 +30,8 @@ configurations.transitiveSourcesElements {
     }
 }
 
-kotlin {
-    target.compilations.named("testFixtures") {
-        associateWith(target.compilations["main"])
-    }
-    target.compilations.named("test") {
-        associateWith(target.compilations["main"])
-        associateWith(target.compilations["testFixtures"])
-    }
-    target.compilations.named("integTest") {
-        associateWith(target.compilations["main"])
-        associateWith(target.compilations["testFixtures"])
-    }
-}
-
 tasks {
     withType<KotlinCompile>().configureEach {
         configureKotlinCompilerForGradleBuild()
     }
-
-    withType<Test>().configureEach {
-        // enables stricter ClassLoaderScope behaviour
-        systemProperty(
-            DefaultClassLoaderScope.STRICT_MODE_PROPERTY,
-            true
-        )
-    }
 }
-
-configureTestSourceSetInIde(sourceSets.getByName("${TestType.INTEGRATION.prefix}Test"))

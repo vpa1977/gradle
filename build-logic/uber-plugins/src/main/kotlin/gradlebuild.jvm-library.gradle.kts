@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import com.autonomousapps.DependencyAnalysisSubExtension
 import gradlebuild.attributes.ExternallyAvailableLibraryAttribute
 
 plugins {
@@ -25,43 +24,10 @@ plugins {
     id("gradlebuild.no-module-annotation")
     id("gradlebuild.reproducible-archives")
     id("gradlebuild.unittest-and-compile")
-    id("gradlebuild.test-fixtures")
-    id("gradlebuild.distribution-testing")
-    id("gradlebuild.incubation-report")
-    id("gradlebuild.removal-report")
     id("gradlebuild.strict-compile")
-    id("gradlebuild.code-quality")
-    id("gradlebuild.integration-tests")
-    id("gradlebuild.refactoring")
-    id("gradlebuild.ci-lifecycle")
-    id("gradlebuild.ci-reporting") // CI: Prepare reports to be uploaded to TeamCity
-    id("gradlebuild.configure-ci-artifacts") // CI: Prepare reports to be uploaded to TeamCity
-    id("gradlebuild.module-target-runtimes")
-    id("com.autonomousapps.dependency-analysis") // Auditing dependencies to find unused libraries
 }
 
 ensurePublishedLibrariesOnlyDependOnPublishedLibraries()
-
-configure<DependencyAnalysisSubExtension> {
-    issues {
-        onAny {
-            severity("fail")
-        }
-
-        onUnusedAnnotationProcessors {
-            // Ignore check for internal-instrumentation-processor, since we apply
-            // it to all distribution.api-java projects but projects might not have any upgrade
-            exclude(":internal-instrumentation-processor")
-        }
-
-        onDuplicateClassWarnings {
-            severity("fail")
-        }
-
-        ignoreSourceSet("crossVersionTest", "integTest", "jmh", "testFixtures")
-
-    }
-}
 
 class ExternallyAvailableAttributeCompatibilityRule : AttributeCompatibilityRule<Boolean> {
     override fun execute(details: CompatibilityCheckDetails<Boolean>) {

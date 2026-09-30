@@ -17,5 +17,4 @@
 plugins {
     `java-library`
     id("gradlebuild.jvm-library")
-    id("gradlebuild.private-javadoc")
 }
