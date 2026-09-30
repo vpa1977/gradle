@@ -32,33 +32,4 @@ dependencies {
 
     implementation(projects.stdlibJavaExtensions)
     implementation(projects.baseAsm)
-
-    testCompileOnly(libs.jetbrainsAnnotations)
-
-    testImplementation(testLibs.compileTesting)
-    testImplementation(projects.core)
-    testImplementation(testFixtures(projects.core))
-    // TODO remove this
-    testImplementation(libs.jetbrainsAnnotations)
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Because we use TestUtil")
-    }
-}
-
-tasks.named<Test>("test").configure {
-    if (!javaVersion.isJava9Compatible) {
-        // For Java8 tools.jar is needed for com.google.testing.compile:compile-testing
-        classpath += javaLauncher.get().metadata.installationPath.files("lib/tools.jar")
-    } else {
-        // Needed for Java19 for com.google.testing.compile:compile-testing
-        jvmArgs(
-            "--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
-            "--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
-            "--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED"
-        )
-    }
-}
-
-errorprone {
-    nullawayEnabled = true
 }
