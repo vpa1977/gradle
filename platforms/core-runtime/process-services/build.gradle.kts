@@ -28,18 +28,6 @@ dependencies {
     implementation(libs.commonsLang)
     implementation(libs.guava)
     implementation(libs.slf4jApi)
-
-    testImplementation(projects.io)
-    testImplementation(testFixtures(projects.core)) {
-        because("Provides TestFiles, TestUtil, UsesNativeServices, and NoOpProblemDiagnosticsFactory used by process unit tests")
-    }
-    testImplementation(testFixtures(projects.logging))
-
-    testFixturesImplementation(projects.stdlibJavaExtensions)
-
-    integTestImplementation(projects.internalDistributionTesting)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
