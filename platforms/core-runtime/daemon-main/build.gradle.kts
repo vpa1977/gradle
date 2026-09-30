@@ -45,7 +45,3 @@ gradleModule {
         daemon = true
     }
 }
-
-errorprone {
-    nullawayEnabled = true
-}
