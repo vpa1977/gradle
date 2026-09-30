@@ -42,9 +42,6 @@ dependencies {
     implementation("org.gradle:kotlin-dsl-shared-runtime")
 
     compileOnly(libs.kotlinReflect)
-
-    testImplementation(testFixtures(projects.kotlinDsl))
-    testImplementation(testLibs.mockitoKotlin)
 }
 
 gradleModule {
