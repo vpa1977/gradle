@@ -46,34 +46,6 @@ dependencies {
     implementation(libs.commonsLang)
     implementation(libs.commonsIo)
     implementation(libs.slf4jApi)
-
-    testImplementation(projects.fileCollections)
-    testImplementation(projects.enterpriseOperations)
-    testImplementation(testFixtures(projects.baseServices))
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.logging))
-    testImplementation(testFixtures(projects.messaging))
-    testImplementation(testFixtures(projects.platformBase))
-    testImplementation(testFixtures(projects.serialization))
-    testImplementation(testFixtures(projects.time))
-
-    testImplementation(libs.commonsIo)
-
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(projects.logging)
-    testFixturesImplementation(projects.modelCore)
-
-    testFixturesImplementation(libs.guava)
-    testFixturesImplementation(libs.jsoup)
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.testingJvm)
 }
 
 gradleModule {
