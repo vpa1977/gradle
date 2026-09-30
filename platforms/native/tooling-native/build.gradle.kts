@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.api-java")
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Tooling API model builders for native builds"
@@ -24,13 +23,6 @@ dependencies {
 
 
     implementation(libs.guava)
-
-    testImplementation(testFixtures(projects.platformNative))
-
-    crossVersionTestImplementation(projects.internalIntegTesting)
-    crossVersionTestImplementation(testFixtures(projects.platformNative))
-
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsNative)
 }
 
 gradleModule {
