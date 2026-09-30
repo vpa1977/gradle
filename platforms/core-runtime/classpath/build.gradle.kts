@@ -1,36 +1,8 @@
-import gradlebuild.integrationtests.configureTestSourceSetInIde
-
 plugins {
     id("gradlebuild.distribution.implementation-java")
 }
 
 description = "Classpath manipulation, instrumentation, and bytecode transformation infrastructure"
-
-// Instrumentation interceptors for tests
-// Separated from the test source set since we don't support incremental annotation processor with Java/Groovy joint compilation
-val testInterceptors = sourceSets.create("testInterceptors") {
-    compileClasspath += sourceSets.main.get().output
-    runtimeClasspath += sourceSets.main.get().output
-}
-
-configureTestSourceSetInIde(testInterceptors)
-
-sourceSets.test {
-    compileClasspath += testInterceptors.output
-    runtimeClasspath += testInterceptors.output
-}
-dependencyAnalysis {
-    issues {
-        ignoreSourceSet(testInterceptors.name)
-    }
-}
-jvmCompile {
-    addCompilationFrom(testInterceptors)
-}
-
-val testInterceptorsImplementation = configurations.getByName("testInterceptorsImplementation") {
-    extendsFrom(configurations.implementation.get())
-}
 
 dependencies {
     api(projects.baseAsm)
@@ -76,32 +48,6 @@ dependencies {
 
     annotationProcessor(projects.internalInstrumentationProcessor)
     annotationProcessor(platform(projects.distributionsDependencies))
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.snapshots))
-    testImplementation(testFixtures(projects.hashing))
-    testImplementation(testFixtures(projects.baseServices))
-
-    testImplementation(libs.asmCommons)
-
-    testFixturesApi(projects.internalInstrumentationApi)
-
-    testFixturesCompileOnly(libs.jetbrainsAnnotations)
-
-    testFixturesImplementation(libs.asm)
-
-    integTestImplementation(projects.dependencyManagement)
-    integTestImplementation(testFixtures(projects.launcher))
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm) {
-        because("BuildScriptClasspathIntegrationSpec uses the 'java' and 'me.champeau.mrjar' plugins")
-    }
-
-    testInterceptorsImplementation(platform(projects.distributionsDependencies))
-    testInterceptorsImplementation(testFixtures(projects.classpath))
-    testInterceptorsImplementation(testFixtures(projects.core))
-    "testInterceptorsAnnotationProcessor"(projects.internalInstrumentationProcessor)
-    "testInterceptorsAnnotationProcessor"(platform(projects.distributionsDependencies))
 }
 
 gradleModule {
