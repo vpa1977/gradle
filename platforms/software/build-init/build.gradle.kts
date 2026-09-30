@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.api-java")
-    id("gradlebuild.update-init-template-versions")
 }
 
 description = """This project contains the Build Init plugin, which is automatically applied to the root project of every build, and provides the init and wrapper tasks.
@@ -71,40 +70,6 @@ dependencies {
     runtimeOnly(projects.wrapperMain) {
         because("WrapperGenerator uses the /gradle-wrapper.jar resource")
     }
-
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.platformBase)
-    testFixturesImplementation(projects.coreApi)
-    testFixturesImplementation(projects.logging)
-    testFixturesImplementation(projects.pluginsJava)
-    testFixturesImplementation(projects.testingBase)
-    testFixturesImplementation(projects.testSuitesBase)
-    testFixturesImplementation(projects.pluginsJvmTestSuite)
-
-
-    testImplementation(projects.baseServicesGroovy)
-    testImplementation(projects.cli)
-    testImplementation(projects.internalIntegTesting)
-    testImplementation(projects.native)
-    testImplementation(projects.snapshots)
-    testImplementation(projects.processServices)
-    testImplementation(projects.wrapperMain)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.platformNative))
-    testImplementation(testFixtures(projects.testingBase))
-
-    testRuntimeOnly(providedLibs.maven3Compat)
-    testRuntimeOnly(providedLibs.maven3PluginApi)
-
-    testRuntimeOnly(projects.distributionsFull) {
-        because("ProjectBuilder tests load services from a Gradle distribution.  Toolchain usage requires JVM distribution.")
-    }
-
-    integTestImplementation(projects.native)
-
-    integTestRuntimeOnly(providedLibs.maven3Compat)
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
@@ -116,5 +81,3 @@ gradleModule {
         daemon = true
     }
 }
-
-integTest.testJvmXmx = "1g"
