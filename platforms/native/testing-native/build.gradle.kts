@@ -33,19 +33,6 @@ dependencies {
     implementation(libs.commonsIo)
     implementation(libs.commonsLang)
     implementation(libs.guava)
-
-    testImplementation(projects.fileCollections)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.platformNative))
-    testImplementation(testFixtures(projects.platformBase))
-    testImplementation(testFixtures(projects.testingBase))
-    testImplementation(testFixtures(projects.languageNative))
-    testImplementation(testFixtures(projects.ide))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsNative)
 }
 
 gradleModule {
@@ -54,5 +41,4 @@ gradleModule {
         daemon = true
     }
 }
-
 
