@@ -22,35 +22,6 @@ dependencies {
     implementation(projects.buildProcessServices)
 
     implementation(libs.commonsIo)
-
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(projects.launcher)
-    testFixturesImplementation(projects.toolingApi)
-    testFixturesImplementation(projects.wrapperShared)
-    testFixturesImplementation(testFixtures(projects.core))
-    testFixturesImplementation(libs.guava)
-
-    testImplementation(libs.guava)
-    testImplementation(testFixtures(projects.core))
-
-    integTestImplementation(projects.native)
-    integTestImplementation(projects.logging)
-    integTestImplementation(projects.launcher)
-    integTestImplementation(projects.buildOption)
-    integTestImplementation(projects.jvmServices)
-    integTestImplementation(testFixtures(projects.buildConfiguration))
-    integTestImplementation(testFixtures(projects.buildProcessServices))
-    integTestImplementation(testFixtures(projects.testingBase))
-    integTestImplementation(libs.slf4jApi)
-    integTestImplementation(libs.jetbrainsAnnotations)
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Tests instantiate DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsBasics)
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.coreApi)
 }
 
 gradleModule {
@@ -74,8 +45,4 @@ val generateTestKitPackageList = tasks.register<PackageListGenerator>("generateT
 }
 sourceSets.main {
     resources.srcDir(files(runtimeApiInfoDir) { builtBy(generateTestKitPackageList) })
-}
-
-tasks.integMultiVersionTest {
-    systemProperty("org.gradle.integtest.testkit.compatibility", "all")
 }
