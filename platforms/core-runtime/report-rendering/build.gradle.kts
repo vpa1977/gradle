@@ -28,8 +28,6 @@ dependencies {
     implementation(projects.baseServices)
 
     implementation(libs.commonsLang)
-
-    testImplementation(libs.jsoup)
 }
 
 gradleModule {
