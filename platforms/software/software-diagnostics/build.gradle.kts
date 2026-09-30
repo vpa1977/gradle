@@ -46,29 +46,6 @@ dependencies {
     implementation(libs.jatl)
 
     implementationResources(variantOf(libs.jquery) { artifactType("js") })
-
-    testFixturesApi(testFixtures(projects.platformNative))
-    testFixturesApi(testFixtures(projects.logging))
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.core)
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(libs.guava)
-
-    testImplementation(projects.processServices)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.dependencyManagement))
-    testImplementation(testFixtures(projects.logging))
-
-    testRuntimeOnly(projects.distributionsFull) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-
-    integTestImplementation(testFixtures(projects.baseDiagnostics))
-    integTestImplementation(testFixtures(projects.platformNative))
-
-    integTestImplementation(libs.jsoup)
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
