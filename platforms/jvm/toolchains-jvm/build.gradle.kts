@@ -17,7 +17,6 @@
 plugins {
     id("gradlebuild.distribution.api-java")
     id("gradlebuild.distribution.api-kotlin")
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Adds support for using JVM toolchains in projects"
@@ -57,26 +56,6 @@ dependencies {
 
     implementation(libs.guava)
     implementation(libs.slf4jApi)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.logging))
-    testImplementation(testFixtures(projects.toolchainsJvmShared))
-    testImplementation(testFixtures(projects.languageJava))
-
-    testFixturesImplementation(projects.native)
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Tests instantiate DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-
-    integTestImplementation(libs.slf4jApi)
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
-
-    crossVersionTestImplementation(projects.internalIntegTesting)
-    crossVersionTestImplementation(testFixtures(projects.toolchainsJvmShared))
-
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
