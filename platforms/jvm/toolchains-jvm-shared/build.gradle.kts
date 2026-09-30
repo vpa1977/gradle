@@ -44,16 +44,6 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.slf4jApi)
     implementation(libs.commonsIo)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(projects.dependencyManagement)
-
-    testRuntimeOnly(projects.distributionsJvm) {
-        because("ProjectBuilder tests load services from a Gradle distribution.  Toolchain usage requires JVM distribution.")
-    }
-
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(libs.commonsCompress)
 }
 
 gradleModule {
