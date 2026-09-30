@@ -43,9 +43,6 @@ dependencies {
 
     implementation(libs.groovy)
     implementation(libs.guava)
-
-    testFixturesImplementation(testFixtures(projects.core))
-    testFixturesImplementation(testFixtures(projects.persistentCache))
 }
 
 gradleModule {
