@@ -38,18 +38,6 @@ dependencies {
     implementation(libs.asmCommons)
     implementation(libs.guava)
     implementation(libs.slf4jApi)
-
-    testImplementation(testFixtures(projects.core)) {
-        because("Unit tests use ConcurrentTestUtil and MultithreadedTestRule from core test fixtures")
-    }
-    testImplementation(testFixtures(projects.logging))
-
-    testFixturesImplementation(projects.requestHandlerWorker)
-
-    integTestImplementation(testFixtures(projects.core)) {
-        because("AbstractWorkerProcessIntegrationSpec uses core infrastructure: ClassPathRegistry, ModuleRegistry, GlobalScopeServices, TestFiles, NativeServicesTestFixture")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
