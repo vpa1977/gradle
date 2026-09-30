@@ -58,14 +58,6 @@ dependencies {
     implementation(projects.workerShared)
 
     implementation(libs.guava)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.hashing))
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.workers)
 }
 
 gradleModule {
