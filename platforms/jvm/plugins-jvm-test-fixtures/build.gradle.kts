@@ -40,11 +40,6 @@ dependencies {
     implementation(projects.pluginsJava)
     implementation(projects.pluginsJavaBase)
     implementation(projects.pluginsJvmTestSuite)
-
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(projects.logging)
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
