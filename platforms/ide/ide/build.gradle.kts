@@ -45,35 +45,6 @@ dependencies {
     implementation(libs.slf4jApi)
     implementation(libs.commonsIo)
     implementation(libs.commonsLang)
-
-    testFixturesApi(projects.baseServices) {
-        because("test fixtures export the Action class")
-    }
-    testFixturesApi(projects.logging) {
-        because("test fixtures export the ConsoleOutput class")
-    }
-    testFixturesApi(projects.toolingApi) {
-        because("test fixtures export the EclipseWorkspace and EclipseWorkspaceProject classes")
-    }
-    testFixturesImplementation(projects.dependencyManagement)
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(projects.modelCore)
-    testFixturesImplementation(libs.groovyXml)
-    testFixturesImplementation(testLibs.xmlunit)
-
-    testImplementation(projects.dependencyManagement)
-    testImplementation(testLibs.xmlunit)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.dependencyManagement))
-    testImplementation(testFixtures(projects.languageGroovy))
-
-    testRuntimeOnly(projects.distributionsJvm) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.idePlugins)
 }
 
 gradleModule {
@@ -86,5 +57,3 @@ gradleModule {
 strictCompile {
     ignoreRawTypes()
 }
-
-testFilesCleanup.reportOnly = true
