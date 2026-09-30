@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.api-java")
-    id("gradlebuild.jmh")
 }
 
 description = "Implementation of configuration model types and annotation metadata handling (Providers, software model, conventions)"
@@ -41,39 +40,7 @@ dependencies {
 
     compileOnly(libs.errorProneAnnotations)
 
-    testFixturesApi(testFixtures(projects.baseDiagnostics))
-    testFixturesApi(testFixtures(projects.core))
-    testFixturesApi(projects.internalIntegTesting)
-    testFixturesImplementation(projects.baseAsm)
-    testFixturesImplementation(libs.guava)
-    testFixturesImplementation(libs.groovyDatetime)
-    testFixturesImplementation(libs.groovyDateUtil)
-
     api(projects.processServicesApi)
-
-    testImplementation(projects.processServices)
-    testImplementation(projects.fileCollections)
-    testImplementation(projects.native)
-    testImplementation(projects.resources)
-    testImplementation(testFixtures(projects.coreApi))
-    testImplementation(testFixtures(projects.languageGroovy))
-    testImplementation(testFixtures(projects.logging))
-    testImplementation(testFixtures(projects.modelReflect))
-
-    integTestImplementation(projects.platformBase)
-    integTestImplementation(testFixtures(projects.processServices))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Tests instantiate DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsNative) {
-        because("ModelRuleCachingIntegrationTest requires a rules implementation")
-    }
-
-    jmhImplementation(platform(projects.distributionsDependencies))
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.core)
 }
 
 gradleModule {
