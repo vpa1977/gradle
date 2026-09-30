@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.api-java")
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Gradle plugin development plugins"
@@ -60,41 +59,6 @@ dependencies {
 
     implementation(libs.asm)
     implementation(libs.guava)
-
-    testImplementation(projects.fileCollections)
-    testImplementation(projects.enterpriseOperations)
-    testImplementation(projects.problemsReporting)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.logging))
-
-    testRuntimeOnly(projects.distributionsJvm) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-
-    integTestImplementation(projects.baseServicesGroovy)
-
-    integTestImplementation(testFixtures(projects.modelReflect))
-    integTestImplementation(testFixtures(projects.testingBase))
-    integTestImplementation(testFixtures(projects.toolingApi))
-
-    integTestImplementation(testLibs.groovyTest)
-    integTestImplementation(libs.jetbrainsAnnotations)
-
-    integTestLocalRepository(projects.toolingApi) {
-        because("Required by GradleImplDepsCompatibilityIntegrationTest")
-    }
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
-
-    crossVersionTestImplementation(projects.internalIntegTesting)
-
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsJvm)
-
-    testFixturesImplementation(projects.modelCore)
-    testFixturesImplementation(projects.logging)
-    testFixturesImplementation(libs.gson)
-    testFixturesImplementation(projects.baseServices)
 }
 
 gradleModule {
@@ -107,6 +71,3 @@ gradleModule {
 strictCompile {
     ignoreDeprecations()
 }
-
-
-testFilesCleanup.reportOnly = true
