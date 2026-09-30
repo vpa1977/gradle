@@ -1,7 +1,6 @@
 plugins {
     id("gradlebuild.distribution.implementation-kotlin")
     id("gradlebuild.publish-public-libraries")
-    id("gradlebuild.kotlin-dsl-plugin-bundle-integ-tests")
 
     embeddedKotlin("plugin.serialization")
 }
@@ -21,15 +20,6 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.inject)
     implementation(projects.declarativeDslApi)
-
-    testImplementation(libs.jetbrainsAnnotations)
-    testImplementation(projects.coreApi)
-
-    testFixturesImplementation(libs.kotlinReflect)
-
-    integTestImplementation(testFixtures(projects.kotlinDsl))
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
