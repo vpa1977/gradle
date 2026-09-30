@@ -17,15 +17,6 @@ dependencies {
     implementation(projects.stdlibJavaExtensions)
     implementation(libs.guava)
     implementation(libs.slf4jApi)
-
-    integTestImplementation(testFixtures(projects.core))
-    integTestImplementation(testFixtures(projects.logging))
-    integTestImplementation(libs.log4jToSlf4j)    // TestAntTask: org.apache.log4j
-    integTestImplementation(libs.jclToSlf4j)      // TestAntTask: org.apache.commons.logging
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm) {
-        because("DefaultIsolatedAntBuilderTest loads modules from the distribution")
-    }
 }
 
 gradleModule {
