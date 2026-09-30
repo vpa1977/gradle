@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.implementation-kotlin")
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Declarative DSL Tooling Builders for IDEs"
@@ -17,13 +16,6 @@ dependencies {
     implementation(projects.declarativeDslProvider)
     implementation(projects.declarativeDslToolingModels)
     implementation(projects.stdlibJavaExtensions)
-
-    crossVersionTestImplementation(projects.declarativeDslCore)
-    crossVersionTestImplementation(projects.declarativeDslEvaluator)
-    crossVersionTestImplementation(projects.declarativeDslToolingModels)
-    crossVersionTestImplementation(projects.internalIntegTesting)
-
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsBasics)
 }
 
 gradleModule {
