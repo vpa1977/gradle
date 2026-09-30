@@ -27,27 +27,6 @@ dependencies {
     implementation(projects.processServicesApi)
 
     implementation(libs.guava)
-
-    testFixturesImplementation(projects.baseServices) {
-        because("Required to access org.gradle.internal.SystemProperties")
-    }
-
-    testImplementation(projects.maven)
-    testImplementation(projects.ivy)
-    testImplementation(testFixtures(projects.core))
-
-    testRuntimeOnly(projects.distributionsPublishing) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-
-    integTestDistributionRuntimeOnly(projects.distributionsPublishing)
-
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(projects.security)
-    testFixturesImplementation(testFixtures(projects.core))
-
-    testFixturesImplementation(libs.slf4jApi)
 }
 
 gradleModule {
@@ -62,12 +41,4 @@ gradleModule {
 
 strictCompile {
     ignoreRawTypes() // raw types used in public API
-}
-
-
-
-tasks.withType<Test>().configureEach {
-    // increase the amount of memory available as the sample key from https://www.rfc-editor.org/rfc/rfc9580.html#name-sample-locked-version-6-sec
-    // used Argon2 in a configuration that uses a lot of memory (probably 2GiB) for a very short time.
-    maxHeapSize = "3g"
 }
