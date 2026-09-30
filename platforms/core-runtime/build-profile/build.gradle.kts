@@ -21,12 +21,6 @@ dependencies {
     implementation(projects.reportRendering)
 
     implementation(libs.guava)
-
-    testImplementation(projects.internalTesting)
-
-    integTestImplementation(libs.jsoup)
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
