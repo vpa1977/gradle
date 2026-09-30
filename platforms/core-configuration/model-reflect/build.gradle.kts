@@ -18,12 +18,6 @@ dependencies {
     implementation(libs.commonsLang)
     implementation(libs.groovy)
     implementation(libs.inject)
-
-    testImplementation(testFixtures(projects.persistentCache))
-    testImplementation(testFixtures(projects.core))
-
-    testFixturesApi(projects.internalIntegTesting)
-    testFixturesImplementation(libs.guava)
 }
 
 gradleModule {
