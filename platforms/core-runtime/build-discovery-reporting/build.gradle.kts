@@ -27,8 +27,6 @@ dependencies {
     compileOnly(libs.jspecify)
 
     implementation(projects.baseServices)
-
-    testImplementation(testFixtures(projects.problemsApi))
 }
 
 gradleModule {
@@ -37,9 +35,4 @@ gradleModule {
         client = true
         daemon = true
     }
-}
-
-errorprone {
-    // Cannot be enabled because the "problems-api" > "serialization" chain is not yet nullaway checked
-    nullawayEnabled = false
 }
