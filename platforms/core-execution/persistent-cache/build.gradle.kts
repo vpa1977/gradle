@@ -26,22 +26,6 @@ dependencies {
     implementation(libs.slf4jApi)
     implementation(libs.commonsIo)
     implementation(libs.commonsLang)
-
-    testImplementation(projects.messaging)
-    testImplementation(projects.coreApi)
-    testImplementation(projects.functional)
-    testImplementation(testFixtures(projects.core))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("DefaultPersistentDirectoryCacheTest instantiates DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-
-    integTestImplementation(projects.messaging)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.scopedPersistentCache)
 }
 
 gradleModule {
