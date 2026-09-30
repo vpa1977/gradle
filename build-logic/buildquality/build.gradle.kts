@@ -8,7 +8,11 @@ dependencies {
     implementation("gradlebuild:basics")
 
     implementation(projects.cleanup)
-    implementation(projects.documentation)
+    implementation(projects.documentation) {
+        // Dokka is only used by GradleKotlinDslReferencePlugin, applied solely to the
+        // (removed) :docs project; keep it off the convention-plugin classpath
+        exclude(group = "org.jetbrains.dokka")
+    }
     implementation(projects.integrationTesting)
     implementation(projects.jvm)
     implementation(projects.performanceTesting)
