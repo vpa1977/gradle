@@ -29,27 +29,6 @@ dependencies {
     implementation(projects.testSuitesBase)
 
     implementation(libs.guava)
-
-    testImplementation(projects.native)
-    testImplementation(projects.resources)
-    testImplementation(projects.snapshots)
-    testImplementation(testFixtures(projects.core))
-
-    integTestImplementation(testFixtures(projects.modelReflect))
-    integTestImplementation(testFixtures(projects.resourcesHttp))
-
-    testFixturesImplementation(libs.commonsLang)
-    testFixturesImplementation(libs.guava)
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(testFixtures(projects.core))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("AbstractOptionsTest instantiates DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.pluginsJavaBase)
 }
 
 gradleModule {
