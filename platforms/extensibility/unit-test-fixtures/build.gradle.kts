@@ -52,19 +52,6 @@ dependencies {
     implementation(projects.startParameter)
     implementation(projects.stdlibJavaExtensions)
     implementation(projects.workerShared)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(projects.testingBase)
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder loads services from a Gradle distribution.")
-    }
-
-    integTestImplementation(testFixtures(projects.buildProcessServices))
-    integTestImplementation(testFixtures(projects.testingBase))
-    integTestCompileOnly(libs.jetbrainsAnnotations)
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
@@ -76,5 +63,4 @@ gradleModule {
         daemon = true
     }
 }
-
 
