@@ -2,7 +2,6 @@ plugins {
     id("gradlebuild.distribution.api-java")
     id("gradlebuild.publish-public-libraries")
     id("gradlebuild.shaded-jar")
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Gradle Tooling API - the programmatic API to invoke Gradle"
@@ -36,65 +35,6 @@ dependencies {
             require(libs.versions.slf4j.get())
         }
     }
-
-    testImplementation(projects.internalDistributionTesting)
-
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.baseServicesGroovy)
-    testFixturesImplementation(projects.core)
-    testFixturesImplementation(projects.coreApi)
-    testFixturesImplementation(projects.internalDistributionTesting)
-    testFixturesImplementation(projects.internalTesting)
-    testFixturesImplementation(projects.logging)
-    testFixturesImplementation(projects.modelCore)
-    testFixturesImplementation(testFixtures(projects.buildProcessServices))
-    testFixturesImplementation(libs.commonsIo)
-    testFixturesImplementation(libs.slf4jApi)
-
-    testFixturesRuntimeOnly(testLibs.spockJUnit4) {
-        because("Required for @org.junit.Rule, used in ToolingApiSpecification")
-    }
-
-    integTestImplementation(projects.jvmServices)
-    integTestImplementation(projects.persistentCache)
-    integTestImplementation(projects.kotlinDslToolingModels)
-    integTestImplementation(testFixtures(projects.buildProcessServices))
-    integTestImplementation(testFixtures(projects.launcher))
-    integTestImplementation(testFixtures(projects.toolchainsJvmShared))
-
-    crossVersionTestImplementation(projects.jvmServices)
-    crossVersionTestImplementation(projects.internalIntegTesting)
-    crossVersionTestImplementation(projects.internalTesting)
-    crossVersionTestImplementation(testFixtures(projects.buildProcessServices))
-    crossVersionTestImplementation(testFixtures(projects.problemsApi))
-    crossVersionTestImplementation(libs.commonsIo)
-    crossVersionTestRuntimeOnly(testLibs.cglib) {
-        because("BuildFinishedCrossVersionSpec classpath inference requires cglib enhancer")
-    }
-
-    testImplementation(projects.daemonMessaging)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.logging))
-    testImplementation(testFixtures(projects.time))
-
-    integTestNormalizedDistribution(projects.distributionsFull) {
-        because("Used by ToolingApiRemoteIntegrationTest")
-    }
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
-    integTestLocalRepository(project(path)) {
-        because("ToolingApiResolveIntegrationTest and ToolingApiClasspathIntegrationTest use the Tooling API Jar")
-    }
-
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsFull)
-    crossVersionTestLocalRepository(project(path)) {
-        because("ToolingApiVersionSpecification uses the Tooling API Jar")
-    }
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.coreApi)
-    javadocReferences(projects.startParameter) // for org.gradle.StartParameter
 }
 
 gradleModule {
@@ -130,11 +70,3 @@ shadedJar {
 strictCompile {
     ignoreRawTypes() // raw types used in public API
 }
-
-testFilesCleanup.reportOnly = true
-
-apply(from = "buildship.gradle")
-
-
-// AutoTestedSamplesToolingApiTest includes customized test logic, so automatic auto testing samples generation is not needed (and would fail) in this project
-integTest.generateDefaultAutoTestedSamplesTest = false
