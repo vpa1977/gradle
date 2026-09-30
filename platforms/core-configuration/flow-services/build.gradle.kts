@@ -42,8 +42,6 @@ dependencies {
 
     implementation(libs.guava)
     implementation(libs.inject)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
