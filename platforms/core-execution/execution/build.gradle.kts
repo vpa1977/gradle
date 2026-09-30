@@ -36,29 +36,6 @@ dependencies {
     }
 
     implementation(libs.commonsLang)
-
-    testImplementation(projects.native)
-    testImplementation(projects.logging)
-    testImplementation(projects.processServices)
-    testImplementation(projects.baseServicesGroovy)
-    testImplementation(projects.resources)
-    testImplementation(libs.commonsIo)
-    testImplementation(testFixtures(projects.serialization))
-    testImplementation(testFixtures(projects.baseServices))
-    testImplementation(testFixtures(projects.buildOperations))
-    testImplementation(testFixtures(projects.fileCollections))
-    testImplementation(testFixtures(projects.messaging))
-    testImplementation(testFixtures(projects.snapshots))
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.modelReflect))
-
-    testFixturesImplementation(libs.guava)
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.buildCache)
-    testFixturesImplementation(projects.problems)
-    testFixturesImplementation(projects.snapshots)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
@@ -69,5 +46,3 @@ gradleModule {
         worker = true
     }
 }
-
-
