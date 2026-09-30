@@ -30,17 +30,6 @@ dependencies {
     implementation(libs.groovyXml)
     implementation(libs.guava)
     implementation(libs.commonsLang)
-
-    testImplementation(projects.baseServicesGroovy)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(projects.native)
-    testImplementation(projects.war)
-    testImplementation(libs.ant)
-
-    testRuntimeOnly(projects.distributionsJvm) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
