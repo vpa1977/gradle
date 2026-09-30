@@ -60,7 +60,6 @@ fun registerTransforms() {
     dependencies {
         registerTransform(ShadeClasses::class) {
             from.attribute(Attributes.artifactType, "jar")
-                .attribute(Attributes.minified, true)
             to.attribute(Attributes.artifactType, relocatedClassesAndAnalysisType)
             parameters {
                 shadowPackage = "org.gradle.internal.impldep"

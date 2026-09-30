@@ -51,7 +51,6 @@ val zipEntryBaseTimestamp = LocalDateTime.of(1980, 2, 1, 0, 0, 0)
 
 object Attributes {
     val artifactType = Attribute.of("artifactType", String::class.java)
-    val minified = Attribute.of("minified", Boolean::class.javaObjectType)
 }
 
 

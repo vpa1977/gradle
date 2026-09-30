@@ -18,7 +18,6 @@ plugins {
     `java-base`
     id("gradlebuild.dependency-modules")
     id("gradlebuild.repositories")
-    id("gradlebuild.minify")
     id("gradlebuild.no-module-annotation")
     id("gradlebuild.reproducible-archives")
     id("gradlebuild.distributions")

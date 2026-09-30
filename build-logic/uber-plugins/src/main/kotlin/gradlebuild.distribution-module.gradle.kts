@@ -23,7 +23,6 @@ import org.jetbrains.kotlin.gradle.tasks.BaseKotlinCompile
 
 // Common configuration for everything that belongs to the Gradle distribution
 plugins {
-    id("gradlebuild.minify")
     id("gradlebuild.task-properties-validation")
     id("gradlebuild.dependency-modules")
 }
