@@ -22,8 +22,6 @@ dependencies {
     implementation(libs.asm)
     implementation(libs.groovy)
     implementation(libs.guava)
-
-    testImplementation(testFixtures(projects.core))
 }
 
 gradleModule {
