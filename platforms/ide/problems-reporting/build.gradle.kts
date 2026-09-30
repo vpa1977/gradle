@@ -31,8 +31,6 @@ dependencies {
 
     implementation(libs.slf4jApi)
     implementation(projects.problemsRendering)
-
-    testImplementation(projects.logging)
 }
 
 gradleModule {
