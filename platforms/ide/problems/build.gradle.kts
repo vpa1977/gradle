@@ -54,19 +54,6 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.fastutil)
     implementation(libs.slf4jApi)
-
-    testImplementation(projects.stdlibKotlinExtensions)
-    testImplementation(testFixtures(projects.core))
-
-    testImplementation(testLibs.junit)
-
-    testImplementation(testLibs.mockitoKotlin)
-    testImplementation(libs.kotlinReflect)
-    testImplementation(testLibs.mockitoCore)
-
-    integTestImplementation(projects.internalTesting)
-    integTestImplementation(testFixtures(projects.logging))
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
