@@ -36,17 +36,6 @@ dependencies {
     implementation(projects.publish)
 
     runtimeOnly(libs.groovy)
-
-    integTestImplementation(testFixtures(projects.dependencyManagement))
-    integTestImplementation(testFixtures(projects.resourcesHttp))
-
-    testImplementation(projects.languageJava) {
-        because("need to access JavaCompile task")
-    }
-
-    testImplementation(testFixtures(projects.core))
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
