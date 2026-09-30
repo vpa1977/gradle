@@ -59,15 +59,6 @@ dependencies {
     implementation(projects.workerShared)
 
     runtimeOnly(libs.groovy)
-
-    testImplementation(libs.ant)
-    testImplementation(projects.kotlinDsl)
-    testImplementation(testFixtures(projects.logging))
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Tests instantiate DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
