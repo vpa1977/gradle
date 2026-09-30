@@ -40,10 +40,6 @@ dependencies {
     implementation(libs.guava)
 
     compileOnly(libs.jspecify)
-
-    integTestImplementation(testFixtures(projects.testingBase))
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
