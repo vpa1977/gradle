@@ -60,7 +60,3 @@ jvmCompile {
         }
     }
 }
-
-errorprone {
-    nullawayEnabled = true
-}
