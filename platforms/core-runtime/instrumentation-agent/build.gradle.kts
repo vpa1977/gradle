@@ -29,7 +29,3 @@ tasks.named<Jar>("jar") {
         ))
     }
 }
-
-errorprone {
-    nullawayEnabled = true
-}
