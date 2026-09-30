@@ -44,33 +44,6 @@ dependencies {
 
     implementation(libs.guava)
     implementation(libs.asm)
-
-    testImplementation(projects.baseServicesGroovy)
-    testImplementation(projects.internalTesting)
-    testImplementation(projects.resources)
-    testImplementation(testFixtures(projects.core))
-
-    testFixturesApi(testFixtures(projects.languageJvm))
-    testFixturesImplementation(projects.core)
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(testFixtures(projects.core))
-    testFixturesImplementation(testFixtures(projects.modelReflect))
-    testFixturesImplementation(testFixtures(projects.testingBase))
-
-    testFixturesImplementation(libs.guava)
-
-    integTestImplementation(testFixtures(projects.modelReflect))
-    integTestImplementation(testFixtures(projects.testingBase))
-    integTestImplementation(libs.commonsLang)
-    integTestImplementation(libs.nativePlatform) {
-        because("Required for SystemInfo")
-    }
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Tests instantiate DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
