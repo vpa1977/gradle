@@ -26,8 +26,6 @@ dependencies {
     api(projects.stdlibJavaExtensions)
 
     compileOnly(libs.jspecify)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
@@ -37,7 +35,3 @@ gradleModule {
         daemon = true
     }
 }
-
-// The samples test is the only one in the project, so we need to have it or the `generateSubprojectsInfo` will not rebuild the json properly.
-// TODO(bt-dev-prod) can the json generator figure that out automatically?
-integTest.generateDefaultAutoTestedSamplesTest = false
