@@ -48,26 +48,6 @@ dependencies {
     implementation(libs.guava)
 
     runtimeOnly(projects.languageJvm)
-
-    testImplementation(projects.fileCollections)
-    testImplementation(projects.pluginsJava)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.modelCore))
-
-    testFixturesImplementation(projects.core)
-    testFixturesImplementation(testFixtures(projects.core))
-    testFixturesImplementation(projects.coreApi)
-    testFixturesImplementation(projects.baseServices)
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
-
-    integTestImplementation(testFixtures(projects.languageGroovy))
-    integTestImplementation(libs.jsoup) {
-        because("We need to validate generated HTML reports")
-    }
 }
 
 gradleModule {
