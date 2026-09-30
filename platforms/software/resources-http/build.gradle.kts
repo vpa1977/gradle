@@ -31,17 +31,6 @@ dependencies {
     runtimeOnly(projects.coreApi)
 
     runtimeOnly(libs.jacksonCore)
-
-    testImplementation(projects.internalIntegTesting)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.logging))
-
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.logging)
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(libs.slf4jApi)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
