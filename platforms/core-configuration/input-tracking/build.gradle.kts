@@ -7,8 +7,6 @@ description = "Configuration input discovery code"
 dependencies {
     api(libs.jspecify)
     api(libs.guava)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
@@ -18,8 +16,4 @@ gradleModule {
         daemon = true
         worker = true
     }
-}
-
-errorprone {
-    nullawayEnabled = true
 }
