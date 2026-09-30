@@ -36,15 +36,6 @@ dependencies {
 
     runtimeOnly(projects.languageJvm)
     runtimeOnly(projects.workers)
-
-    testImplementation(projects.baseServicesGroovy)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(projects.fileCollections)
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
 
 gradleModule {
