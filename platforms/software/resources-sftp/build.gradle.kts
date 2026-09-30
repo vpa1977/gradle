@@ -22,18 +22,6 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.jsr305)
     implementation(libs.slf4jApi)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.dependencyManagement))
-    testImplementation(testFixtures(projects.ivy))
-    testImplementation(testFixtures(projects.maven))
-
-    integTestImplementation(projects.logging)
-    integTestImplementation(libs.sshdCore)
-    integTestImplementation(libs.sshdScp)
-    integTestImplementation(libs.sshdSftp)
-
-    integTestDistributionRuntimeOnly(projects.distributionsBasics)
 }
 
 gradleModule {
