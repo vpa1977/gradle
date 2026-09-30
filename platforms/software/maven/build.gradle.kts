@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.api-java")
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Implementation of the Maven Publish Plugin that provides the ability to publish build artifacts to Maven repositories."
@@ -39,37 +38,6 @@ dependencies {
     implementation(libs.commonsLang)
     implementation(libs.plexusUtils)
     implementation(libs.slf4jApi)
-
-    testImplementation(projects.native)
-    testImplementation(projects.processServices)
-    testImplementation(projects.snapshots)
-    testImplementation(projects.resourcesHttp)
-
-    testImplementation(testLibs.xmlunit)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.modelCore))
-    testImplementation(testFixtures(projects.dependencyManagement))
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("ProjectBuilder tests load services from a Gradle distribution.")
-    }
-
-    testFixturesApi(projects.baseServices) {
-        because("Test fixtures export the Action class")
-    }
-    testFixturesImplementation(projects.logging)
-    testFixturesImplementation(projects.coreApi)
-    testFixturesImplementation(projects.internalIntegTesting)
-    testFixturesImplementation(projects.dependencyManagement)
-
-    integTestImplementation(projects.enterpriseOperations)
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm)
-
-    crossVersionTestImplementation(projects.internalIntegTesting)
-
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsJvm)
 }
 
 gradleModule {
