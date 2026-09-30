@@ -29,18 +29,6 @@ dependencies {
 
     compileOnly(libs.jetbrainsAnnotations)
     compileOnly(projects.internalInstrumentationApi)
-
-    testImplementation(testFixtures(projects.core))   // AbstractProjectBuilderSpec, TestUtil
-    testImplementation(projects.internalTesting)       // TestNameTestDirectoryProvider
-    testImplementation(testFixtures(projects.logging)) // ConfigureLogging, TestOutputEventListener
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Required by ProjectBuilder to find gradle-plugins.properties")
-    }
-
-    integTestDistributionRuntimeOnly(projects.distributionsJvm) {
-        because("AntBuilder relies on groovy-loader which ships with the JVM distribution")
-    }
 }
 
 gradleModule {
