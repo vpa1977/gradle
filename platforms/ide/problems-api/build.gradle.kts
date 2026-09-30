@@ -40,17 +40,6 @@ dependencies {
     api(libs.jspecify)
 
     implementation(libs.jsr305)
-
-    testImplementation(projects.logging)
-    integTestImplementation(projects.internalTesting)
-    integTestImplementation(testFixtures(projects.logging))
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
-
-    testFixturesImplementation(projects.internalDistributionTesting)
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.coreApi)
-    javadocReferences(projects.configurationProblemsBase)
 }
 
 gradleModule {
@@ -59,14 +48,5 @@ gradleModule {
         client = true
         daemon = true
         worker = true
-    }
-}
-
-jvmCompile {
-    compilations {
-        named("testFixtures") {
-            // The TAPI cross version tests depend on these test fixtures
-            targetJvmVersion = 8
-        }
     }
 }
