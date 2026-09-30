@@ -18,15 +18,6 @@ dependencies {
     implementation(libs.commonsIo)
 
     compileOnly(libs.jspecify)
-
-    testImplementation(projects.fileCollections)
-    testImplementation(projects.processServices)
-    testImplementation(projects.resources)
-
-    testImplementation(testFixtures(projects.baseServices))
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.coreApi))
-    testImplementation(testFixtures(projects.snapshots))
 }
 
 gradleModule {
@@ -36,8 +27,4 @@ gradleModule {
         daemon = true
         worker = true
     }
-}
-
-errorprone {
-    nullawayEnabled = true
 }
