@@ -47,8 +47,6 @@ dependencies {
     implementation(projects.serviceRegistryBuilder)
 
     compileOnly(libs.jspecify)
-
-    testImplementation(projects.serviceRegistryImpl)
 }
 
 gradleModule {
