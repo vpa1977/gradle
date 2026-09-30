@@ -1,6 +1,5 @@
 plugins {
     id("gradlebuild.distribution.api-java")
-    id("gradlebuild.jmh")
 }
 
 description = "Logging infrastructure"
@@ -43,27 +42,6 @@ dependencies {
     runtimeOnly(libs.gson)
     runtimeOnly(libs.jclToSlf4j)
     runtimeOnly(libs.log4jToSlf4j)
-
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.time))
-    testImplementation(testFixtures(projects.testingJvm))
-    testImplementation(libs.groovyDatetime)
-    testImplementation(libs.groovyDateUtil)
-
-    integTestImplementation(projects.problems)
-
-    integTestImplementation(testLibs.ansiControlSequenceUtil)
-
-    testFixturesImplementation(projects.baseServices)
-    testFixturesImplementation(projects.enterpriseWorkers)
-    testFixturesImplementation(testFixtures(projects.core))
-    testFixturesImplementation(testFixtures(projects.time))
-    testFixturesImplementation(libs.slf4jApi)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
-
-    // Javadoc-only: downstream modules whose types are referenced by {@link ...} in this module's docs.
-    javadocReferences(projects.daemonServices)
 }
 
 gradleModule {
