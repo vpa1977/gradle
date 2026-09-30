@@ -11,8 +11,6 @@ dependencies {
     api(libs.jspecify)
     api(libs.groovy)
     api(libs.guava)
-
-    testImplementation(testFixtures(projects.core))
 }
 
 gradleModule {
@@ -22,8 +20,4 @@ gradleModule {
         daemon = true
         worker = true
     }
-}
-
-errorprone {
-    nullawayEnabled = true
 }
