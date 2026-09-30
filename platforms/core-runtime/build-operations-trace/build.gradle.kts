@@ -45,8 +45,6 @@ dependencies {
     implementation(libs.jacksonDatabind)
     implementation(libs.jacksonDatatypeJdk8)
     implementation(libs.jacksonDatatypeJsr310)
-
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
