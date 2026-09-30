@@ -2,20 +2,9 @@ plugins {
     id("gradlebuild.distribution.implementation-kotlin")
     id("gradlebuild.kotlin-dsl-sam-with-receiver")
     id("gradlebuild.kotlin-experimental-contracts")
-    id("gradlebuild.cross-version-tests")
 }
 
 description = "Configuration cache implementation"
-
-// The integration tests in this project do not need to run in 'config cache' mode.
-tasks.configCacheIntegTest {
-    enabled = false
-}
-
-// The integration tests in this project do not need to run in 'isolated projects' mode.
-tasks.isolatedProjectsIntegTest {
-    enabled = false
-}
 
 dependencies {
     api(projects.baseServices)
@@ -94,47 +83,6 @@ dependencies {
     runtimeOnly(projects.workers)
 
     runtimeOnly(libs.kotlinReflect)
-
-    testImplementation(projects.beanSerializationServices)
-    testImplementation(testFixtures(projects.beanSerializationServices))
-    testImplementation(projects.io)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testLibs.mockitoKotlin)
-    testImplementation(testLibs.kotlinxCoroutinesDebug)
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Tests instantiate DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-
-    integTestImplementation(projects.cli)
-    integTestImplementation(projects.ide)
-    integTestImplementation(projects.jvmServices)
-    integTestImplementation(projects.launcher)
-    integTestImplementation(projects.platformJvm)
-    integTestImplementation(projects.testKit)
-    integTestImplementation(projects.toolingApi)
-    integTestImplementation(projects.workers)
-
-    integTestImplementation(libs.ant)
-    integTestImplementation(libs.guava)
-    integTestImplementation(libs.inject)
-    integTestImplementation(testLibs.playwright)
-
-    integTestImplementation(testFixtures(projects.toolingApi))
-    integTestImplementation(testFixtures(projects.kotlinDslToolingBuilders))
-    integTestImplementation(testFixtures(projects.dependencyManagement))
-    integTestImplementation(testFixtures(projects.jacoco))
-    integTestImplementation(testFixtures(projects.modelReflect))
-    integTestImplementation(testFixtures(projects.processServices))
-
-    integTestDistributionRuntimeOnly(projects.distributionsFull) {
-        because("Includes tests for builds with the enterprise plugin and TestKit involved; ConfigurationCacheJacocoIntegrationTest requires JVM distribution")
-    }
-
-    crossVersionTestImplementation(projects.cli)
-    crossVersionTestImplementation(projects.internalIntegTesting)
-
-    crossVersionTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
