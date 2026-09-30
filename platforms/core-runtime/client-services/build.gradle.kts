@@ -81,14 +81,6 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.jsr305)
     implementation(libs.slf4jApi)
-
-    testImplementation(testFixtures(projects.core)) {
-        because("ConcurrentSpecification")
-    }
-    testImplementation(projects.toolingApi) {
-        because("Unit tests verify serialization works with TAPI types")
-    }
-    testImplementation(testFixtures(projects.daemonProtocol))
 }
 
 gradleModule {
