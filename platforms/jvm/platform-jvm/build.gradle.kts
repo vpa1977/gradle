@@ -31,22 +31,6 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.commonsLang)
     implementation(libs.commonsIo)
-
-    testImplementation(projects.snapshots)
-    testImplementation(libs.ant)
-    testImplementation(testFixtures(projects.core))
-    testImplementation(testFixtures(projects.logging))
-    testImplementation(testFixtures(projects.platformBase))
-    testImplementation(testFixtures(projects.platformNative))
-
-    integTestImplementation(projects.internalIntegTesting)
-
-    integTestImplementation(libs.slf4jApi)
-
-    testRuntimeOnly(projects.distributionsCore) {
-        because("Tests instantiate DefaultClassLoaderRegistry which requires a 'gradle-plugins.properties' through DefaultPluginModuleRegistry")
-    }
-    integTestDistributionRuntimeOnly(projects.distributionsCore)
 }
 
 gradleModule {
