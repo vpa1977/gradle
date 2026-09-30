@@ -22,8 +22,6 @@ dependencies {
     implementation(projects.concurrent)
     implementation(projects.loggingApi)
     implementation(projects.problemsRendering)
-
-    testImplementation(testFixtures(projects.core))
 }
 
 gradleModule {
@@ -42,17 +40,5 @@ jvmCompile {
         named("main") {
             usesJdkInternals = true
         }
-    }
-}
-
-tasks.javadoc {
-    options {
-        this as StandardJavadocDocletOptions
-        // This project accesses JDK internals, which we need to open up so that javadoc can access them
-        addMultilineStringsOption("-add-exports").value = listOf(
-            "jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
-            "jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
-            "jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED"
-        )
     }
 }
