@@ -23,7 +23,3 @@ gradleModule {
 configurations.remove(configurations.apiStubElements.get())
 
 // This lib should not have any dependencies.
-
-errorprone {
-    nullawayEnabled = true
-}
