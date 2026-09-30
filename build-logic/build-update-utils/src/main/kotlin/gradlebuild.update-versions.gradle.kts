@@ -68,9 +68,7 @@ val bumpVersionForPatchRelease = tasks.register<BumpVersionForPatchRelease>("bum
 
 tasks.register("preparePatchRelease") {
     group = "Versioning"
-    description = "Prepares the repository for a patch release: bumps the version, records the released version, clears accepted API changes, and prepares the release notes."
-    // Order matters: the release notes preparation reads version.txt, so it must run after the bump.
+    description = "Prepares the repository for a patch release: bumps the version, records the released version, and clears accepted API changes."
     dependsOn(bumpVersionForPatchRelease)
     dependsOn(":architecture-test:cleanAcceptedApiChanges")
-    dependsOn(":docs:preparePatchReleaseNotes")
 }

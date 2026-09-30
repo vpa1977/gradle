@@ -30,7 +30,6 @@ class GradleBuildDocumentationConfigurationCacheSmokeTest extends AbstractGradle
         given:
         def tasks = [
             ':docs:dslHtml',
-            ':docs:releaseNotes',
             ':docs:generateDocInfo',
             ':docs:apiMapping',
             ':docs:defaultImports',
@@ -54,7 +53,6 @@ class GradleBuildDocumentationConfigurationCacheSmokeTest extends AbstractGradle
         then:
         result.assertConfigurationCacheStateLoaded()
         result.task(":docs:dslHtml").outcome == TaskOutcome.FROM_CACHE
-        result.task(":docs:releaseNotes").outcome == TaskOutcome.FROM_CACHE
         result.task(":docs:generateDocInfo").outcome == TaskOutcome.FROM_CACHE
         result.task(":docs:apiMapping").outcome == TaskOutcome.FROM_CACHE
         result.task(":docs:defaultImports").outcome == TaskOutcome.FROM_CACHE

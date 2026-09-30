@@ -73,7 +73,6 @@ public abstract class GradleBuildDocumentationPlugin implements Plugin<Project> 
 
         project.apply(target -> target.plugin("org.asciidoctor.jvm.convert"));
 
-        project.apply(target -> target.plugin(GradleReleaseNotesPlugin.class));
         project.apply(target -> target.plugin(GradleJavadocsPlugin.class));
         project.apply(target -> target.plugin(GradleKotlinDslReferencePlugin.class));
         project.apply(target -> target.plugin(GradleDslReferencePlugin.class));

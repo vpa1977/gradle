@@ -32,7 +32,6 @@ docbook = { module = "net.sf.docbook:docbook-xsl", version = "1.75.2" }
 dokkaPlugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version = "2.2.0" }
 errorProne = { module = "com.google.errorprone:error_prone_core", version.ref = "errorProne" }
 errorPronePlugin = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version = "5.1.0" }
-flexmark = { module = "com.vladsch.flexmark:flexmark-all", version = "0.34.60" } # Higher versions tested are either incompatible (0.62.2) or bring additional unwanted dependencies (0.36.8)
 foojayConventions = { module = "org.gradle.toolchains.foojay-resolver-convention:org.gradle.toolchains.foojay-resolver-convention.gradle.plugin", version = "1.0.0" }
 gradleGuidesPlugin = { group = "org.gradle.guides", name = "gradle-guides-plugin", version = "0.25.0" }
 groovy = { module = "org.apache.groovy:groovy", version.ref = "groovy" }
@@ -65,7 +64,6 @@ mockitoKotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version
 nullaway = { module = "com.uber.nullaway:nullaway", version = "0.13.7" }
 nullawayPlugin = { module = "net.ltgt.gradle:gradle-nullaway-plugin", version = "2.2.0" }
 objenesis = { group = "org.objenesis", name = "objenesis", version.ref = "objenesis" }
-pdfbox = { module = "org.apache.pdfbox:pdfbox", version = "2.0.24" } # Flexmark 0.34.60 brings in a vulnerable version of pdfbox
 plexusUtils = { module = "org.codehaus.plexus:plexus-utils", version = "3.6.1" } # CVE-2025-67030 on lower versions
 pomPropertiesPlugin = { module = "org.gradle.pom-properties:org.gradle.pom-properties.gradle.plugin", version = "0.2.0" }
 publishPlugin = { module = "com.gradle.publish:plugin-publish-plugin", version = "2.1.1" }

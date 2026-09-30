@@ -13,7 +13,6 @@ dependencies {
 
     implementation(buildLibs.javaParserCore)
     implementation(buildLibs.guava)
-    implementation(buildLibs.flexmark)
     implementation(buildLibs.gson)
     implementation(buildLibs.commonsLang3)
     implementation(buildLibs.asciidoctor)

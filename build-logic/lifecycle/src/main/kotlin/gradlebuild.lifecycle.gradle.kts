@@ -127,7 +127,7 @@ fun TaskContainer.registerDistributionsPromotionTasks() {
         group = "build"
         dependsOn(
             ":distributions-full:verifyIsProductionBuildEnvironment", ":distributions-full:buildDists", ":distributions-full:copyDistributionsToRootBuild",
-            ":distributions-integ-tests:forkingIntegTest", ":docs:releaseNotes", ":docs:incubationReport", ":docs:checkDeadInternalLinks"
+            ":distributions-integ-tests:forkingIntegTest", ":docs:incubationReport", ":docs:checkDeadInternalLinks"
         )
     }
 }
