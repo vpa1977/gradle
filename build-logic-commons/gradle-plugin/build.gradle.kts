@@ -22,7 +22,4 @@ dependencies {
     implementation("org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:$expectedKotlinDslPluginsVersion")
     implementation(buildLibs.kgp)
     implementation(buildLibs.testRetryPlugin)
-    implementation(buildLibs.detektPlugin) {
-        exclude(group = "org.gradle.experimental", module = "gradle-public-api")
-    }
 }

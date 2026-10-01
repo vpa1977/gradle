@@ -20,7 +20,6 @@ plugins {
     id("org.gradle.kotlin.kotlin-dsl") // this is 'kotlin-dsl' without version
     id("gradlebuild.build-platform")
     id("gradlebuild.code-quality")
-    id("gradlebuild.detekt")
     id("gradlebuild.ci-reporting")
     id("gradlebuild.test-retry")
     id("gradlebuild.private-javadoc")
@@ -61,15 +60,6 @@ tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
         allWarningsAsErrors = true
     }
-}
-
-detekt {
-    // overwrite the config file's location
-    config.convention(project.isolated.rootProject.projectDirectory.file("../gradle/detekt.yml"))
-}
-
-tasks.named("codeQuality") {
-    dependsOn("detekt")
 }
 
 tasks.validatePlugins {

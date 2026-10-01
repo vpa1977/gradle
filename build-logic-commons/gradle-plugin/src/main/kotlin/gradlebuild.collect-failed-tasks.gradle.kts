@@ -16,14 +16,13 @@
 import com.gradle.develocity.agent.gradle.scan.BuildScanConfiguration
 import gradlebuild.AbstractBuildScanInfoCollectingService
 import gradlebuild.registerBuildScanInfoCollectingService
-import dev.detekt.gradle.Detekt
 import org.gradle.tooling.events.task.TaskFailureResult
 import org.gradle.tooling.events.task.TaskOperationResult
 import java.io.Serializable
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
- * Register a build service that monitors compilation tasks and code quality tasks (Checkstyle/CodeNarc/detekt)
+ * Register a build service that monitors compilation tasks and code quality tasks (Checkstyle/CodeNarc)
  * and reports them as TeamCity build problems.
  */
 registerBuildScanInfoCollectingService(CollectFailedTaskPathsBuildService::class.java, ::shouldBeReportedAsTeamCityBuildProblem) { gradleRootProject, failedTasksInBuildLogic, failedTasksInMainBuild ->
@@ -36,7 +35,7 @@ registerBuildScanInfoCollectingService(CollectFailedTaskPathsBuildService::class
     }
 }
 
-fun shouldBeReportedAsTeamCityBuildProblem(task: Task) = task is Checkstyle || task is Detekt || task is AbstractCompile || task is CodeNarc
+fun shouldBeReportedAsTeamCityBuildProblem(task: Task) = task is Checkstyle || task is AbstractCompile || task is CodeNarc
 
 abstract class CollectFailedTaskPathsBuildService : AbstractBuildScanInfoCollectingService() {
     private val failedTaskPaths = CopyOnWriteArrayList<String>()
@@ -44,7 +43,7 @@ abstract class CollectFailedTaskPathsBuildService : AbstractBuildScanInfoCollect
 
     override fun shouldInclude(taskPath: String): Boolean {
         // https://github.com/gradle/gradle/issues/21351
-        return super.shouldInclude(taskPath) || taskPath.contains("detekt")
+        return super.shouldInclude(taskPath)
     }
 
     override fun action(taskPath: String, taskResult: TaskOperationResult) {
