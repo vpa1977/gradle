@@ -71,7 +71,6 @@ abstract class AbstractSmokeTest extends Specification {
         static nebulaDependencyLock = SMOKE_TESTED_PLUGINS.get("com.netflix.nebula.dependency-lock")
         static nebulaResolutionRules = SMOKE_TESTED_PLUGINS.get("com.netflix.nebula.resolution-rules")
         static shadow = SMOKE_TESTED_PLUGINS.get("com.gradleup.shadow")
-        static asciidoctor = SMOKE_TESTED_PLUGINS.get("org.asciidoctor.jvm.convert")
         static spotbugs = SMOKE_TESTED_PLUGINS.get("com.github.spotbugs")
         static docker = SMOKE_TESTED_PLUGINS.get("com.bmuschko.docker-java-application")
         static springDependencyManagement = SMOKE_TESTED_PLUGINS.get("io.spring.dependency-management")

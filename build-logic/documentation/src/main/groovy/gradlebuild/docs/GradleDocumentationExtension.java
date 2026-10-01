@@ -141,14 +141,14 @@ public abstract class GradleDocumentationExtension {
     public abstract Property<Boolean> getQuickFeedback();
 
     /**
-     * The Gradle version this documentation describes. Used in Asciidoctor attributes
+     * The Gradle version this documentation describes. Surfaced in documentation
      * (e.g. {@code gradleVersion} and the {@code https://docs.gradle.org/<version>} URLs).
      */
     public abstract Property<String> getGradleVersion();
 
     /**
      * The latest Gradle 8.x patch version, derived from {@code released-versions.json}.
-     * Surfaced as the {@code gradleVersion8} Asciidoctor attribute for upgrade-guide back-references.
+     * Used for upgrade-guide back-references.
      */
     public abstract Property<String> getGradleVersion8();
 }

@@ -15,8 +15,6 @@ dependencies {
     implementation(buildLibs.guava)
     implementation(buildLibs.gson)
     implementation(buildLibs.commonsLang3)
-    implementation(buildLibs.asciidoctor)
-    implementation(buildLibs.asciidoctorJvm)
     implementation(buildLibs.dokkaPlugin)
     implementation(buildLibs.jspecify)
 

@@ -61,7 +61,7 @@ class GradleBuildDocumentationConfigurationCacheSmokeTest extends AbstractGradle
         result.task(":docs:incubationReport").outcome == TaskOutcome.FROM_CACHE
     }
 
-    @Ignore("Broken by at least the Asciidoctor plugin, and takes 40mins on CI")
+    @Ignore("The documentation build previously depended on the Asciidoctor plugin, and this full end-to-end test takes a long time on CI.")
     @ToBeImplemented
     def "can build and test Gradle documentation with configuration cache enabled"() {
 

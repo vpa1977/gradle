@@ -34,7 +34,7 @@ public abstract class Javadocs {
 
     /**
      * Minimum JDK version that the documented Gradle distribution targets.
-     * Surfaced as the {@code minJdkVersion} Asciidoctor attribute.
+     * Used when rendering documentation.
      */
     public abstract Property<Integer> getMinJdkVersion();
 

@@ -147,11 +147,6 @@ tasks.named<Wrapper>("generateWrapperForSamples") {
     validateDistributionUrl = false
 }
 
-// TODO: The rich console to plain text is flaky
-tasks.named("checkAsciidoctorSampleContents") {
-    enabled = false
-}
-
 // exclude (unused and non-existing) wrapper of development Gradle version, as well as README, because the timestamp in the Gradle version break the cache
 tasks.withType<InstallSample>().configureEach {
     if (name.contains("ForTest")) {

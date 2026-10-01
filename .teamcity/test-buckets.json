@@ -193,7 +193,6 @@
           "composite-builds",
           "core-flow-services-api",
           "daemon-messaging",
-          "docs-asciidoctor-extensions-base",
           "problems-reporting",
           "start-parameter",
           "worker-shared"
@@ -576,7 +575,6 @@
       {
         "subprojects": [
           "build-init-specs",
-          "docs-asciidoctor-extensions-base",
           "enterprise",
           "java-compiler-plugin",
           "javadoc",
@@ -1010,7 +1008,6 @@
       {
         "subprojects": [
           "core-flow-services-api",
-          "docs-asciidoctor-extensions-base",
           "problems-impl",
           "problems-reporting",
           "process-services",
@@ -1250,7 +1247,6 @@
           "build-cache-packaging",
           "build-process-services",
           "configuration-problems-base",
-          "docs-asciidoctor-extensions-base",
           "kotlin-dsl-provider-plugins",
           "logging-api",
           "precondition-tester",
@@ -3628,7 +3624,6 @@
           "core-flow-services-api",
           "credentials-impl",
           "daemon-messaging",
-          "docs-asciidoctor-extensions-base",
           "toolchains-jvm-shared"
         ],
         "parallelizationMethod": {
@@ -5523,7 +5518,6 @@
           "declarative-dsl-tooling-builders",
           "dependency-management",
           "docs",
-          "docs-asciidoctor-extensions-base",
           "domain-object-collections",
           "ear",
           "enterprise",

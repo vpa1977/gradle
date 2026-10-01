@@ -55,33 +55,14 @@ abstract class CacheMissMonitorBuildService : AbstractBuildScanInfoCollectingSer
 /**
  *  We monitor some tasks in non-seed builds. If a task executed in a non-seed build, we think it as "CACHE_MISS".
  */
-fun isCacheMissMonitoredTask(task: Task) = task.isCompileCacheMissMonitoredTask() || task.project.isAsciidoctorCacheMissTask()
+fun isCacheMissMonitoredTask(task: Task) = task.isCompileCacheMissMonitoredTask()
 
-fun Task.isCompileCacheMissMonitoredTask() = isMonitoredCompileTask() && !project.isExpectedCompileCacheMiss()
-
-fun Project.isAsciidoctorCacheMissTask() = isMonitoredAsciidoctorTask() && !isExpectedAsciidoctorCacheMiss()
-
-fun Task.isMonitoredCompileTask() = (this is AbstractCompile || this.isClasspathManifest()) && !isKotlinJsIrLink()
+fun Task.isCompileCacheMissMonitoredTask() = (this is AbstractCompile || this.isClasspathManifest()) && !isKotlinJsIrLink() && !project.isExpectedCompileCacheMiss()
 
 fun Task.isClasspathManifest() = this.javaClass.simpleName.startsWith("ClasspathManifest")
 
 // https://youtrack.jetbrains.com/issue/KT-49915
 fun Task.isKotlinJsIrLink() = this.javaClass.simpleName.startsWith("KotlinJsIrLink")
-
-fun isMonitoredAsciidoctorTask() = false // No asciidoctor tasks are cacheable for now
-
-fun Project.isExpectedAsciidoctorCacheMiss() =
-// Expected cache-miss for asciidoctor task:
-// 1. CompileAll is the seed build for docs:distDocs
-// 2. BuildDistributions is the seed build for other asciidoctor tasks
-// 3. buildScanPerformance test, which doesn't depend on compileAll
-// 4. buildScanPerformance test, which doesn't depend on compileAll
-    isInBuild(
-        "Check_CompileAllBuild",
-        "Check_BuildDistributions",
-        "Component_GradlePlugin_Performance_PerformanceLatestMaster",
-        "Component_GradlePlugin_Performance_PerformanceLatestReleased"
-    )
 
 fun Project.isExpectedCompileCacheMiss() =
 // Expected cache-miss:

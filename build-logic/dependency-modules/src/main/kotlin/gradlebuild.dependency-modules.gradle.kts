@@ -50,9 +50,6 @@ dependencies {
         // Ensure jcl-over-slf4j is pulled in when we use GCS so it can conflict.
         applyRule<DependencyAdditionRule>("com.google.apis:google-api-services-storage", "org.slf4j:jcl-over-slf4j")
 
-        // asciidoctorj depends on a lot of stuff, which causes `Can't create process, argument list too long` on Windows
-        applyRule<DependencyRemovalByNameRule>("org.gradle:sample-discovery", setOf("asciidoctorj", "asciidoctorj-api"))
-
         withModule<RemoveXmlApisRule>("jaxen:jaxen")
         withModule<RemoveXmlApisRule>("jdom:jdom")
         withModule<RemoveXmlApisRule>("xalan:xalan")
