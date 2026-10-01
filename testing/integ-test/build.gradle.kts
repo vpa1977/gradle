@@ -31,7 +31,6 @@ dependencies {
     integTestImplementation(testFixtures(projects.core))
     integTestImplementation(testFixtures(projects.modelReflect))
     integTestImplementation(testFixtures(projects.platformNative))
-    integTestImplementation(testFixtures(projects.scala))
     integTestImplementation(testFixtures(projects.testingBase))
 
     integTestDistributionRuntimeOnly(projects.distributionsFull)
@@ -50,7 +49,6 @@ dependencies {
     crossVersionTestImplementation(projects.logging)
     crossVersionTestImplementation(projects.platformJvm)
     crossVersionTestImplementation(projects.pluginsApplication)
-    crossVersionTestImplementation(projects.scala)
     crossVersionTestImplementation(projects.signing)
     crossVersionTestImplementation(projects.testingJvm)
     crossVersionTestImplementation(projects.war)
