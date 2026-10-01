@@ -9,7 +9,6 @@ junit5 = "5.12.2!!"
 junitPlatform = "1.12.2!!"
 plexusClassworlds = "2.7.0!!"
 testng = "6.3.1!!" # later versions break test cross-version test filtering
-zinc = "1.12.0!!"
 
 [libraries]
 antlr = { group = "antlr", name = "antlr", version.ref = "antlr" }
@@ -27,4 +26,3 @@ maven3PluginApi = { group = "org.apache.maven", name = "maven-plugin-api", versi
 mavenResolverApi = { group = "org.apache.maven.resolver", name = "maven-resolver-api", version.ref = "mavenResolver" }
 plexusClassworlds = { group = "org.codehaus.plexus", name = "plexus-classworlds", version.ref = "plexusClassworlds" }
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }
-zinc = { group = "org.scala-sbt", name = "zinc_2.13", version.ref = "zinc" }
