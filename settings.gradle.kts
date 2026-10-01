@@ -176,11 +176,6 @@ val core = platform("core") {
 
 // IDE Module
 module("ide") {
-    subproject("base-ide-plugins")
-    subproject("ide")
-    subproject("ide-model-impls")
-    subproject("ide-native")
-    subproject("ide-plugins")
     subproject("problems")
     subproject("problems-api")
     subproject("problems-impl")
@@ -282,8 +277,6 @@ platform("native") {
     subproject("distributions-native")
     subproject("platform-native")
     subproject("language-native")
-    subproject("tooling-native")
-    subproject("tooling-native-model-impls")
     subproject("testing-native")
     subproject("plugins-model-native")
 }
