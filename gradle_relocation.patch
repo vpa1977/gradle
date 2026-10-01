@@ -1,0 +1,83 @@
+commit 15a479db3659b9dbcabe2440ac88adb8b7f724ca
+Author: Vladimir Petko <vladimir.petko@canonical.com>
+Date:   Thu Sep 24 09:53:34 2026 +1200
+
+    patch group id for the version-only relocation
+
+diff --git a/platforms/software/dependency-management/src/main/java/org/gradle/api/internal/artifacts/ivyservice/ivyresolve/parser/GradlePomModuleDescriptorParser.java b/platforms/software/dependency-management/src/main/java/org/gradle/api/internal/artifacts/ivyservice/ivyresolve/parser/GradlePomModuleDescriptorParser.java
+index 8fe4a680099..cab4399d02f 100644
+--- a/platforms/software/dependency-management/src/main/java/org/gradle/api/internal/artifacts/ivyservice/ivyresolve/parser/GradlePomModuleDescriptorParser.java
++++ b/platforms/software/dependency-management/src/main/java/org/gradle/api/internal/artifacts/ivyservice/ivyresolve/parser/GradlePomModuleDescriptorParser.java
+@@ -134,22 +134,16 @@ private void doParsePom(DescriptorParseContext parserSettings, GradlePomModuleDe
+ 
+         ModuleVersionIdentifier relocation = pomReader.getRelocation();
+         if (relocation != null) {
++            LOGGER.info(mdBuilder.getComponentIdentifier()
++                + " is relocated to " + relocation
++                + ". Please update your dependencies.");
++            LOGGER.debug("Relocated module will be considered as a dependency");
+             if (groupId != null && artifactId != null && artifactId.equals(relocation.getName()) && groupId.equals(relocation.getGroup())) {
+-                LOGGER.error("POM relocation to an other version number is not fully supported in Gradle : {} relocated to {}.",
+-                    mdBuilder.getComponentIdentifier(), relocation);
+-                LOGGER.warn("Please update your dependency to directly use the correct version '{}'.", relocation);
+-                LOGGER.warn("Resolution will only pick dependencies of the relocated element.  Artifacts and other metadata will be ignored.");
+-                PomReader relocatedModule = parsePomForId(parserSettings, DefaultModuleComponentIdentifier.newId(relocation), new HashMap<>());
+-                addDependencies(mdBuilder, relocatedModule);
+-            } else {
+-                LOGGER.info(mdBuilder.getComponentIdentifier()
+-                    + " is relocated to " + relocation
+-                    + ". Please update your dependencies.");
+-                LOGGER.debug("Relocated module will be considered as a dependency");
+-                ModuleComponentSelector selector = DefaultModuleComponentSelector.newSelector(
+-                    DefaultModuleIdentifier.newId(relocation.getGroup(), relocation.getName()), new DefaultMutableVersionConstraint(relocation.getVersion()));
+-                mdBuilder.addDependencyForRelocation(selector);
++                mdBuilder.setModuleRevId("relocated." + groupId, artifactId, version);
+             }
++            ModuleComponentSelector selector = DefaultModuleComponentSelector.newSelector(
++                DefaultModuleIdentifier.newId(relocation.getGroup(), relocation.getName()), new DefaultMutableVersionConstraint(relocation.getVersion()));
++            mdBuilder.addDependencyForRelocation(selector);
+         } else {
+             overrideDependencyMgtsWithImported(parserSettings, pomReader);
+             addDependencies(mdBuilder, pomReader);
+@@ -215,9 +209,6 @@ private boolean isDependencyImportScoped(PomDependencyMgt dependencyMgt) {
+         return DEPENDENCY_IMPORT_SCOPE.equals(dependencyMgt.getScope());
+     }
+ 
+-    private PomReader parsePomForId(DescriptorParseContext parseContext, ModuleComponentIdentifier identifier, Map<String, String> childProperties) throws IOException, SAXException {
+-        return parsePomResource(parseContext, parseContext.getMetaDataArtifact(identifier, ArtifactType.MAVEN_POM), childProperties);
+-    }
+ 
+     private PomReader parsePomForSelector(DescriptorParseContext parseContext, ModuleComponentSelector selector, Map<String, String> childProperties) throws IOException, SAXException {
+         VersionSelector acceptor = mavenVersionSelectorScheme.parseSelector(selector.getVersion());
+diff --git a/platforms/software/dependency-management/src/main/java/org/gradle/api/internal/artifacts/repositories/metadata/DefaultMavenPomMetadataSource.java b/platforms/software/dependency-management/src/main/java/org/gradle/api/internal/artifacts/repositories/metadata/DefaultMavenPomMetadataSource.java
+index afd432e8811..3f67d94c9f2 100644
+--- a/platforms/software/dependency-management/src/main/java/org/gradle/api/internal/artifacts/repositories/metadata/DefaultMavenPomMetadataSource.java
++++ b/platforms/software/dependency-management/src/main/java/org/gradle/api/internal/artifacts/repositories/metadata/DefaultMavenPomMetadataSource.java
+@@ -17,6 +17,7 @@
+ 
+ import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
+ import org.gradle.api.artifacts.component.ModuleComponentSelector;
++import org.gradle.api.internal.artifacts.DefaultModuleIdentifier;
+ import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.ModuleDescriptorHashModuleSource;
+ import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.parser.DescriptorParseContext;
+ import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.parser.MetaDataParser;
+@@ -27,6 +28,7 @@
+ import org.gradle.api.internal.artifacts.repositories.resolver.MavenUniqueSnapshotComponentIdentifier;
+ import org.gradle.api.internal.artifacts.repositories.resolver.ResourcePattern;
+ import org.gradle.api.internal.artifacts.repositories.resolver.VersionLister;
++import org.gradle.internal.component.external.model.DefaultModuleComponentIdentifier;
+ import org.gradle.internal.component.external.model.maven.MutableMavenModuleResolveMetadata;
+ import org.gradle.internal.component.model.ComponentOverrideMetadata;
+ import org.gradle.internal.hash.ChecksumService;
+@@ -66,6 +68,11 @@ protected MetaDataParser.ParseResult<MutableMavenModuleResolveMetadata> parseMet
+                 metaData.setId(snapshotComponentIdentifier);
+                 metaData.setSnapshotTimestamp(snapshotComponentIdentifier.getTimestamp());
+             } else {
++                if (metaData.isRelocated()) {
++                    moduleComponentIdentifier = DefaultModuleComponentIdentifier
++                        .newId(DefaultModuleIdentifier.newId("relocated." + moduleComponentIdentifier.getGroup(), moduleComponentIdentifier.getModule()),
++                            moduleComponentIdentifier.getVersion());
++                }
+                 checkMetadataConsistency(moduleComponentIdentifier, metaData);
+             }
+             MutableMavenModuleResolveMetadata result = MavenResolver.processMetaData(metaData);

@@ -73,12 +73,6 @@
     <suppress checks="JavadocPackage"
               files=".*[/\\]start-parameter[/\\]src[/\\]main[/\\]java[/\\]org[/\\]gradle[/\\][^/\\]+"/>
 
-    <!-- These packages are duplicated in scala-compiler-worker from scala, don't require a package-info.java in each place -->
-    <suppress checks="JavadocPackage"
-              files=".*[/\\]scala-compiler-worker[/\\]src[/\\]main[/\\]java[/\\]org[/\\]gradle[/\\]language[/\\]scala[/\\]tasks[/\\][^/\\]+"/>
-    <suppress checks="JavadocPackage"
-              files=".*[/\\]scala-compiler-worker[/\\]src[/\\]main[/\\]java[/\\]org[/\\]gradle[/\\]api[/\\]tasks[/\\]scala[/\\][^/\\]+"/>
-
     <!-- These packages are duplicated in ide-native from ide, don't require a package-info.java in each place -->
     <suppress checks="JavadocPackage"
               files=".*[/\\]ide-native[/\\]src[/\\]main[/\\]java[/\\]org[/\\]gradle[/\\]plugins[/\\]ide[/\\]api[/\\][^/\\]+"/>

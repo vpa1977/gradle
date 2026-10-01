@@ -7,7 +7,6 @@ description = "Plugins, tasks and domain objects for the legacy software-model b
 dependencies {
     api(projects.platformNative)
     api(projects.languageNative)
-    api(projects.ideNative)
 
     api(projects.baseDiagnostics)
     api(projects.baseServices)

@@ -13,11 +13,8 @@ dependencies {
     pluginsRuntimeOnly(platform(projects.distributionsBasics))
     pluginsRuntimeOnly(platform(projects.distributionsPublishing))
 
-    pluginsRuntimeOnly(projects.baseIdePlugins)
     pluginsRuntimeOnly(projects.codeQuality)
     pluginsRuntimeOnly(projects.ear)
-    pluginsRuntimeOnly(projects.ide)
-    pluginsRuntimeOnly(projects.idePlugins)
     pluginsRuntimeOnly(projects.jacoco)
     pluginsRuntimeOnly(projects.pluginsApplication)
     pluginsRuntimeOnly(projects.pluginsGroovy)
