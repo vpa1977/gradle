@@ -30,7 +30,6 @@ dependencies {
     pluginsRuntimeOnly(projects.pluginsVersionCatalog)
     pluginsRuntimeOnly(projects.publish)
     pluginsRuntimeOnly(projects.signing)
-    pluginsRuntimeOnly(projects.scala)
     pluginsRuntimeOnly(projects.war)
 
     pluginsRuntimeOnly(projects.javaPlatform) {
