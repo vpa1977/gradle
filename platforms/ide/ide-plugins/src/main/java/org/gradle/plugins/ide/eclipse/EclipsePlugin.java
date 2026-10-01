@@ -15,11 +15,6 @@
  */
 package org.gradle.plugins.ide.eclipse;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import org.gradle.api.Action;
 import org.gradle.api.ExtensiblePolymorphicDomainObjectContainer;
 import org.gradle.api.JavaVersion;
@@ -41,8 +36,6 @@ import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.plugins.JavaTestFixturesPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.jvm.JvmTestSuite;
-import org.gradle.api.plugins.jvm.internal.JvmPluginServices;
-import org.gradle.api.plugins.scala.ScalaBasePlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskProvider;
@@ -55,7 +48,6 @@ import org.gradle.plugins.ide.eclipse.internal.AfterEvaluateHelper;
 import org.gradle.plugins.ide.eclipse.internal.EclipsePluginConstants;
 import org.gradle.plugins.ide.eclipse.internal.EclipseProjectMetadata;
 import org.gradle.plugins.ide.eclipse.internal.LinkedResourcesCreator;
-import org.gradle.plugins.ide.eclipse.model.BuildCommand;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
 import org.gradle.plugins.ide.eclipse.model.EclipseJdt;
 import org.gradle.plugins.ide.eclipse.model.EclipseModel;
@@ -116,19 +108,16 @@ public abstract class EclipsePlugin extends IdePlugin {
 
     private final UniqueProjectNameProvider uniqueProjectNameProvider;
     private final IdeArtifactRegistry artifactRegistry;
-    private final JvmPluginServices jvmPluginServices;
 
     private final Set<SourceSet> testSourceSetsConvention = new HashSet<>();
     private final Set<Configuration> testConfigurationsConvention = new HashSet<>();
 
     @Inject
     public EclipsePlugin(UniqueProjectNameProvider uniqueProjectNameProvider,
-                         IdeArtifactRegistry artifactRegistry,
-                         JvmPluginServices jvmPluginServices
+                         IdeArtifactRegistry artifactRegistry
     ) {
         this.uniqueProjectNameProvider = uniqueProjectNameProvider;
         this.artifactRegistry = artifactRegistry;
-        this.jvmPluginServices = jvmPluginServices;
     }
 
     @Override
@@ -223,21 +212,6 @@ public abstract class EclipsePlugin extends IdePlugin {
 
         });
 
-        project.getPlugins().withType(ScalaBasePlugin.class, new Action<ScalaBasePlugin>() {
-            @Override
-            public void execute(ScalaBasePlugin scalaBasePlugin) {
-                projectModel.getBuildCommands().set(Iterables.indexOf(projectModel.getBuildCommands(), new Predicate<BuildCommand>() {
-                    @Override
-                    public boolean apply(BuildCommand buildCommand) {
-                        return buildCommand.getName().equals("org.eclipse.jdt.core.javabuilder");
-                    }
-
-                }), new BuildCommand("org.scala-ide.sdt.core.scalabuilder"));
-                projectModel.getNatures().add(projectModel.getNatures().indexOf("org.eclipse.jdt.core.javanature"), "org.scala-ide.sdt.core.scalanature");
-            }
-
-        });
-
         artifactRegistry.registerIdeProject(new EclipseProjectMetadata(model, project.getProjectDir(), task));
     }
 
@@ -289,7 +263,6 @@ public abstract class EclipsePlugin extends IdePlugin {
                     }
                 });
 
-                configureScalaDependencies(project, model);
                 configureJavaClasspath(project, task, model, testSourceSetsConvention, testConfigurationsConvention);
             }
 
@@ -394,33 +367,6 @@ public abstract class EclipsePlugin extends IdePlugin {
                 testConfigurationsConvention.add(project.getConfigurations().findByName(jvmTestSuite.getSources().getCompileClasspathConfigurationName()));
                 testConfigurationsConvention.add(project.getConfigurations().findByName(jvmTestSuite.getSources().getRuntimeClasspathConfigurationName()));
             });
-        });
-    }
-
-    private void configureScalaDependencies(final Project project, final EclipseModel model) {
-        project.getPlugins().withType(ScalaBasePlugin.class, new Action<ScalaBasePlugin>() {
-            @Override
-            public void execute(ScalaBasePlugin scalaBasePlugin) {
-                model.getClasspath().containers("org.scala-ide.sdt.launching.SCALA_CONTAINER");
-
-                // exclude the dependencies already provided by SCALA_CONTAINER; prevents problems with Eclipse Scala plugin
-                project.getGradle().projectsEvaluated(gradle -> {
-                    Set<String> provided = ImmutableSet.of("scala-library", "scala-swing", "scala-dbc");
-                    Predicate<Dependency> dependencyInProvided = dependency -> provided.contains(dependency.getName());
-                    List<Dependency> dependencies = Lists.newArrayList(Iterables.filter(Iterables.concat(Iterables.transform(model.getClasspath().getPlusConfigurations(), new Function<Configuration, Iterable<Dependency>>() {
-                        @Override
-                        public Iterable<Dependency> apply(Configuration config) {
-                            return config.getAllDependencies();
-                        }
-
-                    })), dependencyInProvided));
-                    if (!dependencies.isEmpty()) {
-                        Configuration detachedScalaConfiguration = project.getConfigurations().detachedConfiguration(dependencies.toArray(new Dependency[0]));
-                        jvmPluginServices.configureAsRuntimeClasspath(detachedScalaConfiguration);
-                        model.getClasspath().getMinusConfigurations().add(detachedScalaConfiguration);
-                    }
-                });
-            }
         });
     }
 

@@ -21,7 +21,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.gradle.api.Action;
-import org.gradle.api.GradleException;
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
@@ -45,7 +44,6 @@ import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.internal.JavaPluginHelper;
 import org.gradle.api.plugins.jvm.JvmTestSuite;
 import org.gradle.api.plugins.jvm.internal.JvmFeatureInternal;
-import org.gradle.api.plugins.scala.ScalaBasePlugin;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.internal.deprecation.DeprecationLogger;
@@ -55,7 +53,6 @@ import org.gradle.plugins.ide.idea.internal.IdeaModuleInternal;
 import org.gradle.plugins.ide.idea.internal.IdeaModuleMetadata;
 import org.gradle.plugins.ide.idea.internal.IdeaModuleSupport;
 import org.gradle.plugins.ide.idea.internal.IdeaProjectInternal;
-import org.gradle.plugins.ide.idea.internal.IdeaScalaConfigurer;
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
@@ -173,7 +170,6 @@ public abstract class IdeaPlugin extends IdePlugin {
         configureIdeaModule((ProjectInternal) project);
         configureForJavaPlugin(project);
         configureForWarPlugin(project);
-        configureForScalaPlugin();
         configureForTestSuitesPlugin(project);
         linkCompositeBuildDependencies((ProjectInternal) project);
     }
@@ -526,37 +522,6 @@ public abstract class IdeaPlugin extends IdePlugin {
 
         IdeaProject ideaProject = ideaModelFor(rootProject).getProject();
         return !moduleLanguageLevel.equals(ideaProject.getLanguageLevel());
-    }
-
-    @SuppressWarnings("deprecation")
-    private void configureForScalaPlugin() {
-        boolean isolatedProjects = getBuildFeatures().getIsolatedProjects().getActive().get();
-        project.getPlugins().withType(ScalaBasePlugin.class, new Action<ScalaBasePlugin>() {
-            @Override
-            public void execute(ScalaBasePlugin scalaBasePlugin) {
-                ideaModuleDependsOnRoot(isolatedProjects);
-            }
-        });
-        if (isRoot()) {
-            new IdeaScalaConfigurer(project, scalaProjects -> {
-                if (!scalaProjects.isEmpty() && isolatedProjects) {
-                    failOnIncompatibleWithIsolatedProjects();
-                }
-            }).configure();
-        }
-    }
-
-    private void ideaModuleDependsOnRoot(boolean isolatedProjects) {
-        if (isolatedProjects) {
-            failOnIncompatibleWithIsolatedProjects();
-        }
-
-        // see IdeaScalaConfigurer which requires the ipr to be generated first
-        project.getTasks().named(IDEA_MODULE_TASK_NAME, dependsOn(project.getRootProject().getTasks().named(IDEA_PROJECT_TASK_NAME)));
-    }
-
-    private static void failOnIncompatibleWithIsolatedProjects() {
-        throw new GradleException("Applying 'idea' plugin to Scala projects is not supported with Isolated Projects. Disable Isolated Projects to use this integration.");
     }
 
     private void linkCompositeBuildDependencies(final ProjectInternal project) {
