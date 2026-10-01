@@ -41,12 +41,6 @@ public class DefaultClassPathProvider implements ClassPathProvider {
             classpath = addJavaCompilerModules(classpath);
             return classpath;
         }
-        if (name.equals("SCALA-COMPILER")) {
-            ClassPath classpath = ClassPath.EMPTY;
-            classpath = classpath.plus(moduleRegistry.getModule("gradle-scala-compiler-worker").getImplementationClasspath());
-            classpath = addJavaCompilerModules(classpath);
-            return classpath;
-        }
         if (name.equals("JAVA-COMPILER")) {
             return addJavaCompilerModules(ClassPath.EMPTY);
         }
