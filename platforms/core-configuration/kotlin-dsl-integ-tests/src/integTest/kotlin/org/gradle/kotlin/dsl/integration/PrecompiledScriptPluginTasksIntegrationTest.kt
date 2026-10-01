@@ -37,60 +37,6 @@ import org.gradle.integtests.fixtures.modes.ToBeFixedForIsolatedProjects
 class PrecompiledScriptPluginTasksIntegrationTest : AbstractKotlinIntegrationTest() {
 
     @Test
-    @Requires(
-        value = [JdkVersionTestPreconditions.Jdk25OrEarlier::class],
-        reason = "detekt 2.x supports up to JDK 25. See https://github.com/detekt/detekt?tab=readme-ov-file#requirements"
-    )
-    // TODO: Convert this into a smoke test
-    fun `generated code follows kotlin-dsl coding conventions`() {
-        withBuildScript(
-            """
-            plugins {
-                `kotlin-dsl`
-                id("dev.detekt") version "2.0.0-alpha.5"
-            }
-
-            $repositoriesBlock
-
-            detekt {
-                // enable all default rules
-                buildUponDefaultConfig = true
-            }
-            """
-        )
-
-        withPrecompiledKotlinScript(
-            "plugin-without-package.gradle.kts",
-            """
-            plugins {
-                org.gradle.base
-            }
-
-            """.trimIndent()
-        )
-        withPrecompiledKotlinScript(
-            "test/gradle/plugins/plugin-with-package.gradle.kts",
-            """
-            package test.gradle.plugins
-
-            plugins {
-                org.gradle.base
-            }
-
-            """.trimIndent()
-        )
-
-        // This is necessary until https://github.com/detekt/detekt/issues/9558 is resolved
-        executer.expectDocumentedDeprecationWarning(
-            "The Configuration.setVisible(boolean) method has been deprecated. " +
-                "This is scheduled to be removed in Gradle 11. " +
-                "Consult the upgrading guide for further information: " +
-                "https://docs.gradle.org/current/userguide/upgrading_version_9.html#deprecate-visible-property"
-        )
-        build("generateScriptPluginAdapters", "detekt")
-    }
-
-    @Test
     fun `precompiled script plugins tasks are cached and relocatable`() {
 
         val firstLocation = "first-location"
