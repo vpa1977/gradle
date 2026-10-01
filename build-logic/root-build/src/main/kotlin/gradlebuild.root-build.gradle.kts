@@ -17,7 +17,6 @@
 import com.autonomousapps.DependencyAnalysisExtension
 
 plugins {
-    id("gradlebuild.ide") // Local development: Tweak IDEA import
     id("gradlebuild.warmup-ec2") // Warm up EC2 AMI
     id("gradlebuild.ci-reporting")
 

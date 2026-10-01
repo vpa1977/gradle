@@ -17,7 +17,7 @@ If you need to debug something other than the Daemon, follow the steps below.
 
 For most cases, use [listening debugger](https://www.jetbrains.com/help/idea/attaching-to-local-process.html#attach-to-remote]).
 
-The build should create debugging run configurations for you [automatically](../build-logic/idea/src/main/kotlin/gradlebuild.ide.gradle.kts#L82) if you're using Intellij version 2025.1 or later.
+The build should create debugging run configurations for you if you're using Intellij version 2025.1 or later.
 
 Before you start debugging, start the "Daemon debug" or "Debug Launcher" configuration.
 It will be automatically reused for subsequent test runs.

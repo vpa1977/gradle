@@ -47,7 +47,6 @@ include("dependency-modules")
 
 // Special purpose build logic for root project - please preserve alphabetical order
 include("cleanup")
-include("idea")
 include("lifecycle")
 
 // Special purpose build logic for subproject - please preserve alphabetical order
