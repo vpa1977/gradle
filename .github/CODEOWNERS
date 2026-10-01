@@ -51,7 +51,6 @@ gradle/wrapper                          # @gradle/bt-developer-productivity no n
 gradlew                                 @gradle/bt-developer-productivity
 gradlew.bat                             @gradle/bt-developer-productivity
 gradle.properties                       @gradle/bt-developer-productivity
-gradle/detekt.yml                       @gradle/bt-developer-productivity
 .mailmap
 images/
 .github/ISSUE_TEMPLATE                  @gradle/bt-product-operations

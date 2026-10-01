@@ -146,8 +146,6 @@ reviews:
       enabled: true
     cppcheck:
       enabled: true
-    detekt:
-      enabled: true
     dotenvLint:
       enabled: true
     emberTemplateLint:
