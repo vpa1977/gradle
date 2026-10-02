@@ -244,7 +244,7 @@ class InitBuildSpec extends Specification {
     def "get java language version for #language"() {
         given:
         def userQuestions = Mock(UserQuestions)
-        userQuestions.askIntQuestion(_ as String, InitBuild.MINIMUM_VERSION_SUPPORTED_BY_FOOJAY_API, InitBuild.DEFAULT_JAVA_VERSION) >> 11
+        userQuestions.askIntQuestion(_ as String, InitBuild.MINIMUM_SUPPORTED_JAVA_VERSION, InitBuild.DEFAULT_JAVA_VERSION) >> 11
         def buildInitializer = Mock(BuildInitializer)
         buildInitializer.supportsJavaTargets() >> isJvmLanguage
 
@@ -300,14 +300,14 @@ class InitBuildSpec extends Specification {
         def buildInitializer = Mock(BuildInitializer)
         buildInitializer.supportsJavaTargets() >> true
 
-        init.getJavaVersion().set("5")
+        init.getJavaVersion().set("0")
 
         when:
         init.getJavaLanguageVersion(userQuestions, buildInitializer)
 
         then:
         def e = thrown(GradleException)
-        e.message == "Target Java version: '5' is not a supported target version. It must be equal to or greater than 7"
+        e.message == "Target Java version: '0' is not a supported target version. It must be equal to or greater than 1"
     }
 
     def "should reject invalid package name: #invalidPackageName"() {

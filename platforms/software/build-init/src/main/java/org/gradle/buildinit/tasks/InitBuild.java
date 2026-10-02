@@ -87,7 +87,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 public abstract class InitBuild extends DefaultTask {
     private static final String SOURCE_PACKAGE_DEFAULT = "org.example";
     private static final String SOURCE_PACKAGE_PROPERTY = "org.gradle.buildinit.source.package";
-    private static final int MINIMUM_VERSION_SUPPORTED_BY_FOOJAY_API = 7;
+    private static final int MINIMUM_SUPPORTED_JAVA_VERSION = 1;
     private static final int DEFAULT_JAVA_VERSION = 21;
 
     private String type;
@@ -500,13 +500,13 @@ public abstract class InitBuild extends DefaultTask {
 
         String version = getJavaVersion().getOrNull();
         if (isNullOrEmpty(version)) {
-            return JavaLanguageVersion.of(userQuestions.askIntQuestion("Enter target Java version", MINIMUM_VERSION_SUPPORTED_BY_FOOJAY_API, DEFAULT_JAVA_VERSION));
+            return JavaLanguageVersion.of(userQuestions.askIntQuestion("Enter target Java version", MINIMUM_SUPPORTED_JAVA_VERSION, DEFAULT_JAVA_VERSION));
         }
 
         try {
             int parsedVersion = Integer.parseInt(version);
-            if (parsedVersion < MINIMUM_VERSION_SUPPORTED_BY_FOOJAY_API) {
-                throw new GradleException("Target Java version: '" + version + "' is not a supported target version. It must be equal to or greater than " + MINIMUM_VERSION_SUPPORTED_BY_FOOJAY_API);
+            if (parsedVersion < MINIMUM_SUPPORTED_JAVA_VERSION) {
+                throw new GradleException("Target Java version: '" + version + "' is not a supported target version. It must be equal to or greater than " + MINIMUM_SUPPORTED_JAVA_VERSION);
             }
             return JavaLanguageVersion.of(parsedVersion);
         } catch (NumberFormatException e) {

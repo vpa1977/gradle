@@ -51,15 +51,6 @@ public class SimpleGlobalFilesBuildSettingsDescriptor implements BuildContentGen
             builder.includePluginsBuild();
         }
 
-        if (settings.getJavaLanguageVersion().isPresent()) {
-            builder.plugin(
-                "Apply the foojay-resolver plugin to allow automatic download of JDKs",
-                "org.gradle.toolchains.foojay-resolver-convention",
-                "1.0.0",
-                null
-            );
-        }
-
         builder.propertyAssignment(null, "rootProject.name", settings.getProjectName());
         if (!settings.getSubprojects().isEmpty()) {
             builder.methodInvocation(null, "include", settings.getSubprojects().toArray());
