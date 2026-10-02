@@ -14,23 +14,11 @@
  * limitations under the License.
  */
 
-import com.gradle.develocity.agent.gradle.internal.test.PredictiveTestSelectionConfigurationInternal
-import com.gradle.develocity.agent.gradle.internal.test.TestDistributionConfigurationInternal
-import com.gradle.develocity.agent.gradle.test.DevelocityTestConfiguration
-import gradlebuild.basics.BuildEnvironment
 import gradlebuild.basics.FlakyTestStrategy
 import gradlebuild.basics.accessors.kotlinMainSourceSet
 import gradlebuild.basics.flakyTestStrategy
 import gradlebuild.basics.maxParallelForks
-import gradlebuild.basics.maxTestDistributionLocalExecutors
-import gradlebuild.basics.maxTestDistributionPartitionSecond
-import gradlebuild.basics.maxTestDistributionRemoteExecutors
-import gradlebuild.basics.predictiveTestSelectionEnabled
-import gradlebuild.basics.predictiveTestSelectionServerUrl
 import gradlebuild.basics.rerunAllTests
-import gradlebuild.basics.testDistributionDogfoodingTag
-import gradlebuild.basics.testDistributionEnabled
-import gradlebuild.basics.testDistributionServerUrl
 import gradlebuild.basics.testJavaVendor
 import gradlebuild.basics.testJavaVersion
 import gradlebuild.basics.testing.excludeSpockAnnotation
@@ -43,7 +31,6 @@ import gradlebuild.jvm.argumentproviders.CiEnvironmentProvider
 import org.gradle.internal.jvm.JpmsConfiguration
 import org.gradle.internal.os.OperatingSystem
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.time.Duration
 
 plugins {
     groovy
@@ -152,7 +139,6 @@ fun addDependencies() {
         testImplementation(testLibs.findLibrary("junit5Vintage").get())
         testImplementation(testLibs.findLibrary("spockJUnit4").get())
         testImplementation(testLibs.findLibrary("mockitoCore").get())
-        testImplementation(testLibs.findLibrary("develocityTestAnnotation").get())
         testRuntimeOnly(testLibs.findLibrary("bytebuddy").get())
         testRuntimeOnly(testLibs.findLibrary("objenesis").get())
         testRuntimeOnly(testLibs.findLibrary("junitPlatform").get())
@@ -252,12 +238,8 @@ fun Test.addOsAsInputs() {
 
 fun Test.isUnitTest() = listOf("test", "writePerformanceScenarioDefinitions", "writeTmpPerformanceScenarioDefinitions").contains(name)
 
-/**
- * If enabled, test JVM will inherit the DEVELOCITY_ACCESS_TOKEN
- * environment variable. This allows build scans to be published for integration tests.
- */
 fun Test.inheritedEnvVars(): List<String> = when {
-    project.name == "smoke-test" -> listOf("DEVELOCITY_ACCESS_KEY", "DEVELOCITY_SERVER_URL", "DEVELOCITY_EDGE_DISCOVERY", "CI")
+    project.name == "smoke-test" -> listOf("CI")
     else -> emptyList()
 }
 
@@ -267,16 +249,6 @@ fun Test.configureRerun() {
     if (project.rerunAllTests.get()) {
         doNotTrackState("All tests should re-run")
     }
-}
-
-fun Test.determineMaxRetries() = when {
-    project.flakyTestStrategy == FlakyTestStrategy.ONLY -> 4
-    else -> 2
-}
-
-fun Test.determineMaxFailures() = when {
-    project.flakyTestStrategy == FlakyTestStrategy.ONLY -> Integer.MAX_VALUE
-    else -> 10
 }
 
 fun configureTests() {
@@ -300,79 +272,11 @@ fun configureTests() {
         addOsAsInputs()
         configureRerun()
 
-        if (BuildEnvironment.isCiServer) {
-            develocity.testRetry {
-                maxRetries.convention(determineMaxRetries())
-                maxFailures = determineMaxFailures()
-            }
-        }
-
         useJUnitPlatform()
         configureSpock()
         configureFlakyTest()
-
-        extensions.findByType<DevelocityTestConfiguration>()?.testDistribution {
-            this as TestDistributionConfigurationInternal
-            server = uri(testDistributionServerUrl.orElse("https://gbt-td.grdev.net"))
-
-            if (project.testDistributionEnabled && !isUnitTest() && !isPerformanceProject() && !isNativeProject() && !isKotlinDslToolingBuilders()) {
-                enabled = true
-                project.maxTestDistributionPartitionSecond?.apply {
-                    preferredMaxDuration = Duration.ofSeconds(this)
-                }
-                maxRemoteExecutors = if (project.isPerformanceProject()) 0 else project.maxTestDistributionRemoteExecutors
-                maxLocalExecutors = project.maxTestDistributionLocalExecutors
-
-                if (maxLocalExecutors.orNull != 0) {
-                    localOnly {
-                        includeAnnotationClasses.addAll("org.gradle.testdistribution.LocalOnly")
-                    }
-                }
-
-                val dogfoodingTag = testDistributionDogfoodingTag.getOrElse("gbt-dogfooding")
-                if (BuildEnvironment.isCiServer) {
-                    when {
-                        OperatingSystem.current().isLinux -> requirements = listOf("os=linux", dogfoodingTag)
-                        OperatingSystem.current().isWindows -> requirements = listOf("os=windows", dogfoodingTag)
-                        OperatingSystem.current().isMacOsX -> requirements = listOf("os=macos", dogfoodingTag)
-                    }
-                } else {
-                    requirements = listOf(dogfoodingTag)
-                }
-            }
-        }
-
-        // Set on every test task, not only the PTS-enabled ones: the selection server is shared per
-        // build invocation, so tasks that disagree fail with "Client was already created for a
-        // different server".
-        // Don't move this line into the lambda as it may cause config cache problems
-        val ptsServerUrl = project.predictiveTestSelectionServerUrl.getOrElse("https://ge.gradle.org")
-        extensions.findByType<DevelocityTestConfiguration>()?.predictiveTestSelection {
-            (this as PredictiveTestSelectionConfigurationInternal).server = uri(ptsServerUrl)
-        }
-
-        if (project.supportsPredictiveTestSelection() && !isUnitTest()) {
-            extensions.findByType<DevelocityTestConfiguration>()?.predictiveTestSelection {
-                enabled.convention(project.predictiveTestSelectionEnabled)
-            }
-        }
     }
 }
-
-fun Project.isPerformanceProject() = setOf("build-scan-performance", "performance").contains(name)
-
-fun Project.isNativeProject() = name.contains("native")
-
-fun Project.isKotlinDslToolingBuilders() = name.contains("kotlin-dsl-tooling-builders")
-
-/**
- * Whether the project supports running with predictive test selection.
- *
- * Our performance tests don't work with PTS, yet.
- * Smoke and soak tests are hard to grasp for PTS, that is why we run them without.
- * When running on Windows with PTS, SimplifiedKotlinScriptEvaluatorTest fails. See https://github.com/gradle/gradle-private/issues/3615.
- */
-fun Project.supportsPredictiveTestSelection() = !isPerformanceProject() && !setOf("smoke-test", "soak", "kotlin-dsl", "smoke-ide-test").contains(name)
 
 /**
  * Test lifecycle tasks that correspond to CIBuildModel.TestType (see .teamcity/Gradle_Check/model/CIBuildModel.kt).

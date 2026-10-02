@@ -14,23 +14,5 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositories {
-        maven {
-            url = uri("https://repo.gradle.org/gradle/enterprise-libs-release-candidates")
-            content {
-                val rcAndMilestonesPattern = "\\d{1,2}?\\.\\d{1,2}?(\\.\\d{1,2}?)?-((rc-\\d{1,2}?)|(milestone-\\d{1,2}?))"
-                // DV plugin marker artifact
-                includeVersionByRegex("com.gradle.develocity", "com.gradle.develocity.gradle.plugin", rcAndMilestonesPattern)
-                // DV plugin jar
-                includeVersionByRegex("com.gradle", "develocity-gradle-plugin", rcAndMilestonesPattern)
-            }
-        }
-    }
-}
 
-plugins {
-    id("com.gradle.develocity")
-    id("io.github.gradle.develocity-conventions-plugin")
-}
 

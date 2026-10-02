@@ -23,7 +23,6 @@ class Helper(private val providers: ProviderFactory) {
         "gradle-prod-plugins" to "https://plugins.gradle.org/m2",
         "gradlejavascript" to "https://repo.gradle.org/gradle/javascript-public",
         "gradle-public" to "https://repo.gradle.org/gradle/public",
-        "gradle-enterprise-rc" to "https://repo.gradle.org/gradle/enterprise-libs-release-candidates",
         "android-studio-installers" to "https://redirector.gvt1.com/edgedl/android/studio",
         "jetbrains-ide-installers" to "https://download.jetbrains.com",
     )

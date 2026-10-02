@@ -17,7 +17,6 @@
 package gradlebuild.performance
 
 import com.google.common.annotations.VisibleForTesting
-import com.gradle.develocity.agent.gradle.test.DevelocityTestConfiguration
 import gradlebuild.basics.buildBranch
 import gradlebuild.basics.buildCommitId
 import gradlebuild.basics.capitalize
@@ -259,8 +258,6 @@ class PerformanceTestPlugin : Plugin<Project> {
 
             outputs.cacheIf { false }
             outputs.file(outputJson)
-
-            develocity.predictiveTestSelection.enabled = false
         }
 
     private
@@ -413,8 +410,6 @@ class PerformanceTestExtension(
                 outputs.doNotCacheIf("Is adhoc performance test") { true }
                 mustRunAfter(currentlyRegisteredTestProjects)
                 testSpecificConfigurator(this)
-
-                extensions.findByType<DevelocityTestConfiguration>()?.testRetry?.maxRetries = 0
             }
         )
 
@@ -422,8 +417,6 @@ class PerformanceTestExtension(
             createPerformanceTest("${testProject}PerformanceTest", generatorTask) {
                 description = "Runs performance tests on $testProject - supposed to be used on CI"
                 channel.set(project.performanceChannel)
-
-                extensions.findByType<DevelocityTestConfiguration>()?.testRetry?.maxRetries = 1
 
                 if (project.includePerformanceTestScenarios) {
                     val scenariosFromFile = project.loadScenariosFromFile(testProject)

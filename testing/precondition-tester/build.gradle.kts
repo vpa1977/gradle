@@ -1,4 +1,3 @@
-import com.gradle.develocity.agent.gradle.test.DevelocityTestConfiguration
 import gradlebuild.integrationtests.tasks.DistributionTest
 
 /*
@@ -86,11 +85,6 @@ fun Test.setupPreconditionTesting() {
     testClassesDirs = sourceSets.test.get().output.classesDirs
     // All test should have this project's "test" source set on their classpath
     classpath += sourceSets.test.get().output
-
-    // These tests should not be impacted by the predictive selection
-    extensions.findByType<DevelocityTestConfiguration>()?.apply {
-        predictiveTestSelection.enabled = false
-    }
 
     // These tests should always run
     outputs.upToDateWhen { false }

@@ -2,7 +2,6 @@
 [versions]
 bytebuddy = "1.18.11"
 checkstyle = "13.7.0"
-develocity = "4.5.1"
 groovy = "4.0.33"
 hamcrest = "3.0"
 javaPoet = "1.13.0"
@@ -20,8 +19,6 @@ codenarc = { module = "org.codenarc:CodeNarc", version = "3.7.0-groovy-4.0" }
 commonsIo = { module = "commons-io:commons-io", version = "2.22.0" }
 commonsLang3 = { module = "org.apache.commons:commons-lang3", version = "3.20.0" }
 dependencyAnalysisPlugin = { module = "com.autonomousapps:dependency-analysis-gradle-plugin", version = "3.4.0" }
-develocityConventions = { module = "io.github.gradle.develocity-conventions-plugin:io.github.gradle.develocity-conventions-plugin.gradle.plugin", version = "0.15.0" }
-develocityPlugin = { module = "com.gradle.develocity:com.gradle.develocity.gradle.plugin", version.ref = "develocity" }
 docbook = { module = "net.sf.docbook:docbook-xsl", version = "1.75.2" }
 errorProne = { module = "com.google.errorprone:error_prone_core", version.ref = "errorProne" }
 errorPronePlugin = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version = "5.1.0" }

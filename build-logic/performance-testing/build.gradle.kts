@@ -18,7 +18,6 @@ dependencies {
     implementation(buildLibs.gson)
     implementation(buildLibs.commonsIo)
     implementation(buildLibs.jakartaXml)
-    implementation(buildLibs.develocityPlugin)
 
     // https://eclipse-ee4j.github.io/jaxb-ri/
     runtimeOnly(buildLibs.jaxb)

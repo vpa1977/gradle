@@ -22,8 +22,3 @@ description = "Provides plugin for configuring default settings plugins"
 
 group = "gradlebuild"
 
-dependencies {
-    implementation(buildLibs.develocityPlugin)
-    implementation(buildLibs.develocityConventions)
-}
-

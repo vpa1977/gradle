@@ -41,8 +41,6 @@ import gradlebuild.basics.BuildParams.GRADLE_INSTALL_PATH
 import gradlebuild.basics.BuildParams.IDEA_HOME
 import gradlebuild.basics.BuildParams.INCLUDE_PERFORMANCE_TEST_SCENARIOS
 import gradlebuild.basics.BuildParams.MAX_PARALLEL_FORKS
-import gradlebuild.basics.BuildParams.MAX_TEST_DISTRIBUTION_LOCAL_EXECUTORS
-import gradlebuild.basics.BuildParams.MAX_TEST_DISTRIBUTION_REMOTE_EXECUTORS
 import gradlebuild.basics.BuildParams.PERFORMANCE_BASELINES
 import gradlebuild.basics.BuildParams.PERFORMANCE_CHANNEL_ENV
 import gradlebuild.basics.BuildParams.PERFORMANCE_DB_PASSWORD
@@ -53,16 +51,10 @@ import gradlebuild.basics.BuildParams.PERFORMANCE_DEPENDENCY_BUILD_IDS
 import gradlebuild.basics.BuildParams.PERFORMANCE_MAX_PROJECTS
 import gradlebuild.basics.BuildParams.PERFORMANCE_STAGE_ENV
 import gradlebuild.basics.BuildParams.PERFORMANCE_TEST_VERBOSE
-import gradlebuild.basics.BuildParams.PREDICTIVE_TEST_SELECTION_ENABLED
-import gradlebuild.basics.BuildParams.PREDICTIVE_TEST_SELECTION_SERVER_URL
 import gradlebuild.basics.BuildParams.RERUN_ALL_TESTS
 import gradlebuild.basics.BuildParams.RUN_BROKEN_CONFIGURATION_CACHE_DOCS_TESTS
 import gradlebuild.basics.BuildParams.RUN_IDE_IN_HEADLESS_MODE
 import gradlebuild.basics.BuildParams.STUDIO_HOME
-import gradlebuild.basics.BuildParams.TEST_DISTRIBUTION_DOGFOODING_TAG
-import gradlebuild.basics.BuildParams.TEST_DISTRIBUTION_ENABLED
-import gradlebuild.basics.BuildParams.TEST_DISTRIBUTION_PARTITION_SIZE
-import gradlebuild.basics.BuildParams.TEST_DISTRIBUTION_SERVER_URL
 import gradlebuild.basics.BuildParams.TEST_JAVA_VENDOR
 import gradlebuild.basics.BuildParams.TEST_JAVA_VERSION
 import gradlebuild.basics.BuildParams.TEST_SPLIT_EXCLUDE_TEST_CLASSES
@@ -114,8 +106,6 @@ object BuildParams {
     const val FLAKY_TEST = "flakyTests"
     const val INCLUDE_PERFORMANCE_TEST_SCENARIOS = "includePerformanceTestScenarios"
     const val MAX_PARALLEL_FORKS = "maxParallelForks"
-    const val MAX_TEST_DISTRIBUTION_REMOTE_EXECUTORS = "maxTestDistributionRemoteExecutors"
-    const val MAX_TEST_DISTRIBUTION_LOCAL_EXECUTORS = "maxTestDistributionLocalExecutors"
     const val PERFORMANCE_BASELINES = "performanceBaselines"
     const val PERFORMANCE_TEST_VERBOSE = "performanceTest.verbose"
     const val PERFORMANCE_DB_PASSWORD = "org.gradle.performance.db.password"
@@ -127,12 +117,6 @@ object BuildParams {
     const val PERFORMANCE_STAGE_ENV = "PERFORMANCE_STAGE"
     const val PERFORMANCE_DEPENDENCY_BUILD_IDS = "org.gradle.performance.dependencyBuildIds"
     const val RERUN_ALL_TESTS = "rerunAllTests"
-    const val PREDICTIVE_TEST_SELECTION_ENABLED = "enablePredictiveTestSelection"
-    const val PREDICTIVE_TEST_SELECTION_SERVER_URL = "predictiveTestSelectionServerUrl"
-    const val TEST_DISTRIBUTION_DOGFOODING_TAG = "testDistributionDogfoodingTag"
-    const val TEST_DISTRIBUTION_ENABLED = "enableTestDistribution"
-    const val TEST_DISTRIBUTION_PARTITION_SIZE = "testDistributionPartitionSizeInSeconds"
-    const val TEST_DISTRIBUTION_SERVER_URL = "testDistributionServerUrl"
     const val TEST_SPLIT_INCLUDE_TEST_CLASSES = "includeTestClasses"
     const val TEST_SPLIT_EXCLUDE_TEST_CLASSES = "excludeTestClasses"
     const val TEST_SPLIT_ONLY_TEST_GRADLE_VERSION = "onlyTestGradleVersion"
@@ -276,13 +260,6 @@ val Project.defaultRfrPerformanceBaselines: Provider<String>
     get() = gradleProperty(DEFAULT_RFR_PERFORMANCE_BASELINES)
 
 
-// null means no limit: use all available executors
-val Project.maxTestDistributionRemoteExecutors: Int?
-    get() = gradleProperty(MAX_TEST_DISTRIBUTION_REMOTE_EXECUTORS).orNull?.toInt()
-
-val Project.maxTestDistributionLocalExecutors: Int?
-    get() = gradleProperty(MAX_TEST_DISTRIBUTION_LOCAL_EXECUTORS).orNull?.toInt()
-
 val Project.toolchainInstallationPaths: Provider<String>
     get() = gradleProperty(JAVA_INSTALLATIONS_PATHS_PROPERTY)
 
@@ -386,43 +363,6 @@ val Project.testSplitExcludeTestClasses: String
 
 val Project.testSplitOnlyTestGradleVersion: String
     get() = project.stringPropertyOrEmpty(TEST_SPLIT_ONLY_TEST_GRADLE_VERSION)
-
-
-// The Develocity server that serves Predictive Test Selection. Deliberately not derived from
-// DEVELOCITY_SERVER_URL: CI points that at a Develocity Edge, and Edges do not serve PTS.
-val Project.predictiveTestSelectionServerUrl: Provider<String>
-    get() = gradleProperty(PREDICTIVE_TEST_SELECTION_SERVER_URL)
-
-
-val Project.predictiveTestSelectionEnabled: Provider<Boolean>
-    get() = provider {
-        if (rerunAllTests.orElse(false).get()) {
-            return@provider false
-        } else if (propertyFromAnySource(PREDICTIVE_TEST_SELECTION_ENABLED).isPresent) {
-            return@provider propertyFromAnySource(PREDICTIVE_TEST_SELECTION_ENABLED).get().toBoolean()
-        } else {
-            val isOnCi = buildRunningOnCi.getOrElse(false)
-            val isMasterReleaseOrMergeQueueBranch = buildBranch.getOrElse("").let { branch ->
-                listOf("master", "release", "gh-readonly-queue/").any { prefix -> branch.startsWith(prefix) }
-            }
-            return@provider isOnCi && !isMasterReleaseOrMergeQueueBranch
-        }
-    }
-
-val Project.testDistributionDogfoodingTag: Provider<String>
-    get() = gradleProperty(TEST_DISTRIBUTION_DOGFOODING_TAG)
-
-val Project.testDistributionEnabled: Boolean
-    get() = systemProperty(TEST_DISTRIBUTION_ENABLED).orNull?.toBoolean() == true
-
-
-val Project.testDistributionServerUrl: Provider<String>
-    get() = gradleProperty(TEST_DISTRIBUTION_SERVER_URL)
-
-
-// Controls the test distribution partition size. The test classes smaller than this value will be merged into a "partition"
-val Project.maxTestDistributionPartitionSecond: Long?
-    get() = systemProperty(TEST_DISTRIBUTION_PARTITION_SIZE).orNull?.toLong()
 
 
 val Project.maxParallelForks: Int
