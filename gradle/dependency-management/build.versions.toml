@@ -26,7 +26,6 @@ docbook = { module = "net.sf.docbook:docbook-xsl", version = "1.75.2" }
 dokkaPlugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version = "2.2.0" }
 errorProne = { module = "com.google.errorprone:error_prone_core", version.ref = "errorProne" }
 errorPronePlugin = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version = "5.1.0" }
-foojayConventions = { module = "org.gradle.toolchains.foojay-resolver-convention:org.gradle.toolchains.foojay-resolver-convention.gradle.plugin", version = "1.0.0" }
 gradleGuidesPlugin = { group = "org.gradle.guides", name = "gradle-guides-plugin", version = "0.25.0" }
 groovy = { module = "org.apache.groovy:groovy", version.ref = "groovy" }
 gson = { module = "com.google.code.gson:gson", version = "2.14.0" }
