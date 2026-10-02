@@ -32,7 +32,6 @@ public abstract class GradleDocumentationExtension {
     private final UserManual userManual;
     private final DslReference dslReference;
     private final Javadocs javadocs;
-    private final KotlinDslReference kotlinDslReference;
 
     @Inject
     public GradleDocumentationExtension(ObjectFactory objects) {
@@ -40,7 +39,6 @@ public abstract class GradleDocumentationExtension {
         userManual = objects.newInstance(UserManual.class);
         dslReference = objects.newInstance(DslReference.class);
         javadocs = objects.newInstance(Javadocs.class);
-        kotlinDslReference = objects.newInstance(KotlinDslReference.class);
     }
 
     /**
@@ -63,12 +61,6 @@ public abstract class GradleDocumentationExtension {
      * generated code.
      */
     public abstract ConfigurableFileCollection getSourceRoots();
-
-    /**
-     * Kotlin DSL source code to be documented. This should be the "public" Kotlin APIs,
-     * including generated code.
-     */
-    public abstract ConfigurableFileCollection getKotlinDslSource();
 
     /**
      * The runtime classpath of the source code to be documented.
@@ -122,14 +114,6 @@ public abstract class GradleDocumentationExtension {
 
     public void javadocs(Action<? super Javadocs> action) {
         action.execute(javadocs);
-    }
-
-    public KotlinDslReference getKotlinDslReference() {
-        return kotlinDslReference;
-    }
-
-    public void kotlinDslReference(Action<? super KotlinDslReference> action) {
-        action.execute(kotlinDslReference);
     }
 
     /**

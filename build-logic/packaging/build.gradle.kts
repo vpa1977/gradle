@@ -11,9 +11,6 @@ dependencies {
     implementation(projects.documentation) {
         // TODO turn this around: move corresponding code to this project and let docs depend on it
         because("API metadata generation is part of the DSL guide")
-        // Dokka is only used by GradleKotlinDslReferencePlugin, applied solely to the
-        // (removed) :docs project; keep it off the convention-plugin classpath
-        exclude(group = "org.jetbrains.dokka")
     }
     implementation(projects.dependencyModules)
     implementation(projects.jvm)

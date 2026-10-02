@@ -23,7 +23,6 @@ dependencyAnalysisPlugin = { module = "com.autonomousapps:dependency-analysis-gr
 develocityConventions = { module = "io.github.gradle.develocity-conventions-plugin:io.github.gradle.develocity-conventions-plugin.gradle.plugin", version = "0.15.0" }
 develocityPlugin = { module = "com.gradle.develocity:com.gradle.develocity.gradle.plugin", version.ref = "develocity" }
 docbook = { module = "net.sf.docbook:docbook-xsl", version = "1.75.2" }
-dokkaPlugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version = "2.2.0" }
 errorProne = { module = "com.google.errorprone:error_prone_core", version.ref = "errorProne" }
 errorPronePlugin = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version = "5.1.0" }
 gradleGuidesPlugin = { group = "org.gradle.guides", name = "gradle-guides-plugin", version = "0.25.0" }
