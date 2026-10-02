@@ -25,6 +25,5 @@ group = "gradlebuild"
 dependencies {
     implementation(buildLibs.develocityPlugin)
     implementation(buildLibs.develocityConventions)
-    implementation(buildLibs.foojayConventions)
 }
 

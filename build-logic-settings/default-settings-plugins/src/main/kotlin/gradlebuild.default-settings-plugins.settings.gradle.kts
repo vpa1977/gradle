@@ -32,6 +32,5 @@ dependencyResolutionManagement {
 plugins {
     id("com.gradle.develocity")
     id("io.github.gradle.develocity-conventions-plugin")
-    id("org.gradle.toolchains.foojay-resolver-convention")
 }
 
