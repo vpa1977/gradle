@@ -16,13 +16,6 @@ jvmCompile {
     }
 }
 
-sourceSets {
-    main {
-        // Incremental Groovy joint-compilation doesn't work with the Error Prone annotation processor
-        errorprone.enabled = false
-    }
-}
-
 dependencies {
     api(projects.baseServices)
     api(projects.core)

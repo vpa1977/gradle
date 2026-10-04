@@ -209,7 +209,3 @@ tasks {
         dependsOn("androidHomeWarmup")
     }
 }
-
-errorprone {
-    nullawayEnabled = true
-}

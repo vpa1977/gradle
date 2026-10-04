@@ -6,7 +6,6 @@ plugins {
     id("gradlebuild.module-jar")
     id("gradlebuild.reproducible-archives")
     id("gradlebuild.repositories")
-    id("gradlebuild.code-quality")
     id("gradlebuild.test-retry")
     id("gradlebuild.ci-reporting")
     id("gradlebuild.private-javadoc")

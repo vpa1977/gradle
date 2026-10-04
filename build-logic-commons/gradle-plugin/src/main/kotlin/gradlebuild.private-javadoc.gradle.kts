@@ -22,14 +22,6 @@ import org.gradle.external.javadoc.StandardJavadocDocletOptions
 // These requirements are different than those of the public javadoc.
 // This does not configure the public Javadoc published to the website
 
-pluginManager.withPlugin("gradlebuild.code-quality") {
-    tasks {
-        named("codeQuality") {
-            dependsOn(tasks.withType<Javadoc>())
-        }
-    }
-}
-
 // Extra classpath for the per-module `javadoc` task so cross-module `{@link}` targets resolve.
 // Modules declare additions via `dependencies { javadocReferences(projects.someProject) }`.
 // This is javadoc-only — it does NOT participate in `compileClasspath` or `runtimeClasspath`,

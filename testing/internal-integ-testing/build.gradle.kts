@@ -4,13 +4,6 @@ plugins {
 
 description = "Collection of test fixtures for integration tests, internal use only"
 
-sourceSets {
-    main {
-        // Incremental Groovy joint-compilation doesn't work with the Error Prone annotation processor
-        errorprone.enabled = false
-    }
-}
-
 dependencies {
     api(projects.baseServices) {
         because("Part of the public API, used by spock AST transformer")

@@ -34,7 +34,6 @@ class GradleBuildDocumentationConfigurationCacheSmokeTest extends AbstractGradle
             ':docs:apiMapping',
             ':docs:defaultImports',
             ':docs:checkDeadInternalLinks',
-            ':docs:checkstyleApi',
             ':docs:incubationReport',
         ]
 
@@ -57,7 +56,6 @@ class GradleBuildDocumentationConfigurationCacheSmokeTest extends AbstractGradle
         result.task(":docs:apiMapping").outcome == TaskOutcome.FROM_CACHE
         result.task(":docs:defaultImports").outcome == TaskOutcome.FROM_CACHE
         result.task(":docs:checkDeadInternalLinks").outcome == TaskOutcome.FROM_CACHE
-        result.task(":docs:checkstyleApi").outcome == TaskOutcome.FROM_CACHE
         result.task(":docs:incubationReport").outcome == TaskOutcome.FROM_CACHE
     }
 

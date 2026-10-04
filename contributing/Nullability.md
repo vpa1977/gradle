@@ -12,21 +12,8 @@ For more details, see the [JSpecify user guide](https://jspecify.dev/docs/user-g
 
 ## Static analysis with NullAway
 
-Gradle uses [NullAway](https://github.com/uber/NullAway) to enforce null-safety at compile time.
-Unsafe code becomes a compilation error.
-
-During the transitional period, NullAway checking is enabled on a per-project basis.
-Project's dependencies must all be null-checked for it to be able to opt into NullAway checks itself.
-
-You can enable NullAway checks with the following snippet in the project's `build.gradle.kts`:
-```kotlin
-errorprone {
-    nullawayEnabled = true
-}
-```
-
-For practical reasons, NullAway doesn't rely on `@NullMarked` annotations in Gradle code but considers all code in `org.gradle.*` packages to be non-null by default.
-Combined with the dependency requirement above, it reduces churn on our way to the goal of having everything checked.
+Gradle previously used [NullAway](https://github.com/uber/NullAway) to enforce null-safety at compile time.
+It is no longer enabled in the build.
 
 ## How to null-annotate code
 

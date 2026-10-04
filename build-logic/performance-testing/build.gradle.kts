@@ -40,7 +40,3 @@ tasks.compileGroovy.configure {
 tasks.compileKotlin.configure {
     libraries.from(files(tasks.compileGroovy))
 }
-
-tasks.codenarcMain.configure {
-    exclude("gradlebuild/performance/junit4/**")
-}

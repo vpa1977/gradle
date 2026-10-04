@@ -295,10 +295,6 @@ configurations {
     }
 }
 
-tasks.named("check") {
-    dependsOn(tasks.named("checkstyleApi"))
-}
-
 // TODO there is some duplication with DistributionTest.kt here - https://github.com/gradle/gradle-private/issues/3126
 abstract class GradleInstallationForTestEnvironmentProvider : CommandLineArgumentProvider {
 
@@ -329,8 +325,4 @@ tasks.register("checkLinks") {
     dependsOn(tasks.withType<CheckLinks>())
     dependsOn("checkDeadInternalLinks")
     dependsOn("checkDeadExternalLinks")
-}
-
-errorprone {
-    nullawayEnabled = true
 }

@@ -57,8 +57,3 @@ tasks.withType<IntegrationTest>() {
     }
     jvmArgumentProviders.add(argument)
 }
-
-
-errorprone {
-    nullawayEnabled = true
-}

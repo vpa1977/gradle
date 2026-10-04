@@ -203,7 +203,3 @@ abstract class ReorderArchUnitRulesTask : DefaultTask() {
         }
     }
 }
-
-errorprone {
-    nullawayEnabled = true
-}

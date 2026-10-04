@@ -19,7 +19,6 @@ plugins {
     id("java-library")
     id("org.gradle.kotlin.kotlin-dsl") // this is 'kotlin-dsl' without version
     id("gradlebuild.build-platform")
-    id("gradlebuild.code-quality")
     id("gradlebuild.ci-reporting")
     id("gradlebuild.test-retry")
     id("gradlebuild.private-javadoc")

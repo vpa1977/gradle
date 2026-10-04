@@ -94,7 +94,3 @@ dependencies {
 }
 
 integTest.testJvmXmx = "5g"
-
-errorprone {
-    nullawayEnabled = true
-}

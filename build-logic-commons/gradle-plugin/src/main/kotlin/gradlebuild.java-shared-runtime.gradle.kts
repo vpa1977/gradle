@@ -3,7 +3,6 @@ plugins {
     groovy
 
     id("gradlebuild.ci-reporting")
-    id("gradlebuild.code-quality")
     id("gradlebuild.module-jar")
     id("gradlebuild.repositories")
     id("gradlebuild.reproducible-archives")

@@ -36,8 +36,3 @@ tasks.register("soakTest") {
     group = "CI Lifecycle"
     dependsOn(":soak:forkingIntegTest")
 }
-
-
-errorprone {
-    nullawayEnabled = true
-}

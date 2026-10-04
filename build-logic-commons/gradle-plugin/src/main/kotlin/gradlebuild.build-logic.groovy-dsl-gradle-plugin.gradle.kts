@@ -18,7 +18,6 @@ plugins {
     id("java-library")
     id("groovy-gradle-plugin")
     id("gradlebuild.build-platform")
-    id("gradlebuild.code-quality")
     id("gradlebuild.ci-reporting")
     id("gradlebuild.test-retry")
     id("gradlebuild.private-javadoc")

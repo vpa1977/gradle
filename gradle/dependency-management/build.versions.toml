@@ -20,8 +20,6 @@ commonsIo = { module = "commons-io:commons-io", version = "2.22.0" }
 commonsLang3 = { module = "org.apache.commons:commons-lang3", version = "3.20.0" }
 dependencyAnalysisPlugin = { module = "com.autonomousapps:dependency-analysis-gradle-plugin", version = "3.4.0" }
 docbook = { module = "net.sf.docbook:docbook-xsl", version = "1.75.2" }
-errorProne = { module = "com.google.errorprone:error_prone_core", version.ref = "errorProne" }
-errorPronePlugin = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version = "5.1.0" }
 gradleGuidesPlugin = { group = "org.gradle.guides", name = "gradle-guides-plugin", version = "0.25.0" }
 groovy = { module = "org.apache.groovy:groovy", version.ref = "groovy" }
 gson = { module = "com.google.code.gson:gson", version = "2.14.0" }
@@ -49,8 +47,6 @@ kotlinMetadata = { module = "org.jetbrains.kotlin:kotlin-metadata-jvm"}
 kotlinSamWithReceiver = { group = "org.jetbrains.kotlin", name = "kotlin-sam-with-receiver"}
 log4jCore = { group = "org.apache.logging.log4j", name = "log4j-core", version.ref = "log4j" }
 mockitoKotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
-nullaway = { module = "com.uber.nullaway:nullaway", version = "0.13.7" }
-nullawayPlugin = { module = "net.ltgt.gradle:gradle-nullaway-plugin", version = "2.2.0" }
 objenesis = { group = "org.objenesis", name = "objenesis", version.ref = "objenesis" }
 plexusUtils = { module = "org.codehaus.plexus:plexus-utils", version = "3.6.1" } # CVE-2025-67030 on lower versions
 pomPropertiesPlugin = { module = "org.gradle.pom-properties:org.gradle.pom-properties.gradle.plugin", version = "0.2.0" }

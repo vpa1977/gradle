@@ -89,8 +89,3 @@ fun Test.setupPreconditionTesting() {
     // These tests should always run
     outputs.upToDateWhen { false }
 }
-
-
-errorprone {
-    nullawayEnabled = true
-}

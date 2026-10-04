@@ -15,8 +15,6 @@ dependencies {
     implementation(projects.basics)
     implementation(projects.moduleIdentity)
 
-    implementation(buildLibs.errorPronePlugin)
-    implementation(buildLibs.nullawayPlugin)
     implementation("org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:$expectedKotlinDslPluginsVersion")
     implementation(buildLibs.kgp)
     implementation(buildLibs.testRetryPlugin)

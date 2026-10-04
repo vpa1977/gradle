@@ -19,7 +19,6 @@ plugins {
     groovy
     id("gradlebuild.module-identity")
     id("gradlebuild.repositories")
-    id("gradlebuild.code-quality")
 }
 
 java {

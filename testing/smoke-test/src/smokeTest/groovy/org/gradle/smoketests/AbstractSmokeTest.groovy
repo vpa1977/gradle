@@ -80,7 +80,6 @@ abstract class AbstractSmokeTest extends Specification {
         ]
         static gradleVersions = SMOKE_TESTED_PLUGINS.get("io.github.ben-manes.versions")
         static playframework = SMOKE_TESTED_PLUGINS.get("org.gradle.playframework")
-        static errorProne = SMOKE_TESTED_PLUGINS.get("net.ltgt.errorprone")
         static protobufPlugin = SMOKE_TESTED_PLUGINS.get("com.google.protobuf")
         static testRetryPlugin = SMOKE_TESTED_PLUGINS.get("org.gradle.test-retry")
         static aspectj = SMOKE_TESTED_PLUGINS.get("io.freefair.aspectj")

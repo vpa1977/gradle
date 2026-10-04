@@ -8,7 +8,3 @@ dependencies {
     integTestImplementation(projects.execution)
     integTestDistributionRuntimeOnly(projects.distributionsFull)
 }
-
-errorprone {
-    nullawayEnabled = true
-}

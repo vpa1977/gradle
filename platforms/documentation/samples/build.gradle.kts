@@ -24,7 +24,3 @@ dependencies {
 }
 
 testFilesCleanup.reportOnly = true
-
-errorprone {
-    nullawayEnabled = true
-}

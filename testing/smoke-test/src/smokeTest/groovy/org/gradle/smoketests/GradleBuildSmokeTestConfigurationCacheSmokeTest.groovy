@@ -24,7 +24,7 @@ class GradleBuildSmokeTestConfigurationCacheSmokeTest extends AbstractGradleBuil
         given:
         def tasks = [
             ':smoke-test:smokeTest',
-            '--tests=org.gradle.smoketests.ErrorPronePluginSmokeTest'
+            '--tests=org.gradle.smoketests.NohttpPluginSmokeTest'
         ]
 
         when:
